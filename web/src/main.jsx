@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom/client'
 import Router from './router'
 import {Provider} from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
-// import './styles.css'
+import theme from './theme'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <Router />
       </ChakraProvider>
-    </BrowserRouter>{' '}
+    </BrowserRouter>
   </React.StrictMode>
 )
