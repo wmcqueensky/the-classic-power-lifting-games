@@ -2,17 +2,18 @@ import {Box, Flex, Stack} from '@chakra-ui/react'
 import {Outlet} from 'react-router'
 
 import Navbar from './navbar'
+import {NAVBAR_HEIGHT} from '../../constants'
 
 const Layout = () => {
   return (
     <>
       <Stack minH="100vh">
-        <Flex p={4} minH={400} pt={50} align="right" w="100%" pb={`50`}>
-          <Box w="full">
+        <Navbar />
+        <Flex minH={400} align="right" w="100%" mt={NAVBAR_HEIGHT}>
+          <Box w="full" h="auto">
             <Outlet />
           </Box>
         </Flex>
-        <Navbar />
       </Stack>
     </>
   )

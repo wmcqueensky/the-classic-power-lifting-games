@@ -2,14 +2,42 @@ import {Box, Flex, Text, Image, Divider} from '@chakra-ui/react'
 import {Link, useLocation} from 'react-router-dom'
 import logo from '../images/logo.png' // Update the path accordingly
 import {NAVBAR_HEIGHT} from '../../constants'
+import {useState, useEffect} from 'react'
 
 const Navbar = () => {
   const location = useLocation()
+  const [prevScrollPos, setPrevScrollPos] = useState(0)
+  const [visible, setVisible] = useState(true)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset
+
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 50)
+      setPrevScrollPos(currentScrollPos)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [prevScrollPos])
 
   const isLinkActive = (page) => location.pathname === page
 
   return (
-    <Box position="fixed" top="0" width={'100%'} fontSize={'x-large'} height={NAVBAR_HEIGHT} bg="#121212">
+    <Box
+      position="fixed"
+      width={'100%'}
+      fontSize={'x-large'}
+      height={NAVBAR_HEIGHT}
+      bg="#121212"
+      transition="top 0.3s"
+      boxShadow={visible ? '0 0 10px rgba(0, 0, 0, 0.3)' : 'none'}
+      pointerEvents={visible ? 'auto' : 'none'}
+      top={visible ? 0 : -88}
+      zIndex="999"
+    >
       <Flex justify={'space-between'}>
         <Link to="/">
           <Image src={logo} alt="Logo" style={{width: '120px', height: '88px'}} ml="3" />
@@ -42,6 +70,7 @@ const Navbar = () => {
         </Flex>
         <Text></Text>
       </Flex>
+      <Box height="1px" bg="red" width="100%" />
     </Box>
   )
 }
