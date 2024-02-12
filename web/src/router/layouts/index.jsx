@@ -2,6 +2,7 @@ import {Box, Flex, Stack} from '@chakra-ui/react'
 import {Outlet} from 'react-router'
 
 import Navbar from './navbar'
+import Footer from './footer'
 import {NAVBAR_HEIGHT} from '../../constants'
 
 const Layout = () => {
@@ -14,6 +15,7 @@ const Layout = () => {
             <Outlet />
           </Box>
         </Flex>
+        <Footer />
       </Stack>
     </>
   )
