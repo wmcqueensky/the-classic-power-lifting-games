@@ -40,29 +40,37 @@ const Navbar = () => {
     >
       <Flex justify={'space-between'}>
         <Link to="/">
-          <Image src={logo} alt="Logo" style={{width: '120px', height: '88px'}} ml="3" />
+          <Image src={logo} alt="Logo" maxW="120px" maxH="88px" ml="3" />
         </Link>
         <Flex align={'right'}>
           <Link to={'/statystyki'} style={{color: isLinkActive('/statystyki') ? 'white' : 'gray'}}>
-            <Text fontSize={'x-large'} mt="6" _hover={{color: 'white'}}>
+            <Text
+              fontSize={{base: 'lg', md: 'xl', lg: '2xl'}}
+              mt={{base: '8', lg: '6'}}
+              _hover={{color: 'white'}}
+            >
               Statystyki
             </Text>
             {isLinkActive('/statystyki') && <Divider borderBottom="2px" borderColor="red" />}
           </Link>
           <Link to={'/zapisy'} style={{color: isLinkActive('/zapisy') ? 'white' : 'gray'}}>
-            <Text fontSize={'x-large'} mt="6" ml="5" _hover={{color: 'white'}}>
+            <Text
+              fontSize={{base: 'lg', md: 'xl', lg: '2xl'}}
+              mt={{base: '8', lg: '6'}}
+              ml="5"
+              _hover={{color: 'white'}}
+            >
               Zapisy
             </Text>
             {isLinkActive('/zapisy') && <Divider borderBottom="2px" borderColor="red" ml="3" />}
           </Link>
-          <Link to={'/zdjecia'} style={{color: isLinkActive('/zdjecia') ? 'white' : 'gray'}}>
-            <Text fontSize={'x-large'} mt="6" ml="5" _hover={{color: 'white'}}>
-              Zdjęcia
-            </Text>
-            {isLinkActive('/zdjecia') && <Divider borderBottom="2px" borderColor="red" ml="3" />}
-          </Link>
           <Link to={'/onas'} style={{color: isLinkActive('/onas') ? 'white' : 'gray'}}>
-            <Text fontSize={'x-large'} mt="6" ml="5" _hover={{color: 'white'}}>
+            <Text
+              fontSize={{base: 'lg', md: 'xl', lg: '2xl'}}
+              mt={{base: '8', lg: '6'}}
+              ml="5"
+              _hover={{color: 'white'}}
+            >
               O Nas
             </Text>
             {isLinkActive('/onas') && <Divider borderBottom="2px" borderColor="red" ml="3" />}

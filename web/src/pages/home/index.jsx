@@ -1,20 +1,41 @@
+import {useState, useEffect, useRef} from 'react'
 import {VStack, Heading, Box, Button, Image} from '@chakra-ui/react'
 import {motion} from 'framer-motion'
 import backgroundImage from './images/background.png'
-import championshipImage from './images/double_lift.png'
+import championshipImage from './images/double-lift.png'
+import peopleImage from './images/onas-home.png'
 import {useNavigate} from 'react-router-dom'
 
 const HomePage = () => {
   const navigate = useNavigate()
+  const boxRef1 = useRef(null)
+  const boxRef2 = useRef(null)
+  const boxRef3 = useRef(null)
+
+  const [isVisible1, setIsVisible1] = useState(true)
+  const [isVisible2, setIsVisible2] = useState(false)
+  const [isVisible3, setIsVisible3] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (boxRef1.current && window.scrollY > boxRef1.current.offsetTop - window.innerHeight) {
+        setIsVisible1(true)
+      }
+      if (boxRef2.current && window.scrollY > boxRef2.current.offsetTop - window.innerHeight) {
+        setIsVisible2(true)
+      }
+      if (boxRef3.current && window.scrollY > boxRef3.current.offsetTop - window.innerHeight) {
+        setIsVisible3(true)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const containerVariants = {
-    hidden: {opacity: 0, x: '-100%'},
-    visible: {opacity: 1, x: 0, transition: {type: 'spring', stiffness: 40}},
-  }
-
-  const headingVariants = {
-    hidden: {opacity: 0, y: 0},
-    visible: {opacity: 1, y: 0, transition: {delay: 0.5, type: 'spring', stiffness: 40}},
+    hidden: {opacity: 0, x: -20},
+    visible: {opacity: 1, x: 0, transition: {delay: 0.5, type: 'spring', stiffness: 40}},
   }
 
   return (
@@ -24,29 +45,36 @@ const HomePage = () => {
         backgroundSize="cover"
         backgroundPosition="center"
         h="100vh"
-        d="flex"
         color="white"
       >
-        <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="hidden">
-          <VStack textAlign="left" variants={headingVariants}>
-            <Heading fontSize="6.5rem" mt="10" mr="350px" backdropFilter="blur(2px)">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isVisible1 ? 'visible' : 'hidden'}
+          ref={boxRef1}
+        >
+          <VStack textAlign="left">
+            <Heading
+              fontSize={{base: '3rem', sm: '4,5rem', md: '5rem', lg: '5.5rem', xl: '6rem', '2xl': '6.5rem'}}
+              mt="10px"
+              mr={{base: '0', sm: '50px', md: '100px', lg: '200px', xl: '310px', '2xl': '350px'}}
+            >
               <span style={{fontWeight: 'normal'}}>THE CLASSIC</span> <br /> POWERLIFTING <br /> GAMES
             </Heading>
 
             <Button
-              size="xxl"
+              size={{base: 'xl', lg: 'xxl'}}
               colorScheme="black"
               variant="outline"
               borderRadius="3xl"
               mt="8"
               p="8"
-              fontSize="3.5rem"
+              fontSize={{base: '2rem', sm: '2.5rem', lg: '3rem', '2xl': '3.5rem'}}
               backdropFilter="blur(9px)"
               _hover={{
                 bg: 'rgba(255, 0, 0, 0.4)',
                 color: 'white',
               }}
-              transition="all 0.3s"
               onClick={() => {
                 navigate('/zapisy')
               }}
@@ -56,22 +84,68 @@ const HomePage = () => {
           </VStack>
         </motion.div>
       </Box>
-      <Box backgroundPosition="center" h="100vh" d="flex" color="white">
-        <VStack textAlign="left">
-          <Image src={championshipImage} maxWidth="75%"></Image>
-          <Heading fontSize="4.5rem" mt="10" backdropFilter="blur(2px)">
-            Zawody 20-21 kwietnia 2024
-            <br /> Czekamy na Ciebie
-          </Heading>
-        </VStack>
+      <Box backgroundPosition="center" h="100vh" color="white" ref={boxRef2}>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isVisible2 ? 'visible' : 'hidden'}
+          transition={{delay: 0.5}} // Add a delay for the second box
+          ref={boxRef2}
+        >
+          <VStack textAlign="center">
+            <Image src={championshipImage} maxWidth="90%" mt="120px"></Image>
+            <Heading
+              fontSize={{base: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}}
+            >
+              20-21 April 2024
+            </Heading>
+            <Heading
+              fontSize={{base: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}}
+              mt="10px"
+            >
+              Live Light <span style={{color: 'red'}}>Lift Heavy</span>
+            </Heading>
+          </VStack>
+        </motion.div>
       </Box>
-      <Box backgroundPosition="center" h="100vh" d="flex" color="white">
-        <VStack textAlign="left">
-          <Heading fontSize="4.5rem" mt="10" backdropFilter="blur(2px)">
-            Dowiedz się o nas więcej
-          </Heading>
-        </VStack>
-      </Box>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate={isVisible3 ? 'visible' : 'hidden'}
+        transition={{delay: 1}} // Add a longer delay for the third box
+        ref={boxRef3}
+      >
+        <Box
+          backgroundPosition="center"
+          h="100vh"
+          color="white"
+          bgImage={`url(${peopleImage})`}
+          backgroundSize="cover"
+          ref={boxRef3}
+        >
+          <VStack textAlign="left" align-items="flex-end" justify-content="flex-end">
+            <Button
+              size={{base: 'xl', lg: 'xxl'}}
+              colorScheme="black"
+              variant="outline"
+              borderRadius="3xl"
+              mt="710px"
+              p="8"
+              fontSize={{base: '1.5rem', sm: '2rem', lg: '2.5rem', '2xl': '3rem'}}
+              backdropFilter="blur(40px)"
+              _hover={{
+                bg: 'rgba(255, 0, 0, 0.4)',
+                color: 'white',
+              }}
+              onClick={() => {
+                navigate('/onas')
+              }}
+            >
+              Dowiedz się o nas więcej
+            </Button>
+          </VStack>
+        </Box>
+      </motion.div>
     </>
   )
 }
