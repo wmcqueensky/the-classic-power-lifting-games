@@ -11,8 +11,8 @@ const divStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '92vh',
-  width: '80vw',
+  height: '70vh',
+  width: '75vw',
   overflow: 'hidden',
   backgroundSize: 'cover',
   margin: 'auto',
@@ -35,7 +35,7 @@ const slideImages = [
 
 const Slideshow = () => {
   return (
-    <Box className="slide-container">
+    <Box p="8" h="100vh" w="100vw">
       <Slide>
         {slideImages.map((slideImage, index) => (
           <Box key={index} {...divStyle} backgroundImage={`url(${slideImage.url})`} />
