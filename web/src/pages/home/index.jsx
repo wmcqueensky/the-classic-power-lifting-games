@@ -40,13 +40,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Box
-        bgImage={`url(${backgroundImage})`}
-        backgroundSize="cover"
-        backgroundPosition="center"
-        h="100vh"
-        color="white"
-      >
+      <Box bgImage={`url(${backgroundImage})`} backgroundSize="cover" backgroundPosition="center" h="100vh">
         <motion.div
           variants={containerVariants}
           initial="hidden"
