@@ -114,7 +114,7 @@ const RankingPage = () => {
                   borderColor="red"
                   color="white"
                   boxShadow="0px 3px 6px rgba(0, 0, 0, 0.1)"
-                  _hover={{bg: '#ff1a1a'}}
+                  _hover={{bg: '#DF1818', borderColor: '#DF1818'}}
                   _active={{
                     bg: '#cc0000',
                     transform: 'scale(0.98)',
