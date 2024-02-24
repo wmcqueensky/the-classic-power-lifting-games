@@ -8,7 +8,8 @@ const RankingPage = () => {
   const [scores, setScores] = useState([])
   const [lifters, setLifters] = useState({})
   const location = useLocation()
-  const competitionId = new URLSearchParams(location.search).get('competitionId')
+  const competitionId = new URLSearchParams(location.search).get('zawody')
+  const categoryId = new URLSearchParams(location.search).get('kategoria')
 
   useEffect(() => {
     const fetchCompetitionInfo = async () => {
@@ -35,6 +36,7 @@ const RankingPage = () => {
           .from('scores')
           .select('*')
           .eq('competition_id', competitionId)
+          .eq('category_id', categoryId)
           .order('score_id')
 
         if (error) {

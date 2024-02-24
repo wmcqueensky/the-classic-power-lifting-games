@@ -1,9 +1,10 @@
-import {Box, Button, Text, UnorderedList, ListItem, Heading} from '@chakra-ui/react'
+import {Box, Button, Heading} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import supabase from '../../config/supabaseClient.js'
 import {motion} from 'framer-motion'
 import backgroundImage from '../../common/assets/statisticsBackground.png'
+import ChoiceButton from '../../common/components/choiceButton.jsx'
 
 const containerVariants = {
   hidden: {opacity: 0, x: -20},
@@ -26,7 +27,7 @@ const StatisticsPage = () => {
         throw error
       }
 
-      navigate(`/statystyki/ranking?competitionId=${competitionData.competition_id}`)
+      navigate(`/kategoria?zawody=${competitionData.competition_id}`)
     } catch (error) {
       console.error('Error fetching scores for competition:', error.message)
     }
@@ -70,33 +71,11 @@ const StatisticsPage = () => {
         >
           Wybierz zawody:
         </Heading>
+        <ChoiceButton>Wszystkie</ChoiceButton>
         {competitions.map((competition) => (
-          <Button
-            as="button"
-            height={{base: '36px', md: '46px'}}
-            lineHeight="1.2"
-            transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-            border="1px"
-            p={{base: '30px', md: '50px'}}
-            m="2"
-            borderRadius="10px"
-            fontSize={{base: '18px', md: '26px'}}
-            fontWeight="semibold"
-            bg="red"
-            borderColor="red"
-            color="white"
-            boxShadow="0px 3px 6px rgba(0, 0, 0, 0.1)"
-            _hover={{bg: '#DF1818', borderColor: '#DF1818'}}
-            _active={{
-              bg: '#cc0000',
-              transform: 'scale(0.98)',
-              borderColor: '#cc0000',
-            }}
-            key={competition.name}
-            onClick={() => fetchScoresForCompetition(competition.name)}
-          >
+          <ChoiceButton onClick={() => fetchScoresForCompetition(competition.name)} key={competition.name}>
             {competition.name}
-          </Button>
+          </ChoiceButton>
         ))}
       </Box>
     </motion.div>
