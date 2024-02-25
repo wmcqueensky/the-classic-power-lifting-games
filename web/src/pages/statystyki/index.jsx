@@ -71,7 +71,7 @@ const StatisticsPage = () => {
         >
           Wybierz zawody:
         </Heading>
-        <ChoiceButton>Wszystkie</ChoiceButton>
+        <ChoiceButton onClick={() => navigate(`/kategoria`)}>Wszystkie</ChoiceButton>
         {competitions.map((competition) => (
           <ChoiceButton onClick={() => fetchScoresForCompetition(competition.name)} key={competition.name}>
             {competition.name}

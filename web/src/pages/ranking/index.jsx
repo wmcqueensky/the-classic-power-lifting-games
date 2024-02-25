@@ -5,16 +5,20 @@ import supabase from '../../config/supabaseClient.js'
 
 const RankingPage = () => {
   const [competitionInfo, setCompetitionInfo] = useState({})
+  const [categoryInfo, setCategoryInfo] = useState({})
   const [scores, setScores] = useState([])
   const [lifters, setLifters] = useState({})
   const location = useLocation()
-  const competitionId = new URLSearchParams(location.search).get('zawody')
-  const categoryId = new URLSearchParams(location.search).get('kategoria')
+
+  const competitionIdParam = new URLSearchParams(location.search).get('zawody')
+  const competitionId = competitionIdParam !== null ? competitionIdParam : 0
+  const categoryIdParam = new URLSearchParams(location.search).get('kategoria')
+  const categoryId = categoryIdParam !== null ? categoryIdParam : 0
 
   useEffect(() => {
     const fetchCompetitionInfo = async () => {
       try {
-        const {data: competitionData, error} = await supabase
+        const {data: data, error} = await supabase
           .from('competitions')
           .select('name, date, place')
           .eq('competition_id', competitionId)
@@ -24,31 +28,54 @@ const RankingPage = () => {
           throw error
         }
 
-        setCompetitionInfo(competitionData)
+        setCompetitionInfo(data)
       } catch (error) {
         console.error('Error fetching competition info:', error.message)
       }
     }
 
-    const fetchScoresForCompetition = async () => {
+    const fetchCategoryInfo = async () => {
       try {
-        const {data: scoresData, error} = await supabase
-          .from('scores')
-          .select('*')
-          .eq('competition_id', competitionId)
+        const {data: data, error} = await supabase
+          .from('categories')
+          .select('name')
           .eq('category_id', categoryId)
-          .order('score_id')
+          .single()
 
         if (error) {
           throw error
         }
 
+        setCategoryInfo(data)
+      } catch (error) {
+        console.error('Error fetching category info:', error.message)
+      }
+    }
+
+    const fetchScoresForCompetition = async () => {
+      try {
+        let query = supabase.from('scores').select('*')
+
+        if (competitionId !== 0 && categoryId !== 0) {
+          query = query.eq('competition_id', competitionId).eq('category_id', categoryId)
+        } else if (competitionId !== 0 && categoryId === 0) {
+          query = query.eq('competition_id', competitionId)
+        } else if (categoryId !== 0 && competitionId === 0) {
+          query = query.eq('category_id', categoryId)
+        }
+
+        const {data: scoresData, error} = await query
+
+        if (error) {
+          throw error
+        }
+
+        scoresData.sort((a, b) => b.wilkswl + b.wilksmc - (a.wilkswl + a.wilksmc))
+
         setScores(scoresData)
 
-        // Extract lifter IDs
         const lifterIds = scoresData.map((score) => score.lifter_id)
 
-        // Fetch lifter data using IDs
         const {data: lifterData, error: lifterError} = await supabase
           .from('lifters')
           .select('*')
@@ -58,7 +85,6 @@ const RankingPage = () => {
           throw lifterError
         }
 
-        // Convert lifter data to an object for easier access
         const lifterObject = {}
         lifterData.forEach((lifter) => {
           lifterObject[lifter.lifter_id] = lifter
@@ -69,30 +95,37 @@ const RankingPage = () => {
       }
     }
 
-    if (competitionId) {
+    if (competitionId !== 0) {
       fetchCompetitionInfo()
-      fetchScoresForCompetition()
     }
-  }, [competitionId])
+
+    if (categoryId !== 0) {
+      fetchCategoryInfo()
+    }
+
+    fetchScoresForCompetition()
+  }, [])
 
   return (
     <Stack h="100%">
       <Text fontSize="4xl" fontWeight="bold" mb="4">
-        {competitionInfo.name}
+        {competitionId === 0 ? 'ALL' : competitionInfo.name} | {categoryId === 0 ? 'ALL' : categoryInfo.name}
       </Text>
       <Text fontSize="xl" fontWeight="bold" mb="4">
         {competitionInfo.date}, {competitionInfo.place}
       </Text>
+      //to musi znikać
       <Table variant="striped" colorScheme="blackAlpha">
         <Thead>
           <Tr>
+            <Th>Miejsce</Th>
             <Th>Zawodnik</Th>
-            <Th>Waga</Th>
-            <Th>Maks WL</Th>
+            <Th>Waga [Kg]</Th>
+            <Th>Maks WL [Kg]</Th>
             <Th>Wilks WL</Th>
-            <Th>Maks MC</Th>
+            <Th>Maks MC [Kg]</Th>
             <Th>Wilks MC</Th>
-            <Th>Total</Th>
+            <Th>Total [Kg]</Th>
             <Th>Wilks</Th>
             <Th>Klub</Th>
           </Tr>
@@ -100,6 +133,7 @@ const RankingPage = () => {
         <Tbody>
           {scores.map((score, index) => (
             <Tr key={index}>
+              <Td>{index + 1}</Td>
               <Td>
                 <Button
                   as="button"

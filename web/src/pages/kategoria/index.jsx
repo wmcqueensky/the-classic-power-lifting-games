@@ -15,7 +15,8 @@ const containerVariants = {
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([])
   const location = useLocation()
-  const competitionId = new URLSearchParams(location.search).get('zawody')
+  const competitionIdParam = new URLSearchParams(location.search).get('zawody')
+  const competitionId = competitionIdParam !== null ? competitionIdParam : 0
 
   const navigate = useNavigate()
 
@@ -31,7 +32,13 @@ const CategoriesPage = () => {
         throw error
       }
 
-      navigate(`/ranking?zawody=${competitionId}&&kategoria=${data.category_id}`)
+      if (competitionId != 0) {
+        navigate(`/ranking?zawody=${competitionId}&&kategoria=${data.category_id}`)
+      }
+
+      if (competitionId === 0) {
+        navigate(`/ranking?kategoria=${data.category_id}`)
+      }
     } catch (error) {
       console.error('Error fetching scores for competition category:', error.message)
     }
@@ -40,26 +47,37 @@ const CategoriesPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const {data: scoreData, error: scoresError} = await supabase
-          .from('scores')
-          .select('category_id')
-          .eq('competition_id', competitionId)
-
-        if (scoresError) {
-          throw scoresError
+        let categoriesData
+        if (competitionId === 0) {
+          const {data: allCategoriesData, error: categoriesError} = await supabase
+            .from('categories')
+            .select('name')
+          if (categoriesError) {
+            throw categoriesError
+          }
+          categoriesData = allCategoriesData
         }
 
-        const categoryIds = [...new Set(scoreData.map((score) => score.category_id))]
+        if (competitionId !== 0) {
+          const {data: scoreData, error: scoresError} = await supabase
+            .from('scores')
+            .select('category_id')
+            .eq('competition_id', competitionId)
 
-        const {data: categoriesData, error: categoriesError} = await supabase
-          .from('categories')
-          .select('name')
-          .in('category_id', categoryIds)
+          if (scoresError) {
+            throw scoresError
+          }
 
-        if (categoriesError) {
-          throw categoriesError
+          const categoryIds = [...new Set(scoreData.map((score) => score.category_id))]
+          const {data: fetchedCategoriesData, error: categoriesError} = await supabase
+            .from('categories')
+            .select('name')
+            .in('category_id', categoryIds)
+          if (categoriesError) {
+            throw categoriesError
+          }
+          categoriesData = fetchedCategoriesData
         }
-
         setCategories(categoriesData)
       } catch (error) {
         console.error('Error fetching categories:', error.message)
@@ -67,7 +85,7 @@ const CategoriesPage = () => {
     }
 
     fetchCategories()
-  }, [categories])
+  }, [competitionId])
 
   return (
     <motion.div variants={containerVariants} initial="hidden" animate="visible">
@@ -89,11 +107,7 @@ const CategoriesPage = () => {
         >
           Wybierz kategorie:
         </Heading>
-        <ChoiceButton
-        // onClick={() => fetchScoresForCompetitionCategory(category.name)}
-        >
-          Wszystkie
-        </ChoiceButton>
+        <ChoiceButton onClick={() => navigate(`/ranking`)}>Wszystkie</ChoiceButton>//nawigacja do poprawy
         {categories.map((category) => (
           <ChoiceButton key={category.name} onClick={() => fetchScoresForCompetitionCategory(category.name)}>
             {category.name}
