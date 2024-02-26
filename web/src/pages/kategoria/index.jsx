@@ -99,12 +99,7 @@ const CategoriesPage = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        <Heading
-          fa="h1"
-          fontSize={{base: '2rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}}
-          mb={4}
-          textAlign="center"
-        >
+        <Heading fontSize={{base: '2rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}} mb={4} textAlign="center">
           Wybierz kategorie:
         </Heading>{' '}
         <ChoiceButton

@@ -153,15 +153,7 @@ const RankingPage = () => {
 
   return (
     <motion.div variants={containerVariants} initial="hidden" animate="visible">
-      <Box
-        bgImage={`url(${backgroundImage})`}
-        backgroundSize="cover"
-        backgroundPosition="center"
-        h="100%"
-        display="flex"
-        alignItems="center"
-        flexDirection="column"
-      >
+      <Box bgImage={`url(${backgroundImage})`} backgroundSize="cover" backgroundPosition="center" h="100%">
         {competitionId !== 0 && (
           <Text fontSize="4xl" fontWeight="bold" mb="4">
             {competitionInfo.name} | {categoryInfo.name}
