@@ -1,13 +1,23 @@
-import {Stack, Text, Table, Thead, Tbody, Tr, Th, Td, Button} from '@chakra-ui/react'
+import {Stack, Text, Table, Thead, Tbody, Tr, Th, Td, Button, Box} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useLocation} from 'react-router-dom'
 import supabase from '../../config/supabaseClient.js'
+import TableButton from '../../common/components/tableButton.jsx'
+import backgroundImage from '../../common/assets/statisticsBackground.png'
+import {motion} from 'framer-motion'
+
+const containerVariants = {
+  hidden: {opacity: 0, x: -20},
+  visible: {opacity: 1, x: 0, transition: {delay: 0.5, type: 'spring', stiffness: 40}},
+}
 
 const RankingPage = () => {
   const [competitionInfo, setCompetitionInfo] = useState({})
   const [categoryInfo, setCategoryInfo] = useState({})
   const [scores, setScores] = useState([])
   const [lifters, setLifters] = useState({})
+  const [competitions, setCompetitions] = useState({})
+  const [categories, setCategories] = useState({})
   const location = useLocation()
 
   const competitionIdParam = new URLSearchParams(location.search).get('zawody')
@@ -90,6 +100,41 @@ const RankingPage = () => {
           lifterObject[lifter.lifter_id] = lifter
         })
         setLifters(lifterObject)
+
+        if (competitionId === 0) {
+          const competitionIds = scoresData.map((score) => score.competition_id)
+
+          const {data, error} = await supabase
+            .from('competitions')
+            .select('*')
+            .in('competition_id', competitionIds)
+
+          if (error) {
+            throw error
+          }
+
+          const competitionObject = {}
+          data.forEach((competition) => {
+            competitionObject[competition.competition_id] = competition
+          })
+          setCompetitions(competitionObject)
+        }
+
+        if (categoryId === 0) {
+          const categoryIds = scoresData.map((score) => score.category_id)
+
+          const {data, error} = await supabase.from('categories').select('*').in('category_id', categoryIds)
+
+          if (error) {
+            throw error
+          }
+
+          const categoryObject = {}
+          data.forEach((category) => {
+            categoryObject[category.category_id] = category
+          })
+          setCategories(categoryObject)
+        }
       } catch (error) {
         console.error('Error fetching scores for competition:', error.message)
       }
@@ -107,72 +152,80 @@ const RankingPage = () => {
   }, [])
 
   return (
-    <Stack h="100%">
-      <Text fontSize="4xl" fontWeight="bold" mb="4">
-        {competitionId === 0 ? 'ALL' : competitionInfo.name} | {categoryId === 0 ? 'ALL' : categoryInfo.name}
-      </Text>
-      <Text fontSize="xl" fontWeight="bold" mb="4">
-        {competitionInfo.date}, {competitionInfo.place}
-      </Text>
-      //to musi znikać
-      <Table variant="striped" colorScheme="blackAlpha">
-        <Thead>
-          <Tr>
-            <Th>Miejsce</Th>
-            <Th>Zawodnik</Th>
-            <Th>Waga [Kg]</Th>
-            <Th>Maks WL [Kg]</Th>
-            <Th>Wilks WL</Th>
-            <Th>Maks MC [Kg]</Th>
-            <Th>Wilks MC</Th>
-            <Th>Total [Kg]</Th>
-            <Th>Wilks</Th>
-            <Th>Klub</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {scores.map((score, index) => (
-            <Tr key={index}>
-              <Td>{index + 1}</Td>
-              <Td>
-                <Button
-                  as="button"
-                  height="24px"
-                  lineHeight="1.2"
-                  transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-                  border="1px"
-                  px="12px"
-                  py="8px"
-                  borderRadius="6px"
-                  fontSize="14px"
-                  fontWeight="semibold"
-                  bg="red"
-                  borderColor="red"
-                  color="white"
-                  boxShadow="0px 3px 6px rgba(0, 0, 0, 0.1)"
-                  _hover={{bg: '#DF1818', borderColor: '#DF1818'}}
-                  _active={{
-                    bg: '#cc0000',
-                    transform: 'scale(0.98)',
-                    borderColor: '#cc0000',
-                  }}
-                >
-                  {lifters[score.lifter_id]?.first_name} {lifters[score.lifter_id]?.last_name}
-                </Button>
-              </Td>
-              <Td>{score.weight}</Td>
-              <Td>{score.makswl}</Td>
-              <Td>{score.wilkswl}</Td>
-              <Td>{score.maksmc}</Td>
-              <Td>{score.wilksmc}</Td>
-              <Td>{score.makswl + score.maksmc}</Td>
-              <Td>{score.wilkswl + score.wilksmc}</Td>
-              <Td>{score.club}</Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </Stack>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible">
+      <Box
+        bgImage={`url(${backgroundImage})`}
+        backgroundSize="cover"
+        backgroundPosition="center"
+        h="100%"
+        display="flex"
+        alignItems="center"
+        flexDirection="column"
+      >
+        {competitionId !== 0 && (
+          <Text fontSize="4xl" fontWeight="bold" mb="4">
+            {competitionInfo.name} | {categoryInfo.name}
+          </Text>
+        )}
+        {competitionId !== 0 && (
+          <Text fontSize="xl" fontWeight="bold" mb="4">
+            {competitionInfo.date}, {competitionInfo.place}
+          </Text>
+        )}
+        <Box overflowX="auto">
+          <Table variant="striped" colorScheme="whiteAlpha" minWidth="100%">
+            <Thead>
+              <Tr>
+                <Th>Miejsce</Th>
+                <Th>Zawodnik</Th>
+                <Th>Płeć</Th>
+                <Th>Waga [Kg]</Th>
+                <Th>Klub</Th>
+                {competitionId === 0 && <Th>Zawody</Th>}
+                {categoryId === 0 && <Th>Kategoria</Th>}
+                <Th>Maks WL [Kg]</Th>
+                <Th>Wilks WL</Th>
+                <Th>Maks MC [Kg]</Th>
+                <Th>Wilks MC</Th>
+                <Th>Total [Kg]</Th>
+                <Th>Wilks</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {scores.map((score, index) => (
+                <Tr key={index}>
+                  <Td>{index + 1}</Td>
+                  <Td>
+                    <TableButton>
+                      {lifters[score.lifter_id]?.first_name} {lifters[score.lifter_id]?.last_name}
+                    </TableButton>
+                  </Td>
+                  <Td>{lifters[score.lifter_id]?.gender}</Td>
+                  <Td>{score.weight.toFixed(2)}</Td>
+                  <Td>{score.club}</Td>
+                  {competitionId === 0 && (
+                    <Td>
+                      <TableButton>{competitions[score.competition_id]?.name}</TableButton>
+                    </Td>
+                  )}
+                  {categoryId === 0 && (
+                    <Td>
+                      <TableButton>{categories[score.category_id]?.name}</TableButton>
+                    </Td>
+                  )}
+                  <Td>{score.makswl.toFixed(2)}</Td>
+                  <Td>{score.wilkswl.toFixed(4)}</Td>
+                  <Td>{score.maksmc.toFixed(2)}</Td>
+                  <Td>{score.wilksmc.toFixed(4)}</Td>
+                  <Td>{(score.makswl + score.maksmc).toFixed(2)}</Td>
+                  <Td>{(score.wilkswl + score.wilksmc).toFixed(4)}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
+      </Box>
+    </motion.div>
   )
 }
 

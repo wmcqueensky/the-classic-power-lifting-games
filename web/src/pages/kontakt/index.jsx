@@ -32,7 +32,6 @@ const ContactPage = () => {
           pl="4"
           pr="4"
           pb="4"
-          mt="20"
         >
           <Heading
             a="h1"

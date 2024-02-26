@@ -106,8 +106,12 @@ const CategoriesPage = () => {
           textAlign="center"
         >
           Wybierz kategorie:
-        </Heading>
-        <ChoiceButton onClick={() => navigate(`/ranking`)}>Wszystkie</ChoiceButton>//nawigacja do poprawy
+        </Heading>{' '}
+        <ChoiceButton
+          onClick={() => navigate(competitionId === 0 ? `/ranking` : `/ranking?zawody=${competitionId}`)}
+        >
+          Wszystkie
+        </ChoiceButton>
         {categories.map((category) => (
           <ChoiceButton key={category.name} onClick={() => fetchScoresForCompetitionCategory(category.name)}>
             {category.name}
