@@ -154,11 +154,12 @@ const RankingPage = () => {
   return (
     <motion.div variants={containerVariants} initial="hidden" animate="visible">
       <Box bgImage={`url(${backgroundImage})`} backgroundSize="cover" backgroundPosition="center" h="100%">
-        {competitionId !== 0 && (
+        {(competitionId !== 0 || categoryId !== 0) && (
           <Text fontSize="4xl" fontWeight="bold" mb="4">
             {competitionInfo.name} | {categoryInfo.name}
           </Text>
         )}
+
         {competitionId !== 0 && (
           <Text fontSize="xl" fontWeight="bold" mb="4">
             {competitionInfo.date}, {competitionInfo.place}
