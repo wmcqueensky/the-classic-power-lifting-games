@@ -1,7 +1,6 @@
-import {Box, Button, Heading} from '@chakra-ui/react'
+import {Box, Heading} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
-import {useLocation} from 'react-router-dom'
 import supabase from '../../config/supabaseClient.js'
 import {motion} from 'framer-motion'
 import backgroundImage from '../../common/assets/statisticsBackground.png'
@@ -14,7 +13,6 @@ const containerVariants = {
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([])
-  const location = useLocation()
   const competitionIdParam = new URLSearchParams(location.search).get('zawody')
   const competitionId = competitionIdParam !== null ? competitionIdParam : 0
 

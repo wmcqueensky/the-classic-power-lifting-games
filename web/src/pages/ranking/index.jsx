@@ -1,6 +1,6 @@
-import {Stack, Text, Table, Thead, Tbody, Tr, Th, Td, Button, Box} from '@chakra-ui/react'
+import {Text, Table, Thead, Tbody, Tr, Th, Td, Box} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
-import {useLocation} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import supabase from '../../config/supabaseClient.js'
 import TableButton from '../../common/components/tableButton.jsx'
 import backgroundImage from '../../common/assets/statisticsBackground.png'
@@ -18,17 +18,64 @@ const RankingPage = () => {
   const [lifters, setLifters] = useState({})
   const [competitions, setCompetitions] = useState({})
   const [categories, setCategories] = useState({})
-  const location = useLocation()
+  const navigate = useNavigate()
 
   const competitionIdParam = new URLSearchParams(location.search).get('zawody')
   const competitionId = competitionIdParam !== null ? competitionIdParam : 0
   const categoryIdParam = new URLSearchParams(location.search).get('kategoria')
   const categoryId = categoryIdParam !== null ? categoryIdParam : 0
 
+  const fetchScoresForCategory = async (categoryId) => {
+    try {
+      const {data, error} = await supabase
+        .from('categories')
+        .select('*')
+        .eq('category_id', categoryId)
+        .single()
+
+      if (error) {
+        throw error
+      }
+      navigate(`/ranking?kategoria=${data.category_id}`)
+    } catch (error) {
+      console.error('Error fetching scores for category:', error.message)
+    }
+  }
+
+  const fetchScoresForCompetition = async (competitionId) => {
+    try {
+      const {data, error} = await supabase
+        .from('competitions')
+        .select('*')
+        .eq('competition_id', competitionId)
+        .single()
+
+      if (error) {
+        throw error
+      }
+      navigate(`/ranking?zawody=${data.competition_id}`)
+    } catch (error) {
+      console.error('Error fetching scores for competition:', error.message)
+    }
+  }
+
+  const fetchScoresForLifter = async (lifterId) => {
+    try {
+      const {data, error} = await supabase.from('lifters').select('*').eq('lifter_id', lifterId).single()
+
+      if (error) {
+        throw error
+      }
+      navigate(`/zawodnik?lifter=${data.lifter_id}`)
+    } catch (error) {
+      console.error('Error fetching scores for lifter:', error.message)
+    }
+  }
+
   useEffect(() => {
     const fetchCompetitionInfo = async () => {
       try {
-        const {data: data, error} = await supabase
+        const {data, error} = await supabase
           .from('competitions')
           .select('name, date, place')
           .eq('competition_id', competitionId)
@@ -189,7 +236,7 @@ const RankingPage = () => {
                 <Tr key={index}>
                   <Td>{index + 1}</Td>
                   <Td>
-                    <TableButton>
+                    <TableButton key={score.lifter_id} onClick={() => fetchScoresForLifter(score.lifter_id)}>
                       {lifters[score.lifter_id]?.first_name} {lifters[score.lifter_id]?.last_name}
                     </TableButton>
                   </Td>
@@ -198,12 +245,16 @@ const RankingPage = () => {
                   <Td>{score.club}</Td>
                   {competitionId === 0 && (
                     <Td>
-                      <TableButton>{competitions[score.competition_id]?.name}</TableButton>
+                      <TableButton onClick={() => fetchScoresForCompetition(score.competition_id)}>
+                        {competitions[score.competition_id]?.name}
+                      </TableButton>
                     </Td>
                   )}
                   {categoryId === 0 && (
                     <Td>
-                      <TableButton>{categories[score.category_id]?.name}</TableButton>
+                      <TableButton onClick={() => fetchScoresForCategory(score.category_id)}>
+                        {categories[score.category_id]?.name}
+                      </TableButton>
                     </Td>
                   )}
                   <Td>{score.makswl.toFixed(2)}</Td>
