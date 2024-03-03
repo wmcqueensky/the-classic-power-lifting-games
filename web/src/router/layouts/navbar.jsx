@@ -10,12 +10,13 @@ const NavLink = ({to, active, children, onClose}) => (
     <Text
       fontSize={{base: 'lg', md: 'xl', lg: '2xl'}}
       mt={{base: '8', lg: '6'}}
-      ml={{base: '3', md: '5'}}
+      ml={{base: '2', md: '3'}}
+      mr={{base: '2', md: '3'}}
       _hover={{color: 'white'}}
     >
       {children}
-      {active && <Divider borderBottom="2px" borderColor="red" />}
     </Text>
+    {active && <Divider borderBottom="2px" borderColor="red" />}
   </Link>
 )
 

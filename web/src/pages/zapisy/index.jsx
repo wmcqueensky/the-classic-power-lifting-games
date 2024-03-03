@@ -51,8 +51,8 @@ const RegistrationPage = () => {
           Przyszłe zawody:
         </Heading>
         {registration.map((competition) => (
-          <Link href={competition.link} isExternal>
-            <ChoiceButton key={competition.name}>{competition.name}</ChoiceButton>
+          <Link key={competition.name} href={competition.link} isExternal>
+            <ChoiceButton>{competition.name}</ChoiceButton>
           </Link>
         ))}
       </Box>

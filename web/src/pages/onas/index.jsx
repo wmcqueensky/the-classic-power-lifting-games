@@ -238,7 +238,7 @@ const AboutUsPage = () => {
                 <Heading as="h2" size={{base: 'md', lg: 'lg'}} mt="4">
                   {staff.name}
                 </Heading>
-                <Heading as="h3" s size={{base: 'md', lg: 'lg'}} color="red">
+                <Heading as="h3" size={{base: 'md', lg: 'lg'}} color="red">
                   {staff.role}
                 </Heading>
               </Box>
