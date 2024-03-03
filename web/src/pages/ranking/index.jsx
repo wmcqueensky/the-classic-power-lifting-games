@@ -1,6 +1,6 @@
 import {Text, Table, Thead, Tbody, Tr, Th, Td, Box} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import supabase from '../../config/supabaseClient.js'
 import TableButton from '../../common/components/tableButton.jsx'
 import backgroundImage from '../../common/assets/statisticsBackground.png'
@@ -18,6 +18,7 @@ const RankingPage = () => {
   const [lifters, setLifters] = useState({})
   const [competitions, setCompetitions] = useState({})
   const [categories, setCategories] = useState({})
+  // const {zawody: competitionIdParam, kategoria: categoryIdParam} = useParams()
   const navigate = useNavigate()
 
   const competitionIdParam = new URLSearchParams(location.search).get('zawody')

@@ -34,6 +34,9 @@ const Drawer = ({isOpen, onClose}) => (
     zIndex="998"
   >
     <Flex direction="column" p="3">
+      <NavLink to="/" active={false} onClose={onClose}>
+        Strona Główna
+      </NavLink>
       <NavLink to="/statystyki" active={false} onClose={onClose}>
         Statystyki
       </NavLink>
@@ -95,6 +98,9 @@ const Navbar = () => {
           <Image src={logo} alt="Logo" maxW="120px" maxH="88px" ml="3" />
         </Link>
         <Flex display={{base: 'none', md: 'flex'}} align={'right'}>
+          <NavLink to="/" active={isLinkActive('/')} onClose={onClose}>
+            Strona Główna
+          </NavLink>
           <NavLink to="/statystyki" active={isLinkActive('/statystyki')} onClose={onClose}>
             Statystyki
           </NavLink>
@@ -114,9 +120,11 @@ const Navbar = () => {
           aria-label="Menu"
           icon={<FiMenu />}
           color="white"
+          colorScheme="black"
           onClick={isOpen ? onClose : onOpen}
           variant="outline"
           mt="6"
+          outline="none"
         />
         <Drawer isOpen={isOpen} onClose={onClose} />
       </Flex>
