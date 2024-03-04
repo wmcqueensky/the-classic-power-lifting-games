@@ -7,15 +7,8 @@ import {FaDumbbell} from 'react-icons/fa'
 import {useState, useEffect, useRef} from 'react'
 import {motion} from 'framer-motion'
 
-const CustomHeading = ({children}) => (
-  <Heading as="h1" size="2xl" display="flex">
-    <Icon as={FaDumbbell} mr="2" />
-    {children}
-  </Heading>
-)
-
 const CustomBox = ({children}) => (
-  <Box p="8" h="60vh" w="100vw" alignItems="center" justifyContent="center">
+  <Box p={{base: '4', md: '8'}} w="100vw" alignItems="center" justifyContent="center">
     {children}
   </Box>
 )
@@ -86,6 +79,7 @@ const AboutUsPage = () => {
     }
 
     setIsVisible1(true)
+    window.scrollTo(0, 0)
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -108,7 +102,7 @@ const AboutUsPage = () => {
   const sponsors = [{name: 'ROKK', link: 'https://rokk-sport.pl/', imageUrl: rokkPhoto}]
 
   return (
-    <Box>
+    <>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -130,7 +124,7 @@ const AboutUsPage = () => {
         animate={isVisible2 ? 'visible' : 'hidden'}
         ref={boxRef2}
       >
-        <Box p="8" h="60vh" w="100vw" display="flex" alignItems="center" justifyContent="center">
+        <Box p="8" w="100vw" display="flex" alignItems="center" justifyContent="center">
           <Heading as="h1" size={{base: '2xl', lg: '4xl'}}>
             Kim jesteśmy<span style={{color: 'red'}}>?</span>
           </Heading>
@@ -203,7 +197,7 @@ const AboutUsPage = () => {
         </Stack>
       </motion.div>
 
-      <Box p="8" h="60vh" w="100vw" alignItems="center" justifyContent="left" mt="500">
+      <Box p="8" w="100vw" alignItems="center" justifyContent="left" mt="500">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -247,7 +241,7 @@ const AboutUsPage = () => {
         </motion.div>
       </Box>
 
-      <Box p="8" h="60vh" w="100vw" alignItems="center" justifyContent="left">
+      <Box p="8" w="100vw" alignItems="center" justifyContent="left">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -298,7 +292,7 @@ const AboutUsPage = () => {
           </Flex>
         </motion.div>
       </Box>
-    </Box>
+    </>
   )
 }
 

@@ -87,7 +87,7 @@ const HomePage = () => {
           variants={containerVariants}
           initial="hidden"
           animate={isVisible2 ? 'visible' : 'hidden'}
-          transition={{delay: 0.5}} // Add a delay for the second box
+          transition={{delay: 0.5}}
           ref={boxRef2}
         >
           <VStack textAlign="center">
