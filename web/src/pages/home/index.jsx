@@ -52,9 +52,8 @@ const HomePage = () => {
               fontSize={{base: '3rem', sm: '4,5rem', md: '5rem', lg: '5.5rem', xl: '6rem', '2xl': '6.5rem'}}
               mt="10px"
               mr={{base: '0', sm: '50px', md: '100px', lg: '200px', xl: '310px', '2xl': '350px'}}
-              bgColor="rgba(0, 0, 0, 0.2)"
-              backdropFilter="blur(0.1px)"
-              borderRadius="10"
+              bgColor="rgba(0, 0, 0, 0.5)"
+              borderRadius="20"
               overflow="hidden"
             >
               <span style={{fontWeight: 'normal'}}>THE CLASSIC</span> <br /> POWERLIFTING <br /> GAMES
@@ -68,8 +67,7 @@ const HomePage = () => {
               mt="8"
               p="8"
               fontSize={{base: '2rem', sm: '2.5rem', lg: '3rem', '2xl': '3.5rem'}}
-              bgColor="rgba(0, 0, 0, 0.2)"
-              backdropFilter="blur(10px)"
+              bgColor="rgba(0, 0, 0, 0.5)"
               _hover={{
                 bg: 'rgba(255, 0, 0, 0.4)',
                 color: 'white',
@@ -102,7 +100,7 @@ const HomePage = () => {
               fontSize={{base: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}}
               mt="10px"
             >
-              Live Light <span style={{color: 'red'}}>Lift Heavy</span>
+              <span style={{color: 'red'}}>THE CLASSIC</span> POWERLIFTING GAMES
             </Heading>
           </VStack>
         </motion.div>
@@ -111,7 +109,7 @@ const HomePage = () => {
         variants={containerVariants}
         initial="hidden"
         animate={isVisible3 ? 'visible' : 'hidden'}
-        transition={{delay: 1}} // Add a longer delay for the third box
+        transition={{delay: 1}}
         ref={boxRef3}
       >
         <Box
@@ -131,8 +129,7 @@ const HomePage = () => {
               mt="710px"
               p="8"
               fontSize={{base: '1.5rem', sm: '2rem', lg: '2.5rem', '2xl': '3rem'}}
-              bgColor="rgba(0, 0, 0, 0.2)"
-              backdropFilter="blur(40px)"
+              bgColor="rgba(0, 0, 0, 0.6)"
               _hover={{
                 bg: 'rgba(255, 0, 0, 0.4)',
                 color: 'white',

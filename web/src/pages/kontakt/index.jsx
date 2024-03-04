@@ -23,16 +23,7 @@ const ContactPage = () => {
       flexDirection="column"
     >
       <motion.div variants={containerVariants} initial="hidden" animate="visible">
-        <Box
-          bgColor="rgba(0, 0, 0, 0.2)"
-          backdropFilter="blur(10px)"
-          borderRadius="10"
-          overflow="hidden"
-          pt="1"
-          pl="4"
-          pr="4"
-          pb="4"
-        >
+        <Box bgColor="rgba(0, 0, 0, 0.5)" borderRadius="10" overflow="hidden" pt="1" pl="4" pr="4" pb="4">
           <Heading
             a="h1"
             fontSize={{base: '2rem', sm: '3rem', md: '4rem', lg: '5.5rem', xl: '6rem', '2xl': '6.5rem'}}
@@ -49,22 +40,22 @@ const ContactPage = () => {
               <IconButton
                 aria-label="Instagram"
                 icon={<FaInstagram color={iconColor} />}
-                mr={[2, 4]} // Adjust the margin for different screen sizes
+                mr={[2, 4]}
                 variant="ghost"
                 fontSize={{base: '3xl', md: '4xl', lg: '5xl'}}
-                pt={[4, 6]} // Adjust the padding top for different screen sizes
-                pb={[4, 6]} // Adjust the padding bottom for different screen sizes
+                pt={[4, 6]}
+                pb={[4, 6]}
               />
             </Link>
             <Link href="https://www.facebook.com/TheClassicPowerliftingGames/" isExternal>
               <IconButton
                 aria-label="Facebook"
                 icon={<FaFacebook color={iconColor} />}
-                mr={[2, 4]} // Adjust the margin for different screen sizes
+                mr={[2, 4]}
                 variant="ghost"
                 fontSize={{base: '3xl', md: '4xl', lg: '5xl'}}
-                pt={[4, 6]} // Adjust the padding top for different screen sizes
-                pb={[4, 6]} // Adjust the padding bottom for different screen sizes
+                pt={[4, 6]}
+                pb={[4, 6]}
               />
             </Link>
             <Link
@@ -77,8 +68,8 @@ const ContactPage = () => {
                 mr={[2, 4]}
                 variant="ghost"
                 fontSize={{base: '3xl', md: '4xl', lg: '5xl'}}
-                pt={[4, 6]} // Adjust the padding top for different screen sizes
-                pb={[4, 6]} // Adjust the padding bottom for different screen sizes
+                pt={[4, 6]}
+                pb={[4, 6]}
               />
             </Link>
             <Link href="mailto:TheClassicPowerliftingGames@gmail.com">
@@ -87,10 +78,10 @@ const ContactPage = () => {
                 icon={<FaEnvelope color={iconColor} />}
                 variant="ghost"
                 fontSize={{base: '3xl', md: '4xl', lg: '5xl'}}
-                pt={[4, 6]} // Adjust the padding top for different screen sizes
-                pb={[4, 6]} // Adjust the padding bottom for different screen sizes
-                pl={[1, 2]} // Adjust the padding left for different screen sizes
-                pr={[1, 2]} // Adjust the padding right for different screen sizes
+                pt={[4, 6]}
+                pb={[4, 6]}
+                pl={[1, 2]}
+                pr={[1, 2]}
               />
             </Link>
           </Flex>
