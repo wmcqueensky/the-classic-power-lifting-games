@@ -55,6 +55,7 @@ const HomePage = () => {
               bgColor="rgba(0, 0, 0, 0.5)"
               borderRadius="20"
               overflow="hidden"
+              p="4"
             >
               <span style={{fontWeight: 'normal'}}>THE CLASSIC</span> <br /> POWERLIFTING <br /> GAMES
             </Heading>
@@ -120,27 +121,28 @@ const HomePage = () => {
           backgroundSize="cover"
           ref={boxRef3}
         >
-          <VStack textAlign="left" align-items="flex-end" justify-content="flex-end">
-            <Button
-              size={{base: 'xl', lg: 'xxl'}}
-              colorScheme="black"
-              variant="outline"
-              borderRadius="3xl"
-              mt="710px"
-              p="8"
-              fontSize={{base: '1.5rem', sm: '2rem', lg: '2.5rem', '2xl': '3rem'}}
-              bgColor="rgba(0, 0, 0, 0.6)"
-              _hover={{
-                bg: 'rgba(255, 0, 0, 0.4)',
-                color: 'white',
-              }}
-              onClick={() => {
-                navigate('/onas')
-              }}
-            >
-              Dowiedz się o nas więcej
-            </Button>
-          </VStack>
+          <Button
+            size="xxl"
+            colorScheme="black"
+            variant="outline"
+            borderRadius="3xl"
+            position="absolute"
+            bottom="5%"
+            left="50%"
+            transform="translateX(-50%)"
+            p="8"
+            fontSize={{base: '1.5rem', sm: '2rem', lg: '2.5rem', '2xl': '3rem'}}
+            bgColor="rgba(0, 0, 0, 0.6)"
+            _hover={{
+              bg: 'rgba(255, 0, 0, 0.4)',
+              color: 'white',
+            }}
+            onClick={() => {
+              navigate('/onas')
+            }}
+          >
+            Dowiedz się o nas więcej
+          </Button>
         </Box>
       </motion.div>
     </>
