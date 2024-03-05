@@ -1,6 +1,6 @@
 import {Box, Heading} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import supabase from '../../config/supabaseClient.js'
 import {motion} from 'framer-motion'
 import backgroundImage from '../../common/assets/statisticsBackground.png'
@@ -13,9 +13,7 @@ const containerVariants = {
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([])
-  const competitionIdParam = new URLSearchParams(location.search).get('zawody')
-  const competitionId = competitionIdParam !== null ? competitionIdParam : 0
-
+  const {zawody: competitionId} = useParams()
   const navigate = useNavigate()
 
   const fetchScoresForCompetitionCategory = async (categoryName) => {
@@ -29,13 +27,10 @@ const CategoriesPage = () => {
       if (error) {
         throw error
       }
-
-      if (competitionId != 0) {
-        navigate(`/ranking?zawody=${competitionId}&&kategoria=${data.category_id}`)
-      }
-
-      if (competitionId === 0) {
-        navigate(`/ranking?kategoria=${data.category_id}`)
+      if (competitionId) {
+        navigate(`/ranking/zawody/${competitionId}/kategoria/${data.category_id}`)
+      } else {
+        navigate(`/ranking/kategoria/${data.category_id}`)
       }
     } catch (error) {
       console.error('Error fetching scores for competition category:', error.message)
@@ -45,18 +40,8 @@ const CategoriesPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        let categoriesData
-        if (competitionId === 0) {
-          const {data: allCategoriesData, error: categoriesError} = await supabase
-            .from('categories')
-            .select('name')
-          if (categoriesError) {
-            throw categoriesError
-          }
-          categoriesData = allCategoriesData
-        }
-
-        if (competitionId !== 0) {
+        if (competitionId) {
+          let categoriesData
           const {data: scoreData, error: scoresError} = await supabase
             .from('scores')
             .select('category_id')
@@ -75,8 +60,16 @@ const CategoriesPage = () => {
             throw categoriesError
           }
           categoriesData = fetchedCategoriesData
+          setCategories(categoriesData)
+        } else {
+          const {data: allCategoriesData, error: categoriesError} = await supabase
+            .from('categories')
+            .select('name')
+          if (categoriesError) {
+            throw categoriesError
+          }
+          setCategories(allCategoriesData)
         }
-        setCategories(categoriesData)
       } catch (error) {
         console.error('Error fetching categories:', error.message)
       }
@@ -101,7 +94,7 @@ const CategoriesPage = () => {
           Wybierz kategorie:
         </Heading>{' '}
         <ChoiceButton
-          onClick={() => navigate(competitionId === 0 ? `/ranking` : `/ranking?zawody=${competitionId}`)}
+          onClick={() => navigate(competitionId ? `/ranking/zawody/${competitionId}` : `/ranking`)}
         >
           Wszystkie
         </ChoiceButton>

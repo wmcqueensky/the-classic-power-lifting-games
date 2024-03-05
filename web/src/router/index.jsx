@@ -16,8 +16,12 @@ const Router = () => (
       <Route path="zapisy" element={<RegistrationPage />} />
       <Route path="statystyki" element={<StatisticsPage />} />
       <Route path="kategoria" element={<CategoriesPage />} />
+      <Route path="kategoria/zawody/:zawody" element={<CategoriesPage />} />
       <Route path="ranking" element={<RankingPage />} />
-      <Route path="zawodnik" element={<LifterPage />} />
+      <Route path="ranking/zawody/:zawody" element={<RankingPage />} />
+      <Route path="ranking/kategoria/:kategoria" element={<RankingPage />} />
+      <Route path="ranking/zawody/:zawody/kategoria/:kategoria" element={<RankingPage />} />
+      <Route path="zawodnik/:zawodnik" element={<LifterPage />} />
       <Route path="onas" element={<AboutUsPage />} />
       <Route path="kontakt" element={<ContactPage />} />
     </Route>

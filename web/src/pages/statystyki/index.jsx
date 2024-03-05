@@ -27,7 +27,7 @@ const StatisticsPage = () => {
         throw error
       }
 
-      navigate(`/kategoria?zawody=${competitionData.competition_id}`)
+      navigate(`/kategoria/zawody/${competitionData.competition_id}`)
     } catch (error) {
       console.error('Error fetching scores for competition:', error.message)
     }

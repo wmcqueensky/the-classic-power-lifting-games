@@ -4,7 +4,7 @@ import supabase from '../../config/supabaseClient.js'
 import TableButton from '../../common/components/tableButton.jsx'
 import backgroundImage from '../../common/assets/statisticsBackground.png'
 import {motion} from 'framer-motion'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 
 const containerVariants = {
   hidden: {opacity: 0, x: -20},
@@ -16,7 +16,8 @@ const LifterPage = () => {
   const [scores, setScores] = useState([])
   const [competitions, setCompetitions] = useState([])
   const [categories, setCategories] = useState([])
-  const lifterId = new URLSearchParams(location.search).get('lifter')
+  const {zawodnik: lifterId} = useParams()
+
   const navigate = useNavigate()
 
   const fetchScoresForCategory = async (categoryId) => {
@@ -30,7 +31,7 @@ const LifterPage = () => {
       if (error) {
         throw error
       }
-      navigate(`/ranking?kategoria=${data.category_id}`)
+      navigate(`/ranking/kategoria/${data.category_id}`)
     } catch (error) {
       console.error('Error fetching scores for category:', error.message)
     }
@@ -47,7 +48,7 @@ const LifterPage = () => {
       if (error) {
         throw error
       }
-      navigate(`/ranking?zawody=${data.competition_id}`)
+      navigate(`/ranking/zawody/${data.competition_id}`)
     } catch (error) {
       console.error('Error fetching scores for competition:', error.message)
     }
@@ -130,7 +131,7 @@ const LifterPage = () => {
 
         <Box overflowX="auto" mb="8">
           {scores.length > 0 && (
-            <Table variant="striped" colorScheme="whiteAlpha" minWidth="100%">
+            <Table variant="striped" colorScheme="blackAlpha" minWidth="100%">
               <Thead>
                 <Tr>
                   <Th>Maks WL [Kg]</Th>
@@ -156,7 +157,7 @@ const LifterPage = () => {
         </Text>
 
         <Box overflowX="auto">
-          <Table variant="striped" colorScheme="whiteAlpha" minWidth="100%">
+          <Table variant="striped" colorScheme="blackAlpha" minWidth="100%">
             <Thead>
               <Tr>
                 <Th>Miejsce</Th>

@@ -18,13 +18,8 @@ const RankingPage = () => {
   const [lifters, setLifters] = useState({})
   const [competitions, setCompetitions] = useState({})
   const [categories, setCategories] = useState({})
-  // const {zawody: competitionIdParam, kategoria: categoryIdParam} = useParams()
+  const {zawody: competitionId, kategoria: categoryId} = useParams()
   const navigate = useNavigate()
-
-  const competitionIdParam = new URLSearchParams(location.search).get('zawody')
-  const competitionId = competitionIdParam !== null ? competitionIdParam : 0
-  const categoryIdParam = new URLSearchParams(location.search).get('kategoria')
-  const categoryId = categoryIdParam !== null ? categoryIdParam : 0
 
   const fetchScoresForCategory = async (categoryId) => {
     try {
@@ -37,7 +32,7 @@ const RankingPage = () => {
       if (error) {
         throw error
       }
-      navigate(`/ranking?kategoria=${data.category_id}`)
+      navigate(`/ranking/kategoria/${data.category_id}`)
     } catch (error) {
       console.error('Error fetching scores for category:', error.message)
     }
@@ -54,7 +49,7 @@ const RankingPage = () => {
       if (error) {
         throw error
       }
-      navigate(`/ranking?zawody=${data.competition_id}`)
+      navigate(`/ranking/zawody/${data.competition_id}`)
     } catch (error) {
       console.error('Error fetching scores for competition:', error.message)
     }
@@ -67,7 +62,7 @@ const RankingPage = () => {
       if (error) {
         throw error
       }
-      navigate(`/zawodnik?lifter=${data.lifter_id}`)
+      navigate(`/zawodnik/${data.lifter_id}`)
     } catch (error) {
       console.error('Error fetching scores for lifter:', error.message)
     }
@@ -114,11 +109,11 @@ const RankingPage = () => {
       try {
         let query = supabase.from('scores').select('*')
 
-        if (competitionId !== 0 && categoryId !== 0) {
+        if (competitionId && categoryId) {
           query = query.eq('competition_id', competitionId).eq('category_id', categoryId)
-        } else if (competitionId !== 0 && categoryId === 0) {
+        } else if (competitionId && !categoryId) {
           query = query.eq('competition_id', competitionId)
-        } else if (categoryId !== 0 && competitionId === 0) {
+        } else if (categoryId && !competitionId) {
           query = query.eq('category_id', categoryId)
         }
 
@@ -149,7 +144,7 @@ const RankingPage = () => {
         })
         setLifters(lifterObject)
 
-        if (competitionId === 0) {
+        if (!competitionId) {
           const competitionIds = scoresData.map((score) => score.competition_id)
 
           const {data, error} = await supabase
@@ -168,7 +163,7 @@ const RankingPage = () => {
           setCompetitions(competitionObject)
         }
 
-        if (categoryId === 0) {
+        if (!categoryId) {
           const categoryIds = scoresData.map((score) => score.category_id)
 
           const {data, error} = await supabase.from('categories').select('*').in('category_id', categoryIds)
@@ -188,33 +183,45 @@ const RankingPage = () => {
       }
     }
 
-    if (competitionId !== 0) {
+    if (competitionId) {
       fetchCompetitionInfo()
     }
 
-    if (categoryId !== 0) {
+    if (categoryId) {
       fetchCategoryInfo()
     }
 
     fetchScoresForCompetition()
-  }, [])
+  }, [competitionId, categoryId])
 
   return (
     <motion.div variants={containerVariants} initial="hidden" animate="visible">
       <Box bgImage={`url(${backgroundImage})`} backgroundSize="cover" backgroundPosition="center" h="100%">
-        {(competitionId !== 0 || categoryId !== 0) && (
+        {competitionId && categoryId && (
           <Text fontSize="4xl" fontWeight="bold" mb="4">
             {competitionInfo.name} | {categoryInfo.name}
           </Text>
         )}
 
-        {competitionId !== 0 && (
+        {competitionId && !categoryId && (
+          <Text fontSize="4xl" fontWeight="bold" mb="4">
+            {competitionInfo.name} |
+          </Text>
+        )}
+
+        {categoryId && !competitionId && (
+          <Text fontSize="4xl" fontWeight="bold" mb="4">
+            | {categoryInfo.name}
+          </Text>
+        )}
+
+        {competitionId && (
           <Text fontSize="xl" fontWeight="bold" mb="4">
             {competitionInfo.date}, {competitionInfo.place}
           </Text>
         )}
         <Box overflowX="auto">
-          <Table variant="striped" colorScheme="whiteAlpha" minWidth="100%">
+          <Table variant="striped" colorScheme="blackAlpha" minWidth="100%">
             <Thead>
               <Tr>
                 <Th>Miejsce</Th>
@@ -222,8 +229,8 @@ const RankingPage = () => {
                 <Th>Płeć</Th>
                 <Th>Waga [Kg]</Th>
                 <Th>Klub</Th>
-                {competitionId === 0 && <Th>Zawody</Th>}
-                {categoryId === 0 && <Th>Kategoria</Th>}
+                {!competitionId && <Th>Zawody</Th>}
+                {!categoryId && <Th>Kategoria</Th>}
                 <Th>Maks WL [Kg]</Th>
                 <Th>Wilks WL</Th>
                 <Th>Maks MC [Kg]</Th>
@@ -244,14 +251,14 @@ const RankingPage = () => {
                   <Td>{lifters[score.lifter_id]?.gender}</Td>
                   <Td>{score.weight.toFixed(2)}</Td>
                   <Td>{score.club}</Td>
-                  {competitionId === 0 && (
+                  {!competitionId && (
                     <Td>
                       <TableButton onClick={() => fetchScoresForCompetition(score.competition_id)}>
                         {competitions[score.competition_id]?.name}
                       </TableButton>
                     </Td>
                   )}
-                  {categoryId === 0 && (
+                  {!categoryId && (
                     <Td>
                       <TableButton onClick={() => fetchScoresForCategory(score.category_id)}>
                         {categories[score.category_id]?.name}
