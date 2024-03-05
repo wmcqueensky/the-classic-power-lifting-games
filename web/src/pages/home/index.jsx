@@ -5,6 +5,7 @@ import backgroundImage from './images/background.png'
 import championshipImage from './images/double-lift.png'
 import peopleImage from './images/onas-home.png'
 import {useNavigate} from 'react-router-dom'
+import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
 
 const HomePage = () => {
   const navigate = useNavigate()
@@ -33,16 +34,11 @@ const HomePage = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const containerVariants = {
-    hidden: {opacity: 0, x: -20},
-    visible: {opacity: 1, x: 0, transition: {delay: 0.5, type: 'spring', stiffness: 40}},
-  }
-
   return (
     <>
       <Box bgImage={`url(${backgroundImage})`} backgroundSize="cover" backgroundPosition="center" h="100vh">
         <motion.div
-          variants={containerVariants}
+          variants={smoothVariant}
           initial="hidden"
           animate={isVisible1 ? 'visible' : 'hidden'}
           ref={boxRef1}
@@ -84,7 +80,7 @@ const HomePage = () => {
       </Box>
       <Box backgroundPosition="center" h="100vh" color="white" ref={boxRef2}>
         <motion.div
-          variants={containerVariants}
+          variants={smoothVariant}
           initial="hidden"
           animate={isVisible2 ? 'visible' : 'hidden'}
           transition={{delay: 0.5}}
@@ -107,7 +103,7 @@ const HomePage = () => {
         </motion.div>
       </Box>
       <motion.div
-        variants={containerVariants}
+        variants={smoothVariant}
         initial="hidden"
         animate={isVisible3 ? 'visible' : 'hidden'}
         transition={{delay: 1}}

@@ -4,11 +4,7 @@ import supabase from '../../config/supabaseClient.js'
 import {motion} from 'framer-motion'
 import backgroundImage from '../../common/assets/statisticsBackground.png'
 import ChoiceButton from '../../common/components/choiceButton.jsx'
-
-const containerVariants = {
-  hidden: {opacity: 0, x: -20},
-  visible: {opacity: 1, x: 0, transition: {delay: 0.5, type: 'spring', stiffness: 40}},
-}
+import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
 
 const RegistrationPage = () => {
   const [registration, setRegistration] = useState([])
@@ -36,7 +32,7 @@ const RegistrationPage = () => {
   }, [])
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible">
+    <motion.div variants={smoothVariant} initial="hidden" animate="visible">
       <Box
         bgImage={`url(${backgroundImage})`}
         backgroundSize="cover"

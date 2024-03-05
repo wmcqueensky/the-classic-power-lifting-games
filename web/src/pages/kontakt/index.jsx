@@ -2,11 +2,7 @@ import {Box, Flex, Heading, Link, IconButton, useColorModeValue} from '@chakra-u
 import {FaInstagram, FaFacebook, FaEnvelope, FaTiktok} from 'react-icons/fa'
 import backgroundImage from './images/background.png'
 import {motion} from 'framer-motion'
-
-const containerVariants = {
-  hidden: {opacity: 0, x: -20},
-  visible: {opacity: 1, x: 0, transition: {delay: 0.5, type: 'spring', stiffness: 40}},
-}
+import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
 
 const ContactPage = () => {
   const iconColor = useColorModeValue('red', 'white')
@@ -22,7 +18,7 @@ const ContactPage = () => {
       justifyContent="center"
       flexDirection="column"
     >
-      <motion.div variants={containerVariants} initial="hidden" animate="visible">
+      <motion.div variants={smoothVariant} initial="hidden" animate="visible">
         <Box bgColor="rgba(0, 0, 0, 0.5)" borderRadius="10" overflow="hidden" pt="1" pl="4" pr="4" pb="4">
           <Heading
             a="h1"

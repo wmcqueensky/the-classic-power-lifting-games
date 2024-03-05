@@ -6,6 +6,7 @@ import rokkPhoto from './images/rokk.png'
 import {FaDumbbell} from 'react-icons/fa'
 import {useState, useEffect, useRef} from 'react'
 import {motion} from 'framer-motion'
+import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
 
 const CustomBox = ({children}) => (
   <Box p={{base: '4', md: '8'}} w="100vw" alignItems="center" justifyContent="center">
@@ -85,11 +86,6 @@ const AboutUsPage = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const containerVariants = {
-    hidden: {opacity: 0, x: -20},
-    visible: {opacity: 1, x: 0, transition: {delay: 0.9, type: 'spring', stiffness: 40}},
-  }
-
   const isLargeScreen = useBreakpointValue({base: false, lg: true})
 
   const staffMembers = [
@@ -104,7 +100,7 @@ const AboutUsPage = () => {
   return (
     <>
       <motion.div
-        variants={containerVariants}
+        variants={smoothVariant}
         initial="hidden"
         animate={isVisible1 ? 'visible' : 'hidden'}
         ref={boxRef1}
@@ -119,7 +115,7 @@ const AboutUsPage = () => {
       </motion.div>
 
       <motion.div
-        variants={containerVariants}
+        variants={smoothVariant}
         initial="hidden"
         animate={isVisible2 ? 'visible' : 'hidden'}
         ref={boxRef2}
@@ -132,7 +128,7 @@ const AboutUsPage = () => {
       </motion.div>
 
       <motion.div
-        variants={containerVariants}
+        variants={smoothVariant}
         initial="hidden"
         animate={isVisible3 ? 'visible' : 'hidden'}
         ref={boxRef3}
@@ -148,7 +144,7 @@ const AboutUsPage = () => {
       </motion.div>
 
       <motion.div
-        variants={containerVariants}
+        variants={smoothVariant}
         initial="hidden"
         animate={isVisible4 ? 'visible' : 'hidden'}
         ref={boxRef4}
@@ -163,7 +159,7 @@ const AboutUsPage = () => {
       </motion.div>
 
       <motion.div
-        variants={containerVariants}
+        variants={smoothVariant}
         initial="hidden"
         animate={isVisible5 ? 'visible' : 'hidden'}
         ref={boxRef5}
@@ -178,7 +174,7 @@ const AboutUsPage = () => {
       </motion.div>
 
       <motion.div
-        variants={containerVariants}
+        variants={smoothVariant}
         initial="hidden"
         animate={isVisible6 ? 'visible' : 'hidden'}
         ref={boxRef6}
@@ -199,7 +195,7 @@ const AboutUsPage = () => {
 
       <Box p="8" w="100vw" alignItems="center" justifyContent="left" mt="500">
         <motion.div
-          variants={containerVariants}
+          variants={smoothVariant}
           initial="hidden"
           animate={isVisible7 ? 'visible' : 'hidden'}
           ref={boxRef7}
@@ -209,7 +205,7 @@ const AboutUsPage = () => {
           </Heading>
         </motion.div>
         <motion.div
-          variants={containerVariants}
+          variants={smoothVariant}
           initial="hidden"
           animate={isVisible8 ? 'visible' : 'hidden'}
           ref={boxRef8}
@@ -243,7 +239,7 @@ const AboutUsPage = () => {
 
       <Box p="8" w="100vw" alignItems="center" justifyContent="left">
         <motion.div
-          variants={containerVariants}
+          variants={smoothVariant}
           initial="hidden"
           animate={isVisible9 ? 'visible' : 'hidden'}
           ref={boxRef9}
@@ -254,7 +250,7 @@ const AboutUsPage = () => {
         </motion.div>
 
         <motion.div
-          variants={containerVariants}
+          variants={smoothVariant}
           initial="hidden"
           animate={isVisible10 ? 'visible' : 'hidden'}
           ref={boxRef10}

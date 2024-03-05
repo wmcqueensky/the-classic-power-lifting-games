@@ -5,11 +5,7 @@ import TableButton from '../../common/components/tableButton.jsx'
 import backgroundImage from '../../common/assets/statisticsBackground.png'
 import {motion} from 'framer-motion'
 import {useNavigate, useParams} from 'react-router-dom'
-
-const containerVariants = {
-  hidden: {opacity: 0, x: -20},
-  visible: {opacity: 1, x: 0, transition: {delay: 0.5, type: 'spring', stiffness: 40}},
-}
+import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
 
 const LifterPage = () => {
   const [lifter, setLifterData] = useState(0)
@@ -119,7 +115,7 @@ const LifterPage = () => {
   }, [lifterId])
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible">
+    <motion.div variants={smoothVariant} initial="hidden" animate="visible">
       <Box bgImage={`url(${backgroundImage})`} backgroundSize="cover" backgroundPosition="center" h="100%">
         <Text fontSize="4xl" fontWeight="bold" mb="4">
           {lifter.first_name} {lifter.last_name} ({lifter.gender})
