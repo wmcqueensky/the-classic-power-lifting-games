@@ -1,11 +1,16 @@
 import {Text, Table, Thead, Tbody, Tr, Th, Td, Box} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
-import supabase from '../../config/supabaseClient.js'
-import TableButton from '../../common/components/tableButton.jsx'
-import backgroundImage from '../../common/assets/statisticsBackground.png'
 import {motion} from 'framer-motion'
-import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
+import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+
+import supabase from '../../config/supabase-client.js'
+import TableButton from '../../common/components/table-button.jsx'
+import backgroundImage from '../../common/assets/statistics-background.png'
+
+import fetchCategoryInfo from '../../common/hooks/categories/use-category-for-ranking-info.jsx'
+import fetchCompetitionInfo from '../../common/hooks/competitions/use-competition-for-ranking-info.jsx'
+import fetchScoresForCompetition from '../../common/hooks/scores/use-scores-for-ranking.jsx'
 
 const RankingPage = () => {
   const [competitionInfo, setCompetitionInfo] = useState({})
@@ -17,90 +22,7 @@ const RankingPage = () => {
   const {zawody: competitionId, kategoria: categoryId} = useParams()
   const navigate = useNavigate()
 
-  const fetchScoresForCategory = async (categoryId) => {
-    try {
-      const {data, error} = await supabase
-        .from('categories')
-        .select('*')
-        .eq('category_id', categoryId)
-        .single()
-
-      if (error) {
-        throw error
-      }
-      navigate(`/ranking/kategoria/${data.category_id}`)
-    } catch (error) {
-      console.error('Error fetching scores for category:', error.message)
-    }
-  }
-
-  const fetchScoresForCompetition = async (competitionId) => {
-    try {
-      const {data, error} = await supabase
-        .from('competitions')
-        .select('*')
-        .eq('competition_id', competitionId)
-        .single()
-
-      if (error) {
-        throw error
-      }
-      navigate(`/ranking/zawody/${data.competition_id}`)
-    } catch (error) {
-      console.error('Error fetching scores for competition:', error.message)
-    }
-  }
-
-  const fetchScoresForLifter = async (lifterId) => {
-    try {
-      const {data, error} = await supabase.from('lifters').select('*').eq('lifter_id', lifterId).single()
-
-      if (error) {
-        throw error
-      }
-      navigate(`/zawodnik/${data.lifter_id}`)
-    } catch (error) {
-      console.error('Error fetching scores for lifter:', error.message)
-    }
-  }
-
   useEffect(() => {
-    const fetchCompetitionInfo = async () => {
-      try {
-        const {data, error} = await supabase
-          .from('competitions')
-          .select('name, date, place')
-          .eq('competition_id', competitionId)
-          .single()
-
-        if (error) {
-          throw error
-        }
-
-        setCompetitionInfo(data)
-      } catch (error) {
-        console.error('Error fetching competition info:', error.message)
-      }
-    }
-
-    const fetchCategoryInfo = async () => {
-      try {
-        const {data: data, error} = await supabase
-          .from('categories')
-          .select('name')
-          .eq('category_id', categoryId)
-          .single()
-
-        if (error) {
-          throw error
-        }
-
-        setCategoryInfo(data)
-      } catch (error) {
-        console.error('Error fetching category info:', error.message)
-      }
-    }
-
     const fetchScoresForCompetition = async () => {
       try {
         let query = supabase.from('scores').select('*')
@@ -177,16 +99,25 @@ const RankingPage = () => {
       } catch (error) {
         console.error('Error fetching scores for competition:', error.message)
       }
+    } //do tego poprawiasz
+
+    const fetchCompetitionAndCategoryInfo = async () => {
+      if (competitionId) {
+        const data = await fetchCompetitionInfo(competitionId)
+        if (data) {
+          setCompetitionInfo(data)
+        }
+      }
+
+      if (categoryId) {
+        const data = await fetchCategoryInfo(categoryId)
+        if (data) {
+          setCategoryInfo(data)
+        }
+      }
     }
 
-    if (competitionId) {
-      fetchCompetitionInfo()
-    }
-
-    if (categoryId) {
-      fetchCategoryInfo()
-    }
-
+    fetchCompetitionAndCategoryInfo()
     fetchScoresForCompetition()
   }, [competitionId, categoryId])
 
@@ -240,7 +171,10 @@ const RankingPage = () => {
                 <Tr key={index}>
                   <Td>{index + 1}</Td>
                   <Td>
-                    <TableButton key={score.lifter_id} onClick={() => fetchScoresForLifter(score.lifter_id)}>
+                    <TableButton
+                      key={score.lifter_id}
+                      onClick={() => navigate(`/zawodnik/${score.lifter_id}`)}
+                    >
                       {lifters[score.lifter_id]?.first_name} {lifters[score.lifter_id]?.last_name}
                     </TableButton>
                   </Td>
@@ -249,14 +183,14 @@ const RankingPage = () => {
                   <Td>{score.club}</Td>
                   {!competitionId && (
                     <Td>
-                      <TableButton onClick={() => fetchScoresForCompetition(score.competition_id)}>
+                      <TableButton onClick={() => navigate(`/ranking/zawody/${score.competition_id}`)}>
                         {competitions[score.competition_id]?.name}
                       </TableButton>
                     </Td>
                   )}
                   {!categoryId && (
                     <Td>
-                      <TableButton onClick={() => fetchScoresForCategory(score.category_id)}>
+                      <TableButton onClick={() => navigate(`/ranking/kategoria/${score.category_id}`)}>
                         {categories[score.category_id]?.name}
                       </TableButton>
                     </Td>

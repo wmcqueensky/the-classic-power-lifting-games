@@ -1,71 +1,42 @@
 import {Box, Heading} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
-import supabase from '../../config/supabaseClient.js'
 import {motion} from 'framer-motion'
-import backgroundImage from '../../common/assets/statisticsBackground.png'
-import ChoiceButton from '../../common/components/choiceButton.jsx'
-import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
+import backgroundImage from '../../common/assets/statistics-background.png'
+import ChoiceButton from '../../common/components/choice-button.jsx'
+import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+import fetchAllCategories from '../../common/hooks/categories/use-categories.jsx'
+import fetchCategoriesForCompetition from '../../common/hooks/categories/use-category-for-competition.jsx'
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([])
   const {zawody: competitionId} = useParams()
   const navigate = useNavigate()
 
-  const fetchScoresForCompetitionCategory = async (categoryName) => {
-    try {
-      const {data, error} = await supabase
-        .from('categories')
-        .select('category_id')
-        .eq('name', categoryName)
-        .single()
+  const fetchScoresForCompetitionCategory = async (categoryId) => {
+    if (competitionId) {
+      navigate(`/ranking/zawody/${competitionId}/kategoria/${categoryId}`)
+    }
 
-      if (error) {
-        throw error
-      }
-      if (competitionId) {
-        navigate(`/ranking/zawody/${competitionId}/kategoria/${data.category_id}`)
-      } else {
-        navigate(`/ranking/kategoria/${data.category_id}`)
-      }
-    } catch (error) {
-      console.error('Error fetching scores for competition category:', error.message)
+    if (!competitionId) {
+      navigate(`/ranking/kategoria/${categoryId}`)
     }
   }
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        let categoriesData = []
+
         if (competitionId) {
-          let categoriesData
-          const {data: scoreData, error: scoresError} = await supabase
-            .from('scores')
-            .select('category_id')
-            .eq('competition_id', competitionId)
-
-          if (scoresError) {
-            throw scoresError
-          }
-
-          const categoryIds = [...new Set(scoreData.map((score) => score.category_id))]
-          const {data: fetchedCategoriesData, error: categoriesError} = await supabase
-            .from('categories')
-            .select('name')
-            .in('category_id', categoryIds)
-          if (categoriesError) {
-            throw categoriesError
-          }
-          categoriesData = fetchedCategoriesData
-          setCategories(categoriesData)
-        } else {
-          const {data: allCategoriesData, error: categoriesError} = await supabase
-            .from('categories')
-            .select('name')
-          if (categoriesError) {
-            throw categoriesError
-          }
-          setCategories(allCategoriesData)
+          categoriesData = await fetchCategoriesForCompetition(competitionId)
         }
+
+        if (!competitionId) {
+          categoriesData = await fetchAllCategories()
+        }
+
+        setCategories(categoriesData)
       } catch (error) {
         console.error('Error fetching categories:', error.message)
       }
@@ -95,7 +66,10 @@ const CategoriesPage = () => {
           Wszystkie
         </ChoiceButton>
         {categories.map((category) => (
-          <ChoiceButton key={category.name} onClick={() => fetchScoresForCompetitionCategory(category.name)}>
+          <ChoiceButton
+            key={category.name}
+            onClick={() => fetchScoresForCompetitionCategory(category.category_id)}
+          >
             {category.name}
           </ChoiceButton>
         ))}

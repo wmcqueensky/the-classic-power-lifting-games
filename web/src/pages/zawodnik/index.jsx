@@ -1,11 +1,14 @@
-import {Text, Table, Thead, Tbody, Tr, Th, Td, Button, Box} from '@chakra-ui/react'
+import {Text, Table, Thead, Tbody, Tr, Th, Td, Box} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
-import supabase from '../../config/supabaseClient.js'
-import TableButton from '../../common/components/tableButton.jsx'
-import backgroundImage from '../../common/assets/statisticsBackground.png'
 import {motion} from 'framer-motion'
 import {useNavigate, useParams} from 'react-router-dom'
-import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
+import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+
+import supabase from '../../config/supabase-client.js'
+import TableButton from '../../common/components/table-button.jsx'
+import backgroundImage from '../../common/assets/statistics-background.png'
+
+import fetchInfoForLifter from '../../common/hooks/lifters/use-lifter-for-info.jsx'
 
 const LifterPage = () => {
   const [lifter, setLifterData] = useState(0)
@@ -16,52 +19,12 @@ const LifterPage = () => {
 
   const navigate = useNavigate()
 
-  const fetchScoresForCategory = async (categoryId) => {
-    try {
-      const {data, error} = await supabase
-        .from('categories')
-        .select('*')
-        .eq('category_id', categoryId)
-        .single()
-
-      if (error) {
-        throw error
-      }
-      navigate(`/ranking/kategoria/${data.category_id}`)
-    } catch (error) {
-      console.error('Error fetching scores for category:', error.message)
-    }
-  }
-
-  const fetchScoresForCompetition = async (competitionId) => {
-    try {
-      const {data, error} = await supabase
-        .from('competitions')
-        .select('*')
-        .eq('competition_id', competitionId)
-        .single()
-
-      if (error) {
-        throw error
-      }
-      navigate(`/ranking/zawody/${data.competition_id}`)
-    } catch (error) {
-      console.error('Error fetching scores for competition:', error.message)
-    }
-  }
-
   useEffect(() => {
-    const fetchInfoForLifter = async () => {
-      try {
-        const {data, error} = await supabase.from('lifters').select('*').eq('lifter_id', lifterId).single()
+    const fetchLifterInfo = async () => {
+      const data = await fetchInfoForLifter(lifterId)
 
-        if (error) {
-          throw error
-        }
-
+      if (data) {
         setLifterData(data)
-      } catch (error) {
-        console.error('Error fetching data for lifter', error.message)
       }
     }
 
@@ -111,7 +74,7 @@ const LifterPage = () => {
     }
 
     fetchScoresForLifter()
-    fetchInfoForLifter()
+    fetchLifterInfo()
   }, [lifterId])
 
   return (
@@ -156,7 +119,7 @@ const LifterPage = () => {
           <Table variant="striped" colorScheme="blackAlpha" minWidth="100%">
             <Thead>
               <Tr>
-                <Th>Miejsce</Th>
+                <Th>Ranking</Th>
                 <Th>Waga [Kg]</Th>
                 <Th>Klub</Th>
                 <Th>Data</Th>
@@ -178,12 +141,12 @@ const LifterPage = () => {
                   <Td>{score.club}</Td>
                   <Td>{competitions[score.competition_id]?.date}</Td>
                   <Td>
-                    <TableButton onClick={() => fetchScoresForCompetition(score.competition_id)}>
+                    <TableButton onClick={() => navigate(`/ranking/zawody/${score.competition_id}`)}>
                       {competitions[score.competition_id]?.name}
                     </TableButton>
                   </Td>
                   <Td>
-                    <TableButton onClick={() => fetchScoresForCategory(score.category_id)}>
+                    <TableButton onClick={() => navigate(`/ranking/kategoria/${score.category_id}`)}>
                       {categories[score.category_id]?.name}
                     </TableButton>
                   </Td>

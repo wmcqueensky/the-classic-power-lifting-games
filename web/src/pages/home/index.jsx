@@ -5,7 +5,7 @@ import backgroundImage from './images/background.png'
 import championshipImage from './images/double-lift.png'
 import peopleImage from './images/onas-home.png'
 import {useNavigate} from 'react-router-dom'
-import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
+import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
 
 const HomePage = () => {
   const navigate = useNavigate()

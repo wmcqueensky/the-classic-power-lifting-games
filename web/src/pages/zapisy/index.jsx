@@ -1,34 +1,23 @@
 import {Box, Link, Heading} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
-import supabase from '../../config/supabaseClient.js'
 import {motion} from 'framer-motion'
-import backgroundImage from '../../common/assets/statisticsBackground.png'
-import ChoiceButton from '../../common/components/choiceButton.jsx'
-import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
+import backgroundImage from '../../common/assets/statistics-background.png'
+import ChoiceButton from '../../common/components/choice-button.jsx'
+import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+import fetchCompetitionsForRegistration from '../../common/hooks/registration/use-registration.jsx'
 
 const RegistrationPage = () => {
   const [registration, setRegistration] = useState([])
 
   useEffect(() => {
-    const fetchCompetitionsForRegistration = async () => {
-      try {
-        const currentDate = new Date().toISOString()
-        const {data, error} = await supabase
-          .from('registration')
-          .select('name, link')
-          .gt('deadline', currentDate)
-
-        if (error) {
-          throw error
-        }
-
+    const fetchCompetitions = async () => {
+      const data = await fetchCompetitionsForRegistration()
+      if (data) {
         setRegistration(data)
-      } catch (error) {
-        console.error('Error fetching competitions for registration:', error.message)
       }
     }
 
-    fetchCompetitionsForRegistration()
+    fetchCompetitions()
   }, [])
 
   return (

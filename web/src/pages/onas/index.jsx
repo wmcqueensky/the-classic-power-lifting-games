@@ -1,12 +1,12 @@
 import {Box, Center, Heading, Flex, Icon, Stack, Image, useBreakpointValue, Button} from '@chakra-ui/react'
 import React from 'react'
 import Slideshow from './components/slider.jsx'
-import trainerPhoto from './images/Laskiewicz.png'
+import trainerPhoto from './images/laskiewicz.png'
 import rokkPhoto from './images/rokk.png'
 import {FaDumbbell} from 'react-icons/fa'
 import {useState, useEffect, useRef} from 'react'
 import {motion} from 'framer-motion'
-import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
+import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
 
 const CustomBox = ({children}) => (
   <Box p={{base: '4', md: '8'}} w="100vw" alignItems="center" justifyContent="center">

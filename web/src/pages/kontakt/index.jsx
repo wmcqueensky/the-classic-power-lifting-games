@@ -2,7 +2,7 @@ import {Box, Flex, Heading, Link, IconButton, useColorModeValue} from '@chakra-u
 import {FaInstagram, FaFacebook, FaEnvelope, FaTiktok} from 'react-icons/fa'
 import backgroundImage from './images/background.png'
 import {motion} from 'framer-motion'
-import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
+import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
 
 const ContactPage = () => {
   const iconColor = useColorModeValue('red', 'white')

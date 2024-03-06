@@ -1,50 +1,26 @@
 import {Box, Heading} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
-import supabase from '../../config/supabaseClient.js'
 import {motion} from 'framer-motion'
-import backgroundImage from '../../common/assets/statisticsBackground.png'
-import ChoiceButton from '../../common/components/choiceButton.jsx'
-import {smoothVariant} from '../../common/animations/smoothSlideInAnimation.jsx'
+import backgroundImage from '../../common/assets/statistics-background.png'
+import ChoiceButton from '../../common/components/choice-button.jsx'
+import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+import fetchCompetitions from '../../common/hooks/competitions/use-competitions.jsx'
 
 const StatisticsPage = () => {
   const [competitions, setCompetitions] = useState([])
   const navigate = useNavigate()
 
-  const fetchScoresForCompetition = async (competitionName) => {
-    try {
-      const {data: competitionData, error} = await supabase
-        .from('competitions')
-        .select('competition_id')
-        .eq('name', competitionName)
-        .single()
-
-      if (error) {
-        throw error
-      }
-
-      navigate(`/kategoria/zawody/${competitionData.competition_id}`)
-    } catch (error) {
-      console.error('Error fetching scores for competition:', error.message)
-    }
-  }
-
   useEffect(() => {
-    const fetchCompetitions = async () => {
-      try {
-        const {data, error} = await supabase.from('competitions').select('name')
+    const fetchCompetitionsData = async () => {
+      const data = await fetchCompetitions()
 
-        if (error) {
-          throw error
-        }
-
+      if (data) {
         setCompetitions(data)
-      } catch (error) {
-        console.error('Error fetching competitions:', error.message)
       }
     }
 
-    fetchCompetitions()
+    fetchCompetitionsData()
   }, [])
 
   return (
@@ -69,7 +45,10 @@ const StatisticsPage = () => {
         </Heading>
         <ChoiceButton onClick={() => navigate(`/kategoria`)}>Wszystkie</ChoiceButton>
         {competitions.map((competition) => (
-          <ChoiceButton onClick={() => fetchScoresForCompetition(competition.name)} key={competition.name}>
+          <ChoiceButton
+            onClick={() => navigate(`/kategoria/zawody/${competition.competition_id}`)}
+            key={competition.name}
+          >
             {competition.name}
           </ChoiceButton>
         ))}
