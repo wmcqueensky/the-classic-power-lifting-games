@@ -2,9 +2,11 @@ import {Box, Heading} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {motion} from 'framer-motion'
+import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+
 import backgroundImage from '../../common/assets/statistics-background.png'
 import ChoiceButton from '../../common/components/choice-button.jsx'
-import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+
 import fetchCompetitions from '../../common/hooks/competitions/use-competitions.jsx'
 
 const StatisticsPage = () => {

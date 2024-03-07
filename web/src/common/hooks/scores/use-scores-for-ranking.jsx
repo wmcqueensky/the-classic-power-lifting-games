@@ -1,6 +1,6 @@
 import supabase from '../../../config/supabase-client.js'
 
-const fetchScoresForCompetition = async (competitionId, categoryId) => {
+const fetchScoresForRanking = async (competitionId, categoryId) => {
   try {
     let query = supabase.from('scores').select('*')
 
@@ -27,4 +27,4 @@ const fetchScoresForCompetition = async (competitionId, categoryId) => {
   }
 }
 
-export default fetchScoresForCompetition
+export default fetchScoresForRanking

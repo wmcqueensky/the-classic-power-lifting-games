@@ -4,13 +4,16 @@ import {useNavigate, useParams} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
 
-import supabase from '../../config/supabase-client.js'
 import TableButton from '../../common/components/table-button.jsx'
 import backgroundImage from '../../common/assets/statistics-background.png'
 
 import fetchCategoryInfo from '../../common/hooks/categories/use-category-for-ranking-info.jsx'
 import fetchCompetitionInfo from '../../common/hooks/competitions/use-competition-for-ranking-info.jsx'
-import fetchScoresForCompetition from '../../common/hooks/scores/use-scores-for-ranking.jsx'
+
+import fetchScoresForRanking from '../../common/hooks/scores/use-scores-for-ranking.jsx'
+import fetchLiftersData from '../../common/hooks/lifters/use-lifters-for-ranking.jsx'
+import fetchCompetitionsData from '../../common/hooks/competitions/use-competitions-for-ranking.jsx'
+import fetchCategoriesData from '../../common/hooks/categories/use-categories-for-ranking.jsx'
 
 const RankingPage = () => {
   const [competitionInfo, setCompetitionInfo] = useState({})
@@ -23,102 +26,42 @@ const RankingPage = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const fetchScoresForCompetition = async () => {
+    const fetchData = async () => {
       try {
-        let query = supabase.from('scores').select('*')
-
-        if (competitionId && categoryId) {
-          query = query.eq('competition_id', competitionId).eq('category_id', categoryId)
-        } else if (competitionId && !categoryId) {
-          query = query.eq('competition_id', competitionId)
-        } else if (categoryId && !competitionId) {
-          query = query.eq('category_id', categoryId)
-        }
-
-        const {data: scoresData, error} = await query
-
-        if (error) {
-          throw error
-        }
-
-        scoresData.sort((a, b) => b.wilkswl + b.wilksmc - (a.wilkswl + a.wilksmc))
-
+        const scoresData = await fetchScoresForRanking(competitionId, categoryId)
         setScores(scoresData)
 
         const lifterIds = scoresData.map((score) => score.lifter_id)
-
-        const {data: lifterData, error: lifterError} = await supabase
-          .from('lifters')
-          .select('*')
-          .in('lifter_id', lifterIds)
-
-        if (lifterError) {
-          throw lifterError
-        }
-
-        const lifterObject = {}
-        lifterData.forEach((lifter) => {
-          lifterObject[lifter.lifter_id] = lifter
-        })
-        setLifters(lifterObject)
+        const lifterData = await fetchLiftersData(lifterIds)
+        setLifters(lifterData)
 
         if (!competitionId) {
           const competitionIds = scoresData.map((score) => score.competition_id)
-
-          const {data, error} = await supabase
-            .from('competitions')
-            .select('*')
-            .in('competition_id', competitionIds)
-
-          if (error) {
-            throw error
-          }
-
-          const competitionObject = {}
-          data.forEach((competition) => {
-            competitionObject[competition.competition_id] = competition
-          })
-          setCompetitions(competitionObject)
+          const competitionData = await fetchCompetitionsData(competitionIds)
+          setCompetitions(competitionData)
         }
 
         if (!categoryId) {
           const categoryIds = scoresData.map((score) => score.category_id)
+          const categoryData = await fetchCategoriesData(categoryIds)
+          setCategories(categoryData)
+        }
 
-          const {data, error} = await supabase.from('categories').select('*').in('category_id', categoryIds)
+        if (competitionId) {
+          const competitionData = await fetchCompetitionInfo(competitionId)
+          setCompetitionInfo(competitionData)
+        }
 
-          if (error) {
-            throw error
-          }
-
-          const categoryObject = {}
-          data.forEach((category) => {
-            categoryObject[category.category_id] = category
-          })
-          setCategories(categoryObject)
+        if (categoryId) {
+          const categoryData = await fetchCategoryInfo(categoryId)
+          setCategoryInfo(categoryData)
         }
       } catch (error) {
-        console.error('Error fetching scores for competition:', error.message)
-      }
-    } //do tego poprawiasz
-
-    const fetchCompetitionAndCategoryInfo = async () => {
-      if (competitionId) {
-        const data = await fetchCompetitionInfo(competitionId)
-        if (data) {
-          setCompetitionInfo(data)
-        }
-      }
-
-      if (categoryId) {
-        const data = await fetchCategoryInfo(categoryId)
-        if (data) {
-          setCategoryInfo(data)
-        }
+        console.error('Error fetching data:', error.message)
       }
     }
 
-    fetchCompetitionAndCategoryInfo()
-    fetchScoresForCompetition()
+    fetchData()
   }, [competitionId, categoryId])
 
   return (
