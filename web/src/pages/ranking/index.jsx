@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+import {calculateWilksCoefficient} from '../../utils/wilks-calculator.js'
 
 import TableButton from '../../common/components/table-button.jsx'
 import backgroundImage from '../../common/assets/statistics-background.png'
@@ -139,11 +140,32 @@ const RankingPage = () => {
                     </Td>
                   )}
                   <Td>{score.makswl.toFixed(2)}</Td>
-                  <Td>{score.wilkswl.toFixed(4)}</Td>
+                  <Td>
+                    {calculateWilksCoefficient(
+                      score.weight,
+                      lifters[score.lifter_id]?.gender,
+                      score.makswl
+                    ).toFixed(4)}
+                  </Td>
                   <Td>{score.maksmc.toFixed(2)}</Td>
-                  <Td>{score.wilksmc.toFixed(4)}</Td>
+                  <Td>
+                    {calculateWilksCoefficient(
+                      score.weight,
+                      lifters[score.lifter_id]?.gender,
+                      score.maksmc
+                    ).toFixed(4)}
+                  </Td>
                   <Td>{(score.makswl + score.maksmc).toFixed(2)}</Td>
-                  <Td>{(score.wilkswl + score.wilksmc).toFixed(4)}</Td>
+                  <Td>
+                    {(
+                      calculateWilksCoefficient(
+                        score.weight,
+                        lifters[score.lifter_id]?.gender,
+                        score.makswl
+                      ) +
+                      calculateWilksCoefficient(score.weight, lifters[score.lifter_id]?.gender, score.maksmc)
+                    ).toFixed(4)}
+                  </Td>
                 </Tr>
               ))}
             </Tbody>
