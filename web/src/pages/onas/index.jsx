@@ -1,12 +1,14 @@
 import {Box, Center, Heading, Flex, Icon, Stack, Image, useBreakpointValue, Button} from '@chakra-ui/react'
-import React from 'react'
-import Slideshow from './components/slider.jsx'
-import trainerPhoto from './images/laskiewicz.png'
-import rokkPhoto from './images/rokk.png'
 import {FaDumbbell} from 'react-icons/fa'
 import {useState, useEffect, useRef} from 'react'
 import {motion} from 'framer-motion'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+
+import React from 'react'
+import Slideshow from './components/slider.jsx'
+import trainerPhoto from './images/laskiewicz.png'
+import rokkPhoto from './images/rokk.png'
+import backgroundImage from '/Users/goodylabs/Desktop/programs/WEB/College-Power-Lifting/web/src/common/assets/statistics-background.png'
 
 const CustomBox = ({children}) => (
   <Box p={{base: '4', md: '8'}} w="100vw" alignItems="center" justifyContent="center">
@@ -98,7 +100,7 @@ const AboutUsPage = () => {
   const sponsors = [{name: 'ROKK', link: 'https://rokk-sport.pl/', imageUrl: rokkPhoto}]
 
   return (
-    <>
+    <Box bgImage={`url(${backgroundImage})`} backgroundSize="cover" backgroundPosition="center" h="100%">
       <motion.div
         variants={smoothVariant}
         initial="hidden"
@@ -288,7 +290,7 @@ const AboutUsPage = () => {
           </Flex>
         </motion.div>
       </Box>
-    </>
+    </Box>
   )
 }
 
