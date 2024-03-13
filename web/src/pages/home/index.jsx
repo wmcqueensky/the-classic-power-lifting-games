@@ -1,11 +1,13 @@
 import {useState, useEffect, useRef} from 'react'
 import {VStack, Heading, Box, Button, Image} from '@chakra-ui/react'
 import {motion} from 'framer-motion'
+import {useNavigate} from 'react-router-dom'
+import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+import {REGISTRATION_PATH, ABOUT_US_PATH} from '../../router/paths.js'
+
 import backgroundImage from './images/background.png'
 import championshipImage from './images/double-lift.png'
 import peopleImage from './images/onas-home.png'
-import {useNavigate} from 'react-router-dom'
-import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
 
 const HomePage = () => {
   const navigate = useNavigate()
@@ -71,7 +73,7 @@ const HomePage = () => {
                 color: 'white',
               }}
               onClick={() => {
-                navigate('/zapisy')
+                navigate(REGISTRATION_PATH)
               }}
             >
               Zapisz się teraz!
@@ -135,7 +137,7 @@ const HomePage = () => {
               color: 'white',
             }}
             onClick={() => {
-              navigate('/onas')
+              navigate(ABOUT_US_PATH)
             }}
           >
             Dowiedz się o nas więcej

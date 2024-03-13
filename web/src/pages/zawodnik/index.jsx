@@ -4,6 +4,7 @@ import {motion} from 'framer-motion'
 import {useNavigate, useParams} from 'react-router-dom'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
 import {calculateWilksCoefficient} from '../../utils/wilks-calculator.js'
+import {RANKING_COMPETITION_CUSTOM_PATH, RANKING_CATEGORY_CUSTOM_PATH} from '../../router/paths.js'
 
 import supabase from '../../config/supabase-client.js'
 import TableButton from '../../common/components/table-button.jsx'
@@ -147,12 +148,16 @@ const LifterPage = () => {
                   <Td>{score.club}</Td>
                   <Td>{competitions[score.competition_id]?.date}</Td>
                   <Td>
-                    <TableButton onClick={() => navigate(`/ranking/zawody/${score.competition_id}`)}>
+                    <TableButton
+                      onClick={() => navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${score.competition_id}`)}
+                    >
                       {competitions[score.competition_id]?.name}
                     </TableButton>
                   </Td>
                   <Td>
-                    <TableButton onClick={() => navigate(`/ranking/kategoria/${score.category_id}`)}>
+                    <TableButton
+                      onClick={() => navigate(`${RANKING_CATEGORY_CUSTOM_PATH}${score.category_id}`)}
+                    >
                       {categories[score.category_id]?.name}
                     </TableButton>
                   </Td>

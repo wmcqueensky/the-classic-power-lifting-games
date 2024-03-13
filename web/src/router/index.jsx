@@ -8,24 +8,25 @@ import HomePage from '../pages/home'
 import AboutUsPage from '../pages/onas'
 import ContactPage from '../pages/kontakt'
 import Layout from './layouts'
+import * as paths from './paths'
 
 const Router = () => (
   <Routes>
     <Route element={<Layout />}>
       <Route index element={<HomePage />} />
-      <Route path="zapisy" element={<RegistrationPage />} />
-      <Route path="statystyki" element={<StatisticsPage />} />
-      <Route path="kategoria" element={<CategoriesPage />} />
-      <Route path="kategoria/zawody/:zawody" element={<CategoriesPage />} />
-      <Route path="ranking" element={<RankingPage />} />
-      <Route path="ranking/zawody/:zawody" element={<RankingPage />} />
-      <Route path="ranking/kategoria/:kategoria" element={<RankingPage />} />
-      <Route path="ranking/zawody/:zawody/kategoria/:kategoria" element={<RankingPage />} />
-      <Route path="zawodnik/:zawodnik" element={<LifterPage />} />
-      <Route path="onas" element={<AboutUsPage />} />
-      <Route path="kontakt" element={<ContactPage />} />
+      <Route path={paths.REGISTRATION_PATH} element={<RegistrationPage />} />
+      <Route path={paths.STATISTICS_PATH} element={<StatisticsPage />} />
+      <Route path={paths.CATEGORIES_PATH} element={<CategoriesPage />} />
+      <Route path={paths.CATEGORY_COMPETITION_PATH} element={<CategoriesPage />} />
+      <Route path={paths.RANKING_PATH} element={<RankingPage />} />
+      <Route path={paths.RANKING_COMPETITION_PATH} element={<RankingPage />} />
+      <Route path={paths.RANKING_CATEGORY_PATH} element={<RankingPage />} />
+      <Route path={paths.RANKING_COMPETITION_CATEGORY_PATH} element={<RankingPage />} />
+      <Route path={paths.LIFTER_PATH} element={<LifterPage />} />
+      <Route path={paths.ABOUT_US_PATH} element={<AboutUsPage />} />
+      <Route path={paths.CONTACT_PATH} element={<ContactPage />} />
     </Route>
-    <Route path="*" element={<Navigate to={{pathname: '/'}} />} />
+    <Route path="*" element={<Navigate to={{pathname: paths.HOME_PATH}} />} />
   </Routes>
 )
 

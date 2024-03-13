@@ -3,6 +3,12 @@ import {useState, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
+import {
+  RANKING_COMPETITION_CUSTOM_PATH,
+  CATEGORIES_PATH,
+  RANKING_CATEGORY_CUSTOM_PATH,
+  RANKING_PATH,
+} from '../../router/paths.js'
 
 import backgroundImage from '../../common/assets/statistics-background.png'
 import ChoiceButton from '../../common/components/choice-button.jsx'
@@ -17,11 +23,11 @@ const CategoriesPage = () => {
 
   const fetchScoresForCompetitionCategory = async (categoryId) => {
     if (competitionId) {
-      navigate(`/ranking/zawody/${competitionId}/kategoria/${categoryId}`)
+      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${CATEGORIES_PATH}/${categoryId}`)
     }
 
     if (!competitionId) {
-      navigate(`/ranking/kategoria/${categoryId}`)
+      navigate(`${RANKING_CATEGORY_CUSTOM_PATH}${categoryId}`)
     }
   }
 
@@ -64,7 +70,9 @@ const CategoriesPage = () => {
         </Heading>{' '}
         <VStack maxH="70vh" overflowY="auto">
           <ChoiceButton
-            onClick={() => navigate(competitionId ? `/ranking/zawody/${competitionId}` : `/ranking`)}
+            onClick={() =>
+              navigate(competitionId ? `${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}` : RANKING_PATH)
+            }
           >
             Wszystkie
           </ChoiceButton>

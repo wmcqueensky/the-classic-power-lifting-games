@@ -4,6 +4,11 @@ import {useNavigate, useParams} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
 import {calculateWilksCoefficient} from '../../utils/wilks-calculator.js'
+import {
+  LIFTER_CUSTOM_PATH,
+  RANKING_COMPETITION_CUSTOM_PATH,
+  RANKING_CATEGORY_CUSTOM_PATH,
+} from '../../router/paths.js'
 
 import TableButton from '../../common/components/table-button.jsx'
 import backgroundImage from '../../common/assets/statistics-background.png'
@@ -117,7 +122,7 @@ const RankingPage = () => {
                   <Td>
                     <TableButton
                       key={score.lifter_id}
-                      onClick={() => navigate(`/zawodnik/${score.lifter_id}`)}
+                      onClick={() => navigate(`${LIFTER_CUSTOM_PATH}${score.lifter_id}`)}
                     >
                       {lifters[score.lifter_id]?.first_name} {lifters[score.lifter_id]?.last_name}
                     </TableButton>
@@ -127,14 +132,18 @@ const RankingPage = () => {
                   <Td>{score.club}</Td>
                   {!competitionId && (
                     <Td>
-                      <TableButton onClick={() => navigate(`/ranking/zawody/${score.competition_id}`)}>
+                      <TableButton
+                        onClick={() => navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${score.competition_id}`)}
+                      >
                         {competitions[score.competition_id]?.name}
                       </TableButton>
                     </Td>
                   )}
                   {!categoryId && (
                     <Td>
-                      <TableButton onClick={() => navigate(`/ranking/kategoria/${score.category_id}`)}>
+                      <TableButton
+                        onClick={() => navigate(`${RANKING_CATEGORY_CUSTOM_PATH}${score.category_id}`)}
+                      >
                         {categories[score.category_id]?.name}
                       </TableButton>
                     </Td>
