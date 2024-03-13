@@ -1,4 +1,4 @@
-import {Box, Heading} from '@chakra-ui/react'
+import {Box, Heading, VStack} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {motion} from 'framer-motion'
@@ -45,15 +45,17 @@ const StatisticsPage = () => {
         >
           Wybierz zawody:
         </Heading>
-        <ChoiceButton onClick={() => navigate(`/kategoria`)}>Wszystkie</ChoiceButton>
-        {competitions.map((competition) => (
-          <ChoiceButton
-            onClick={() => navigate(`/kategoria/zawody/${competition.competition_id}`)}
-            key={competition.name}
-          >
-            {competition.name}
-          </ChoiceButton>
-        ))}
+        <VStack maxH="70vh" overflowY="auto">
+          <ChoiceButton onClick={() => navigate(`/kategoria`)}>Wszystkie</ChoiceButton>
+          {competitions.map((competition) => (
+            <ChoiceButton
+              onClick={() => navigate(`/kategoria/zawody/${competition.competition_id}`)}
+              key={competition.name}
+            >
+              {competition.name}
+            </ChoiceButton>
+          ))}
+        </VStack>
       </Box>
     </motion.div>
   )

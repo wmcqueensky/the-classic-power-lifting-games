@@ -1,4 +1,4 @@
-import {Box, Heading} from '@chakra-ui/react'
+import {Box, Heading, VStack} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import {motion} from 'framer-motion'
@@ -62,19 +62,21 @@ const CategoriesPage = () => {
         <Heading fontSize={{base: '2rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}} mb={4} textAlign="center">
           Wybierz kategorie:
         </Heading>{' '}
-        <ChoiceButton
-          onClick={() => navigate(competitionId ? `/ranking/zawody/${competitionId}` : `/ranking`)}
-        >
-          Wszystkie
-        </ChoiceButton>
-        {categories.map((category) => (
+        <VStack maxH="70vh" overflowY="auto">
           <ChoiceButton
-            key={category.name}
-            onClick={() => fetchScoresForCompetitionCategory(category.category_id)}
+            onClick={() => navigate(competitionId ? `/ranking/zawody/${competitionId}` : `/ranking`)}
           >
-            {category.name}
+            Wszystkie
           </ChoiceButton>
-        ))}
+          {categories.map((category) => (
+            <ChoiceButton
+              key={category.name}
+              onClick={() => fetchScoresForCompetitionCategory(category.category_id)}
+            >
+              {category.name}
+            </ChoiceButton>
+          ))}
+        </VStack>
       </Box>
     </motion.div>
   )
