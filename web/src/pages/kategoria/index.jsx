@@ -7,7 +7,9 @@ import {
   RANKING_COMPETITION_CUSTOM_PATH,
   CATEGORIES_PATH,
   RANKING_CATEGORY_CUSTOM_PATH,
+  RANKING_GENDER_CUSTOM_PATH,
   RANKING_PATH,
+  GENDERS_PATH,
 } from '../../router/paths.js'
 
 import backgroundImage from '../../common/assets/statistics-background.png'
@@ -15,11 +17,32 @@ import ChoiceButton from '../../common/components/choice-button.jsx'
 
 import fetchAllCategories from '../../common/hooks/categories/use-categories.jsx'
 import fetchCategoriesForCompetition from '../../common/hooks/categories/use-category-for-competition.jsx'
+import fetchCategoriesForGender from '../../common/hooks/categories/use-category-for-gender.jsx'
+import fetchCategoriesForCompetitionGender from '../../common/hooks/categories/use-category-for-competition-gender.jsx'
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([])
   const {zawody: competitionId} = useParams()
+  const {gender: gender} = useParams()
   const navigate = useNavigate()
+
+  const fetchScoresForAllCategories = async () => {
+    if (competitionId && gender) {
+      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}${gender}`)
+    }
+
+    if (!competitionId && gender) {
+      navigate(`${RANKING_GENDER_CUSTOM_PATH}${gender}`)
+    }
+
+    if (competitionId && !gender) {
+      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}`)
+    }
+
+    if (!competitionId && !gender) {
+      navigate(RANKING_PATH)
+    }
+  }
 
   const fetchScoresForCompetitionCategory = async (categoryId) => {
     if (competitionId) {
@@ -36,11 +59,19 @@ const CategoriesPage = () => {
       try {
         let categoriesData = []
 
-        if (competitionId) {
+        if (competitionId && gender) {
+          categoriesData = await fetchCategoriesForCompetitionGender(competitionId, gender)
+        }
+
+        if (!competitionId && gender) {
+          categoriesData = await fetchCategoriesForGender(gender)
+        }
+
+        if (competitionId && !gender) {
           categoriesData = await fetchCategoriesForCompetition(competitionId)
         }
 
-        if (!competitionId) {
+        if (!competitionId && !gender) {
           categoriesData = await fetchAllCategories()
         }
 
@@ -67,18 +98,14 @@ const CategoriesPage = () => {
       >
         <Heading fontSize={{base: '2rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}} mb={4} textAlign="center">
           Wybierz kategorie:
-        </Heading>{' '}
+        </Heading>
+
         <VStack maxH="70vh" overflowY="auto">
-          <ChoiceButton
-            onClick={() =>
-              navigate(competitionId ? `${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}` : RANKING_PATH)
-            }
-          >
-            Wszystkie
-          </ChoiceButton>
+          <ChoiceButton onClick={() => fetchScoresForAllCategories()}>Wszystkie</ChoiceButton>
+
           {categories.map((category) => (
             <ChoiceButton
-              key={category.name}
+              key={category.category_id}
               onClick={() => fetchScoresForCompetitionCategory(category.category_id)}
             >
               {category.name}

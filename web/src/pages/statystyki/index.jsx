@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
-import {CATEGORIES_PATH, CATEGORY_COMPETITION_CUSTOM_PATH} from '../../router/paths.js'
+import {GENDERS_PATH, GENDER_COMPETITION_CUSTOM_PATH} from '../../router/paths.js'
 
 import backgroundImage from '../../common/assets/statistics-background.png'
 import ChoiceButton from '../../common/components/choice-button.jsx'
@@ -47,10 +47,10 @@ const StatisticsPage = () => {
           Wybierz zawody:
         </Heading>
         <VStack maxH="70vh" overflowY="auto">
-          <ChoiceButton onClick={() => navigate(`${CATEGORIES_PATH}`)}>Wszystkie</ChoiceButton>
+          <ChoiceButton onClick={() => navigate(`${GENDERS_PATH}`)}>Wszystkie</ChoiceButton>
           {competitions.map((competition) => (
             <ChoiceButton
-              onClick={() => navigate(`${CATEGORY_COMPETITION_CUSTOM_PATH}${competition.competition_id}`)}
+              onClick={() => navigate(`${GENDER_COMPETITION_CUSTOM_PATH}${competition.competition_id}`)}
               key={competition.name}
             >
               {competition.name}
