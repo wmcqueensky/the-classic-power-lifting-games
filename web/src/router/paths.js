@@ -28,4 +28,4 @@ export const RANKING_COMPETITION_GENDER_PATH = '/ranking/zawody/:zawody/gender/:
 
 export const RANKING_COMPETITION_CUSTOM_PATH = '/ranking/zawody/'
 export const RANKING_CATEGORY_CUSTOM_PATH = '/ranking/kategoria/'
-export const RANKING_GENDER_CUSTOM_PATH = '/ranking/kategoria/'
+export const RANKING_GENDER_CUSTOM_PATH = '/ranking/gender/'
