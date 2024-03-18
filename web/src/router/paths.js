@@ -1,7 +1,6 @@
 export const HOME_PATH = '/'
 export const STATISTICS_PATH = '/statystyki'
 export const REGISTRATION_PATH = '/zapisy'
-export const ABOUT_US_PATH = '/onas'
 export const CONTACT_PATH = '/kontakt'
 
 export const LIFTER_PATH = '/zawodnik/:zawodnik'

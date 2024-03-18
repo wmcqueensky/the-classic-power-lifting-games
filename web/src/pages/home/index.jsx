@@ -3,7 +3,7 @@ import {VStack, Heading, Box, Button, Image} from '@chakra-ui/react'
 import {motion} from 'framer-motion'
 import {useNavigate} from 'react-router-dom'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
-import {REGISTRATION_PATH, ABOUT_US_PATH} from '../../router/paths.js'
+import {REGISTRATION_PATH, CONTACT_PATH} from '../../router/paths.js'
 
 import backgroundImage from './images/background.png'
 import championshipImage from './images/double-lift.png'
@@ -137,7 +137,7 @@ const HomePage = () => {
               color: 'white',
             }}
             onClick={() => {
-              navigate(ABOUT_US_PATH)
+              navigate(CONTACT_PATH)
             }}
           >
             Dowiedz się o nas więcej

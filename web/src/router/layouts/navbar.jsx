@@ -2,13 +2,7 @@ import {Box, Flex, Text, Image, Divider, useDisclosure, IconButton} from '@chakr
 import {Link, useLocation} from 'react-router-dom'
 import {FiMenu} from 'react-icons/fi'
 import {NAVBAR_HEIGHT} from '../../constants'
-import {
-  HOME_PATH,
-  STATISTICS_PATH,
-  REGISTRATION_PATH,
-  ABOUT_US_PATH,
-  CONTACT_PATH,
-} from '../../router/paths.js'
+import {HOME_PATH, STATISTICS_PATH, REGISTRATION_PATH, CONTACT_PATH} from '../../router/paths.js'
 import logo from '../images/logo.png'
 
 const NavLink = ({to, active, children, onClose}) => (
@@ -16,8 +10,8 @@ const NavLink = ({to, active, children, onClose}) => (
     <Text
       fontSize={{base: 'lg', md: 'xl', lg: '2xl'}}
       mt={{base: '8', lg: '6'}}
-      ml={{base: '2', md: '3'}}
-      mr={{base: '2', md: '3'}}
+      ml={{base: '1', md: '2'}}
+      mr={{base: '1', md: '2'}}
       _hover={{color: 'white'}}
     >
       {children}
@@ -49,9 +43,6 @@ const Drawer = ({isOpen, onClose}) => (
       </NavLink>
       <NavLink to={REGISTRATION_PATH} active={false} onClose={onClose}>
         Zapisy
-      </NavLink>
-      <NavLink to={ABOUT_US_PATH} active={false} onClose={onClose}>
-        O Nas
       </NavLink>
       <NavLink to={CONTACT_PATH} active={false} onClose={onClose}>
         Kontakt
@@ -91,9 +82,6 @@ const Navbar = () => {
           </NavLink>
           <NavLink to={REGISTRATION_PATH} active={isLinkActive(REGISTRATION_PATH)} onClose={onClose}>
             Zapisy
-          </NavLink>
-          <NavLink to={ABOUT_US_PATH} active={isLinkActive(ABOUT_US_PATH)} onClose={onClose}>
-            O Nas
           </NavLink>
           <NavLink to={CONTACT_PATH} active={isLinkActive(CONTACT_PATH)} onClose={onClose}>
             Kontakt
