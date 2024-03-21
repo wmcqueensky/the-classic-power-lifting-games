@@ -80,13 +80,13 @@ const RankingPage = () => {
 
         {competitionId && !categoryId && (
           <Text fontSize="4xl" fontWeight="bold" mb="4">
-            {competitionInfo.name} |
+            {competitionInfo.name} | Wszystkie Kategorie
           </Text>
         )}
 
         {categoryId && !competitionId && (
           <Text fontSize="4xl" fontWeight="bold" mb="4">
-            | {categoryInfo.name}
+            Wszystkie Zawody | {categoryInfo.name}
           </Text>
         )}
 
@@ -147,10 +147,10 @@ const RankingPage = () => {
                       </TableButton>
                     </Td>
                   )}
-                  <Td>{score.makswl.toFixed(2)}</Td>
-                  <Td>{score.wilkswl.toFixed(4)}</Td>
-                  <Td>{score.maksmc.toFixed(2)}</Td>
-                  <Td>{score.wilksmc.toFixed(4)}</Td>
+                  <Td>{score.makswl?.toFixed(2)}</Td>
+                  <Td>{score.wilkswl?.toFixed(4)}</Td>
+                  <Td>{score.maksmc?.toFixed(2)}</Td>
+                  <Td>{score.wilksmc?.toFixed(4)}</Td>
                   <Td>{(score.makswl + score.maksmc).toFixed(2)}</Td>
                   <Td>{(score.wilkswl + score.wilksmc).toFixed(4)}</Td>
                 </Tr>

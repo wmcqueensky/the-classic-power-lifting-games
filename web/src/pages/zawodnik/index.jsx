@@ -102,8 +102,8 @@ const LifterPage = () => {
               </Thead>
               <Tbody>
                 <Tr>
-                  <Td>{scores[0].makswl.toFixed(2)}</Td>
-                  <Td>{scores[0].maksmc.toFixed(2)}</Td>
+                  <Td>{scores[0].makswl?.toFixed(2)}</Td>
+                  <Td>{scores[0].maksmc?.toFixed(2)}</Td>
                   <Td>{(scores[0].makswl + scores[0].maksmc).toFixed(2)}</Td>
                   <Td>{(scores[0].wilkswl + scores[0].wilksmc).toFixed(4)}</Td>
                 </Tr>
@@ -155,10 +155,10 @@ const LifterPage = () => {
                       {categories[score.category_id]?.name}
                     </TableButton>
                   </Td>
-                  <Td>{score.makswl.toFixed(2)}</Td>
-                  <Td>{score.wilkswl.toFixed(4)}</Td>
-                  <Td>{score.maksmc.toFixed(2)}</Td>
-                  <Td>{score.wilksmc.toFixed(4)}</Td>
+                  <Td>{score.makswl?.toFixed(2)}</Td>
+                  <Td>{score.wilkswl?.toFixed(4)}</Td>
+                  <Td>{score.maksmc?.toFixed(2)}</Td>
+                  <Td>{score.wilksmc?.toFixed(4)}</Td>
                   <Td>{(score.makswl + score.maksmc).toFixed(2)}</Td>
                   <Td>{(score.wilkswl + score.wilksmc).toFixed(4)}</Td>
                 </Tr>
