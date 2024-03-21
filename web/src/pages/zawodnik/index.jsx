@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react'
 import {motion} from 'framer-motion'
 import {useNavigate, useParams} from 'react-router-dom'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
-import {calculateWilksCoefficient} from '../../utils/wilks-calculator.js'
 import {RANKING_COMPETITION_CUSTOM_PATH, RANKING_CATEGORY_CUSTOM_PATH} from '../../router/paths.js'
 
 import supabase from '../../config/supabase-client.js'
@@ -106,12 +105,7 @@ const LifterPage = () => {
                   <Td>{scores[0].makswl.toFixed(2)}</Td>
                   <Td>{scores[0].maksmc.toFixed(2)}</Td>
                   <Td>{(scores[0].makswl + scores[0].maksmc).toFixed(2)}</Td>
-                  <Td>
-                    {(
-                      calculateWilksCoefficient(scores[0].weight, lifter.gender, scores[0].makswl) +
-                      calculateWilksCoefficient(scores[0].weight, lifter.gender, scores[0].maksmc)
-                    ).toFixed(4)}
-                  </Td>
+                  <Td>{(scores[0].wilkswl + scores[0].wilksmc).toFixed(4)}</Td>
                 </Tr>
               </Tbody>
             </Table>
@@ -162,16 +156,11 @@ const LifterPage = () => {
                     </TableButton>
                   </Td>
                   <Td>{score.makswl.toFixed(2)}</Td>
-                  <Td>{calculateWilksCoefficient(score.weight, lifter.gender, score.makswl).toFixed(4)}</Td>
+                  <Td>{score.wilkswl.toFixed(4)}</Td>
                   <Td>{score.maksmc.toFixed(2)}</Td>
-                  <Td>{calculateWilksCoefficient(score.weight, lifter.gender, score.maksmc).toFixed(4)}</Td>
+                  <Td>{score.wilksmc.toFixed(4)}</Td>
                   <Td>{(score.makswl + score.maksmc).toFixed(2)}</Td>
-                  <Td>
-                    {(
-                      calculateWilksCoefficient(score.weight, lifter.gender, score.makswl) +
-                      calculateWilksCoefficient(score.weight, lifter.gender, score.maksmc)
-                    ).toFixed(4)}
-                  </Td>
+                  <Td>{(score.wilkswl + score.wilksmc).toFixed(4)}</Td>
                 </Tr>
               ))}
             </Tbody>

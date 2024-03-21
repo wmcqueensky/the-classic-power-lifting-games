@@ -1,6 +1,4 @@
 import supabase from '../../../config/supabase-client.js'
-import {calculateWilksCoefficient} from '../../../utils/wilks-calculator.js'
-import fetchLiftersData from '../lifters/use-lifters-for-ranking.jsx'
 
 const fetchScoresForRanking = async (competitionId, categoryId, gender) => {
   try {
@@ -38,22 +36,9 @@ const fetchScoresForRanking = async (competitionId, categoryId, gender) => {
       throw error
     }
 
-    // Fetch lifters data
-    const lifterIds = scoresData.map((score) => score.lifter_id)
-    const lifterData = await fetchLiftersData(lifterIds)
+    scoresData.sort((a, b) => b.wilkswl + b.wilksmc - (a.wilkswl + a.wilksmc))
 
-    // Calculate Wilks coefficients and sort the scores array
-    const sortedScores = scoresData.sort((a, b) => {
-      const wilksA =
-        calculateWilksCoefficient(lifterData[a.lifter_id]?.gender, a.makswl) +
-        calculateWilksCoefficient(lifterData[a.lifter_id]?.gender, a.maksmc)
-      const wilksB =
-        calculateWilksCoefficient(lifterData[b.lifter_id]?.gender, b.makswl) +
-        calculateWilksCoefficient(lifterData[b.lifter_id]?.gender, b.maksmc)
-      return wilksB - wilksA
-    })
-
-    return sortedScores
+    return scoresData
   } catch (error) {
     console.error('Error fetching scores for competition:', error.message)
     return []
