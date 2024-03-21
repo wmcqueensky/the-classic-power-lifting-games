@@ -6,6 +6,10 @@ export const CONTACT_PATH = '/kontakt'
 export const LIFTER_PATH = '/zawodnik/:zawodnik'
 export const LIFTER_CUSTOM_PATH = '/zawodnik/'
 
+export const SEARCH_PATH = '/szukaj/'
+
+export const COMPETITIONS_PATH = '/zawody/'
+
 export const GENDERS_PATH = '/gender/'
 export const GENDER_PATH = '/gender/:gender'
 export const GENDER_COMPETITION_PATH = '/gender/zawody/:zawody'

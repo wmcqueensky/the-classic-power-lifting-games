@@ -3,14 +3,14 @@ import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
-import {SEARCH_PATH, COMPETITIONS_PATH} from '../../router/paths.js'
+import {GENDERS_PATH, GENDER_COMPETITION_CUSTOM_PATH} from '../../router/paths.js'
 
 import backgroundImage from '../../common/assets/statistics-background.png'
 import ChoiceButton from '../../common/components/choice-button.jsx'
 
 import fetchCompetitions from '../../common/hooks/competitions/use-competitions.jsx'
 
-const StatisticsPage = () => {
+const CompetitionsPage = () => {
   const [competitions, setCompetitions] = useState([])
   const navigate = useNavigate()
 
@@ -44,15 +44,22 @@ const StatisticsPage = () => {
           mb={4}
           textAlign="center"
         >
-          Wybierz sposób szukania statystyk:
+          Wybierz zawody:
         </Heading>
         <VStack maxH="70vh" overflowY="auto">
-          <ChoiceButton onClick={() => navigate(`${SEARCH_PATH}`)}>Szukaj zawodnika</ChoiceButton>
-          <ChoiceButton onClick={() => navigate(`${COMPETITIONS_PATH}`)}>Szukaj kategorii</ChoiceButton>
+          <ChoiceButton onClick={() => navigate(`${GENDERS_PATH}`)}>Wszystkie</ChoiceButton>
+          {competitions.map((competition) => (
+            <ChoiceButton
+              onClick={() => navigate(`${GENDER_COMPETITION_CUSTOM_PATH}${competition.competition_id}`)}
+              key={competition.name}
+            >
+              {competition.name}
+            </ChoiceButton>
+          ))}
         </VStack>
       </Box>
     </motion.div>
   )
 }
 
-export default StatisticsPage
+export default CompetitionsPage
