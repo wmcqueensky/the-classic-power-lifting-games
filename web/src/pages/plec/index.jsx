@@ -5,8 +5,8 @@ import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.j
 import {
   CATEGORIES_PATH,
   CATEGORY_COMPETITION_CUSTOM_PATH,
+  RANKING_GENDER_CUSTOM_PATH,
   GENDERS_PATH,
-  GENDER_COMPETITION_CUSTOM_PATH,
 } from '../../router/paths.js'
 
 import backgroundImage from '../../common/assets/statistics-background.png'
@@ -29,7 +29,7 @@ const GenderPage = () => {
         flexDirection="column"
       >
         <Heading fontSize={{base: '2rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}} mb={4} textAlign="center">
-          Wybierz kategorie:
+          Wybierz płeć:
         </Heading>
         <VStack maxH="70vh" overflowY="auto">
           <ChoiceButton
@@ -46,8 +46,8 @@ const GenderPage = () => {
             onClick={() =>
               navigate(
                 competitionId
-                  ? `${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}/gender/M`
-                  : `${CATEGORIES_PATH}/gender/M`
+                  ? `${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}M`
+                  : `${RANKING_GENDER_CUSTOM_PATH}M`
               )
             }
           >
@@ -58,8 +58,8 @@ const GenderPage = () => {
             onClick={() =>
               navigate(
                 competitionId
-                  ? `${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}/gender/K`
-                  : `${CATEGORIES_PATH}/gender/K`
+                  ? `${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}K`
+                  : `${RANKING_GENDER_CUSTOM_PATH}K`
               )
             }
           >

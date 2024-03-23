@@ -36,7 +36,14 @@ const fetchScoresForRanking = async (competitionId, categoryId, gender) => {
       throw error
     }
 
-    scoresData.sort((a, b) => b.wilkswl + b.wilksmc - (a.wilkswl + a.wilksmc))
+    scoresData.sort(
+      (a, b) =>
+        b.wilks_wl +
+        b.wilks_mc +
+        b.wilks_sg +
+        b.wilks_sqt -
+        (a.wilks_wl + a.wilks_mc + b.wilks_sg + b.wilks_sqt)
+    )
 
     return scoresData
   } catch (error) {

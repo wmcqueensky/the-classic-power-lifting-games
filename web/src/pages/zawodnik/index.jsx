@@ -94,18 +94,31 @@ const LifterPage = () => {
             <Table variant="striped" colorScheme="blackAlpha" minWidth="100%">
               <Thead>
                 <Tr>
-                  <Th>Maks WL [Kg]</Th>
-                  <Th>Maks MC [Kg]</Th>
-                  <Th>Total [Kg]</Th>
+                  <Th>SteelGrip</Th>
+                  <Th>Squat</Th>
+                  <Th>Deadlift</Th>
+                  <Th>Bench</Th>
+                  <Th>Total</Th>
                   <Th>Wilks</Th>
                 </Tr>
               </Thead>
               <Tbody>
                 <Tr>
-                  <Td>{scores[0].makswl?.toFixed(2)}</Td>
-                  <Td>{scores[0].maksmc?.toFixed(2)}</Td>
-                  <Td>{(scores[0].makswl + scores[0].maksmc).toFixed(2)}</Td>
-                  <Td>{(scores[0].wilkswl + scores[0].wilksmc).toFixed(4)}</Td>
+                  <Td>{scores[0].max_sg?.toFixed(2)}</Td>
+                  <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
+                  <Td>{scores[0].max_wl?.toFixed(2)}</Td>
+                  <Td>{scores[0].max_mc?.toFixed(2)}</Td>
+                  <Td>
+                    {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
+                  </Td>
+                  <Td>
+                    {(
+                      scores[0].wilks_wl +
+                      scores[0].wilks_mc +
+                      scores[0].wilks_sg +
+                      scores[0].wilks_sqt
+                    ).toFixed(4)}
+                  </Td>
                 </Tr>
               </Tbody>
             </Table>
@@ -121,19 +134,24 @@ const LifterPage = () => {
             <Thead>
               <Tr>
                 <Th>Ranking</Th>
-                <Th>Waga [Kg]</Th>
+                <Th>Waga</Th>
                 <Th>Klub</Th>
                 <Th>Data</Th>
                 <Th>Zawody</Th>
                 <Th>Kategoria</Th>
-                <Th>Maks WL [Kg]</Th>
-                <Th>Wilks WL</Th>
-                <Th>Maks MC [Kg]</Th>
-                <Th>Wilks MC</Th>
-                <Th>Total [Kg]</Th>
+                <Th>SteelGrip</Th>
+                <Th>WilksSG</Th>
+                <Th>Squat</Th>
+                <Th>WilksSQT</Th>
+                <Th>Bench</Th>
+                <Th>WilksBP</Th>
+                <Th>Deadlift</Th>
+                <Th>WilksDL</Th>
+                <Th>Total</Th>
                 <Th>Wilks</Th>
               </Tr>
             </Thead>
+
             <Tbody>
               {scores.map((score, index) => (
                 <Tr key={index}>
@@ -141,6 +159,7 @@ const LifterPage = () => {
                   <Td>{score.weight.toFixed(2)}</Td>
                   <Td>{score.club}</Td>
                   <Td>{competitions[score.competition_id]?.date}</Td>
+
                   <Td>
                     <TableButton
                       onClick={() => navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${score.competition_id}`)}
@@ -148,6 +167,7 @@ const LifterPage = () => {
                       {competitions[score.competition_id]?.name}
                     </TableButton>
                   </Td>
+
                   <Td>
                     <TableButton
                       onClick={() => navigate(`${RANKING_CATEGORY_CUSTOM_PATH}${score.category_id}`)}
@@ -155,12 +175,21 @@ const LifterPage = () => {
                       {categories[score.category_id]?.name}
                     </TableButton>
                   </Td>
-                  <Td>{score.makswl?.toFixed(2)}</Td>
-                  <Td>{score.wilkswl?.toFixed(4)}</Td>
-                  <Td>{score.maksmc?.toFixed(2)}</Td>
-                  <Td>{score.wilksmc?.toFixed(4)}</Td>
-                  <Td>{(score.makswl + score.maksmc).toFixed(2)}</Td>
-                  <Td>{(score.wilkswl + score.wilksmc).toFixed(4)}</Td>
+
+                  <Td>{score.max_sg?.toFixed(2)}</Td>
+                  <Td>{score.wilks_sg?.toFixed(4)}</Td>
+
+                  <Td>{score.max_sqt?.toFixed(2)}</Td>
+                  <Td>{score.wilks_sqt?.toFixed(4)}</Td>
+
+                  <Td>{score.max_wl?.toFixed(2)}</Td>
+                  <Td>{score.wilks_wl?.toFixed(4)}</Td>
+
+                  <Td>{score.max_mc?.toFixed(2)}</Td>
+                  <Td>{score.wilks_mc?.toFixed(4)}</Td>
+
+                  <Td>{(score.max_wl + score.max_mc + score.max_sg + score.max_sqt).toFixed(2)}</Td>
+                  <Td>{(score.wilks_wl + score.wilks_mc + score.wilks_sg + score.wilks_sqt).toFixed(4)}</Td>
                 </Tr>
               ))}
             </Tbody>
