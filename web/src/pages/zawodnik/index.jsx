@@ -89,112 +89,115 @@ const LifterPage = () => {
           Rekordy osobiste
         </Text>
 
-        <Box overflowX="auto" mb="8">
-          {scores.length > 0 && (
-            <Table variant="striped" colorScheme="blackAlpha" minWidth="100%">
-              <Thead>
-                <Tr>
-                  <Th>SteelGrip</Th>
-                  <Th>Squat</Th>
-                  <Th>Deadlift</Th>
-                  <Th>Bench</Th>
-                  <Th>Total</Th>
-                  <Th>Wilks</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>{scores[0].max_sg?.toFixed(2)}</Td>
-                  <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
-                  <Td>{scores[0].max_wl?.toFixed(2)}</Td>
-                  <Td>{scores[0].max_mc?.toFixed(2)}</Td>
-                  <Td>
-                    {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
-                  </Td>
-                  <Td>
-                    {(
-                      scores[0].wilks_wl +
-                      scores[0].wilks_mc +
-                      scores[0].wilks_sg +
-                      scores[0].wilks_sqt
-                    ).toFixed(4)}
-                  </Td>
-                </Tr>
-              </Tbody>
-            </Table>
-          )}
-        </Box>
+        {scores.length > 0 && (
+          <Table
+            variant="striped"
+            colorScheme="blackAlpha"
+            minWidth="100%"
+            size="sm"
+            overflowX="scroll"
+            mb="8"
+          >
+            <Thead>
+              <Tr>
+                <Th>SteelGrip</Th>
+                <Th>Squat</Th>
+                <Th>Deadlift</Th>
+                <Th>Bench</Th>
+                <Th>Total</Th>
+                <Th>Wilks</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>{scores[0].max_sg?.toFixed(2)}</Td>
+                <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
+                <Td>{scores[0].max_wl?.toFixed(2)}</Td>
+                <Td>{scores[0].max_mc?.toFixed(2)}</Td>
+                <Td>
+                  {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
+                </Td>
+                <Td>
+                  {(
+                    scores[0].wilks_wl +
+                    scores[0].wilks_mc +
+                    scores[0].wilks_sg +
+                    scores[0].wilks_sqt
+                  ).toFixed(4)}
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        )}
 
         <Text fontSize="2xl" fontWeight="bold" mb="4">
           Wyniki zawodów
         </Text>
 
-        <Box overflowX="auto">
-          <Table variant="striped" colorScheme="blackAlpha" minWidth="100%">
-            <Thead>
-              <Tr>
-                <Th>Ranking</Th>
-                <Th>Waga</Th>
-                <Th>Klub</Th>
-                <Th>Data</Th>
-                <Th>Zawody</Th>
-                <Th>Kategoria</Th>
-                <Th>SteelGrip</Th>
-                <Th>WilksSG</Th>
-                <Th>Squat</Th>
-                <Th>WilksSQT</Th>
-                <Th>Bench</Th>
-                <Th>WilksBP</Th>
-                <Th>Deadlift</Th>
-                <Th>WilksDL</Th>
-                <Th>Total</Th>
-                <Th>Wilks</Th>
+        <Table variant="striped" colorScheme="blackAlpha" minWidth="100%" size="sm" overflowX="scroll" mb="8">
+          <Thead>
+            <Tr>
+              <Th>Ranking</Th>
+              <Th>Waga</Th>
+              <Th>Klub</Th>
+              <Th>Data</Th>
+              <Th>Zawody</Th>
+              <Th>Kategoria</Th>
+              <Th>SteelGrip</Th>
+              <Th>WilksSG</Th>
+              <Th>Squat</Th>
+              <Th>WilksSQT</Th>
+              <Th>Bench</Th>
+              <Th>WilksBP</Th>
+              <Th>Deadlift</Th>
+              <Th>WilksDL</Th>
+              <Th>Total</Th>
+              <Th>Wilks</Th>
+            </Tr>
+          </Thead>
+
+          <Tbody>
+            {scores.map((score, index) => (
+              <Tr key={index}>
+                <Td>{index + 1}</Td>
+                <Td>{score.weight.toFixed(2)}</Td>
+                <Td>{score.club}</Td>
+                <Td>{competitions[score.competition_id]?.date}</Td>
+
+                <Td>
+                  <TableButton
+                    onClick={() => navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${score.competition_id}`)}
+                  >
+                    {competitions[score.competition_id]?.name}
+                  </TableButton>
+                </Td>
+
+                <Td>
+                  <TableButton
+                    onClick={() => navigate(`${RANKING_CATEGORY_CUSTOM_PATH}${score.category_id}`)}
+                  >
+                    {categories[score.category_id]?.name}
+                  </TableButton>
+                </Td>
+
+                <Td>{score.max_sg?.toFixed(2)}</Td>
+                <Td>{score.wilks_sg?.toFixed(4)}</Td>
+
+                <Td>{score.max_sqt?.toFixed(2)}</Td>
+                <Td>{score.wilks_sqt?.toFixed(4)}</Td>
+
+                <Td>{score.max_wl?.toFixed(2)}</Td>
+                <Td>{score.wilks_wl?.toFixed(4)}</Td>
+
+                <Td>{score.max_mc?.toFixed(2)}</Td>
+                <Td>{score.wilks_mc?.toFixed(4)}</Td>
+
+                <Td>{(score.max_wl + score.max_mc + score.max_sg + score.max_sqt).toFixed(2)}</Td>
+                <Td>{(score.wilks_wl + score.wilks_mc + score.wilks_sg + score.wilks_sqt).toFixed(4)}</Td>
               </Tr>
-            </Thead>
-
-            <Tbody>
-              {scores.map((score, index) => (
-                <Tr key={index}>
-                  <Td>{index + 1}</Td>
-                  <Td>{score.weight.toFixed(2)}</Td>
-                  <Td>{score.club}</Td>
-                  <Td>{competitions[score.competition_id]?.date}</Td>
-
-                  <Td>
-                    <TableButton
-                      onClick={() => navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${score.competition_id}`)}
-                    >
-                      {competitions[score.competition_id]?.name}
-                    </TableButton>
-                  </Td>
-
-                  <Td>
-                    <TableButton
-                      onClick={() => navigate(`${RANKING_CATEGORY_CUSTOM_PATH}${score.category_id}`)}
-                    >
-                      {categories[score.category_id]?.name}
-                    </TableButton>
-                  </Td>
-
-                  <Td>{score.max_sg?.toFixed(2)}</Td>
-                  <Td>{score.wilks_sg?.toFixed(4)}</Td>
-
-                  <Td>{score.max_sqt?.toFixed(2)}</Td>
-                  <Td>{score.wilks_sqt?.toFixed(4)}</Td>
-
-                  <Td>{score.max_wl?.toFixed(2)}</Td>
-                  <Td>{score.wilks_wl?.toFixed(4)}</Td>
-
-                  <Td>{score.max_mc?.toFixed(2)}</Td>
-                  <Td>{score.wilks_mc?.toFixed(4)}</Td>
-
-                  <Td>{(score.max_wl + score.max_mc + score.max_sg + score.max_sqt).toFixed(2)}</Td>
-                  <Td>{(score.wilks_wl + score.wilks_mc + score.wilks_sg + score.wilks_sqt).toFixed(4)}</Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </Box>
+            ))}
+          </Tbody>
+        </Table>
       </Box>
     </motion.div>
   )

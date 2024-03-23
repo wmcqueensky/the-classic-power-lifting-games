@@ -46,8 +46,10 @@ const CompetitionsPage = () => {
         >
           Wybierz zawody:
         </Heading>
+
         <VStack maxH="70vh" overflowY="auto">
           <ChoiceButton onClick={() => navigate(`${GENDERS_PATH}`)}>Wszystkie</ChoiceButton>
+
           {competitions.map((competition) => (
             <ChoiceButton
               onClick={() => navigate(`${GENDER_COMPETITION_CUSTOM_PATH}${competition.competition_id}`)}

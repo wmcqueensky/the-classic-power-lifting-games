@@ -1,6 +1,7 @@
 import {Navigate, Route, Routes} from 'react-router-dom'
 import StatisticsPage from '../pages/statystyki'
 import GenderPage from '../pages/plec'
+import DisciplinePage from '../pages/konkurencja'
 import CategoriesPage from '../pages/kategoria'
 import RankingPage from '../pages/ranking'
 import LifterPage from '../pages/zawodnik'
@@ -20,6 +21,7 @@ import {
   LIFTER_PATH,
   GENDERS_PATH,
   GENDER_COMPETITION_PATH,
+  DISCIPLINE_PATH,
   CATEGORY_COMPETITION_GENDER_PATH,
   CATEGORIES_PATH,
   CATEGORIES_GENDER_PATH,
@@ -43,6 +45,7 @@ const Router = () => (
       <Route path={COMPETITIONS_PATH} element={<CompetitionsPage />} />
       <Route path={GENDERS_PATH} element={<GenderPage />} />
       <Route path={GENDER_COMPETITION_PATH} element={<GenderPage />} />
+      <Route path={DISCIPLINE_PATH} element={<DisciplinePage />} />
       <Route path={CATEGORIES_PATH} element={<CategoriesPage />} />
       <Route path={CATEGORIES_GENDER_PATH} element={<CategoriesPage />} />
       <Route path={CATEGORY_COMPETITION_PATH} element={<CategoriesPage />} />

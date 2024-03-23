@@ -5,7 +5,7 @@ import {motion} from 'framer-motion'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
 import {LIFTER_CUSTOM_PATH, RANKING_PATH} from '../../router/paths.js'
 
-import supabase from '/Users/goodylabs/Desktop/programs/WEB/College-Power-Lifting/web/src/config/supabase-client.js'
+import supabase from '../../config/supabase-client.js'
 import backgroundImage from '../../common/assets/statistics-background.png'
 
 const SearchPage = () => {

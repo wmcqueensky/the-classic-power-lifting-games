@@ -10,6 +10,8 @@ export const SEARCH_PATH = '/szukaj/'
 
 export const COMPETITIONS_PATH = '/zawody/'
 
+export const DISCIPLINE_PATH = '/konkurencja/'
+
 export const GENDERS_PATH = '/gender/'
 export const GENDER_PATH = '/gender/:gender'
 export const GENDER_COMPETITION_PATH = '/gender/zawody/:zawody'

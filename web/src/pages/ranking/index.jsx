@@ -95,86 +95,85 @@ const RankingPage = () => {
             {competitionInfo.date}, {competitionInfo.place}
           </Text>
         )}
-        <Box overflowX="auto">
-          <Table variant="striped" colorScheme="blackAlpha" minWidth="100%">
-            <Thead>
-              <Tr>
-                <Th>Miejsce</Th>
-                <Th>Zawodnik</Th>
-                <Th>Płeć</Th>
-                <Th>Waga</Th>
-                <Th>Klub</Th>
-                {!competitionId && <Th>Zawody</Th>}
-                {!categoryId && <Th>Kategoria</Th>}
-                <Th>SteelGrip</Th>
-                <Th>WilksSG</Th>
-                <Th>Squat</Th>
-                <Th>WilksSQT</Th>
-                <Th>Bench</Th>
-                <Th>WilksBP</Th>
-                <Th>Deadlift</Th>
-                <Th>WilksDL</Th>
-                <Th>Total</Th>
-                <Th>Wilks</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {scores.map((score, index) => (
-                <Tr key={index}>
-                  <Td>{index + 1}</Td>
 
+        <Table variant="striped" colorScheme="blackAlpha" minWidth="100%" size="sm" overflowX="scroll">
+          <Thead>
+            <Tr>
+              <Th>Miejsce</Th>
+              <Th>Zawodnik</Th>
+              <Th>Płeć</Th>
+              <Th>Waga</Th>
+              <Th>Klub</Th>
+              {!competitionId && <Th>Zawody</Th>}
+              {!categoryId && <Th>Kategoria</Th>}
+              <Th>SteelGrip</Th>
+              <Th>WilksSG</Th>
+              <Th>Squat</Th>
+              <Th>WilksSQT</Th>
+              <Th>Bench</Th>
+              <Th>WilksBP</Th>
+              <Th>Deadlift</Th>
+              <Th>WilksDL</Th>
+              <Th>Total</Th>
+              <Th>Wilks</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {scores.map((score, index) => (
+              <Tr key={index}>
+                <Td>{index + 1}</Td>
+
+                <Td>
+                  <TableButton
+                    key={score.lifter_id}
+                    onClick={() => navigate(`${LIFTER_CUSTOM_PATH}${score.lifter_id}`)}
+                  >
+                    {lifters[score.lifter_id]?.first_name} {lifters[score.lifter_id]?.last_name}
+                  </TableButton>
+                </Td>
+
+                <Td>{lifters[score.lifter_id]?.gender}</Td>
+                <Td>{score.weight.toFixed(2)}</Td>
+                <Td>{score.club}</Td>
+
+                {!competitionId && (
                   <Td>
                     <TableButton
-                      key={score.lifter_id}
-                      onClick={() => navigate(`${LIFTER_CUSTOM_PATH}${score.lifter_id}`)}
+                      onClick={() => navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${score.competition_id}`)}
                     >
-                      {lifters[score.lifter_id]?.first_name} {lifters[score.lifter_id]?.last_name}
+                      {competitions[score.competition_id]?.name}
                     </TableButton>
                   </Td>
+                )}
 
-                  <Td>{lifters[score.lifter_id]?.gender}</Td>
-                  <Td>{score.weight.toFixed(2)}</Td>
-                  <Td>{score.club}</Td>
+                {!categoryId && (
+                  <Td>
+                    <TableButton
+                      onClick={() => navigate(`${RANKING_CATEGORY_CUSTOM_PATH}${score.category_id}`)}
+                    >
+                      {categories[score.category_id]?.name}
+                    </TableButton>
+                  </Td>
+                )}
 
-                  {!competitionId && (
-                    <Td>
-                      <TableButton
-                        onClick={() => navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${score.competition_id}`)}
-                      >
-                        {competitions[score.competition_id]?.name}
-                      </TableButton>
-                    </Td>
-                  )}
+                <Td>{score.max_sg?.toFixed(2)}</Td>
+                <Td>{score.wilks_sg?.toFixed(4)}</Td>
 
-                  {!categoryId && (
-                    <Td>
-                      <TableButton
-                        onClick={() => navigate(`${RANKING_CATEGORY_CUSTOM_PATH}${score.category_id}`)}
-                      >
-                        {categories[score.category_id]?.name}
-                      </TableButton>
-                    </Td>
-                  )}
+                <Td>{score.max_sqt?.toFixed(2)}</Td>
+                <Td>{score.wilks_sqt?.toFixed(4)}</Td>
 
-                  <Td>{score.max_sg?.toFixed(2)}</Td>
-                  <Td>{score.wilks_sg?.toFixed(4)}</Td>
+                <Td>{score.max_wl?.toFixed(2)}</Td>
+                <Td>{score.wilks_wl?.toFixed(4)}</Td>
 
-                  <Td>{score.max_sqt?.toFixed(2)}</Td>
-                  <Td>{score.wilks_sqt?.toFixed(4)}</Td>
+                <Td>{score.max_mc?.toFixed(2)}</Td>
+                <Td>{score.wilks_mc?.toFixed(4)}</Td>
 
-                  <Td>{score.max_wl?.toFixed(2)}</Td>
-                  <Td>{score.wilks_wl?.toFixed(4)}</Td>
-
-                  <Td>{score.max_mc?.toFixed(2)}</Td>
-                  <Td>{score.wilks_mc?.toFixed(4)}</Td>
-
-                  <Td>{(score.max_wl + score.max_mc + score.max_sg + score.max_sqt).toFixed(2)}</Td>
-                  <Td>{(score.wilks_wl + score.wilks_mc + score.wilks_sg + score.wilks_sqt).toFixed(4)}</Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </Box>
+                <Td>{(score.max_wl + score.max_mc + score.max_sg + score.max_sqt).toFixed(2)}</Td>
+                <Td>{(score.wilks_wl + score.wilks_mc + score.wilks_sg + score.wilks_sqt).toFixed(4)}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
       </Box>
     </motion.div>
   )

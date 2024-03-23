@@ -19,9 +19,9 @@ const theme = extendTheme({
       '::-webkit-scrollbar-thumb': {
         cursor: 'pointer !important',
         '&:hover': {
-          bg: 'blue.700',
+          bg: 'gray',
         },
-        bg: 'black.600',
+        bg: 'gray.900',
         borderRadius: 'full',
       },
       '::-webkit-scrollbar-track': {
@@ -32,11 +32,9 @@ const theme = extendTheme({
   },
   shadows: {
     glowWhite: '0px 0px 18px 0px rgba(125, 181, 228, 1)',
-    // glowBlue: '0px 0px 18px 0px rgba(58, 197, 253, 0.82)',
   },
   fonts: {
     heading: `'Open Sans', sans-serif`,
-    // body: `'Roboto', sans-serif`,
   },
 })
 
