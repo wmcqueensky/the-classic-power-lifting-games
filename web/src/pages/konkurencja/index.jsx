@@ -6,31 +6,71 @@ import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.j
 import {
   CATEGORIES_PATH,
   CATEGORY_COMPETITION_CUSTOM_PATH,
-  RANKING_GENDER_CUSTOM_PATH,
   GENDERS_PATH,
+  CATEGORIES_GENDER_CUSTOM_PATH,
+  CATEGORY_DISCIPLINE_CUSTOM_PATH,
+  DISCIPLINES_PATH,
 } from '../../router/paths.js'
 
 import backgroundImage from '../../common/assets/statistics-background.png'
 import ChoiceButton from '../../common/components/choice-button.jsx'
-
-import fetchDisciplines from '../../common/hooks/categories/use-categories-for-discipline.jsx'
+import fetchDisciplines from '../../common/hooks/disciplines/use-disciplines.jsx'
 
 const DisciplinePage = () => {
-  const [categories, setCategories] = useState([])
-  const {zawody: competitionId} = useParams()
+  const [disciplines, setDisciplines] = useState([])
+  const {zawody: competitionId, gender} = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchDisciplines()
-
-      if (data) {
-        setCategories(data)
+      try {
+        const data = await fetchDisciplines()
+        setDisciplines(data)
+      } catch (error) {
+        console.error('Error fetching disciplines:', error.message)
       }
     }
 
     fetchData()
-  })
+  }, [competitionId])
+
+  const fetchCategoriesForAllDisciplines = () => {
+    if (competitionId && gender) {
+      navigate(`${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}${gender}`)
+    }
+
+    if (!competitionId && gender) {
+      navigate(`${CATEGORIES_GENDER_CUSTOM_PATH}${gender}`)
+    }
+
+    if (competitionId && !gender) {
+      navigate(`${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}`)
+    }
+
+    if (!competitionId && !gender) {
+      navigate(CATEGORIES_PATH)
+    }
+  }
+
+  const fetchCategoriesForDiscipline = (disciplineId) => {
+    if (competitionId && gender) {
+      navigate(
+        `${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}${gender}${DISCIPLINES_PATH}${disciplineId}`
+      )
+    }
+
+    if (!competitionId && gender) {
+      navigate(`${CATEGORIES_GENDER_CUSTOM_PATH}${gender}${DISCIPLINES_PATH}${disciplineId}`)
+    }
+
+    if (competitionId && !gender) {
+      navigate(`${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}${DISCIPLINES_PATH}${disciplineId}`)
+    }
+
+    if (!competitionId && !gender) {
+      navigate(`${CATEGORY_DISCIPLINE_CUSTOM_PATH}${disciplineId}`)
+    }
+  }
 
   return (
     <motion.div variants={smoothVariant} initial="hidden" animate="visible">
@@ -49,19 +89,14 @@ const DisciplinePage = () => {
         </Heading>
 
         <VStack maxH="70vh" overflowY="auto">
-          <ChoiceButton
-            onClick={() =>
-              navigate(
-                competitionId ? `${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}` : CATEGORIES_PATH
-              )
-            }
-          >
-            Wszystkie
-          </ChoiceButton>
+          <ChoiceButton onClick={fetchCategoriesForAllDisciplines}>Wszystkie</ChoiceButton>
 
-          {categories.map((category) => (
-            <ChoiceButton onClick={() => navigate(``)} key={category.discipline}>
-              {category.discipline}
+          {disciplines.map((discipline) => (
+            <ChoiceButton
+              onClick={() => fetchCategoriesForDiscipline(discipline.discipline_id)}
+              key={discipline.discipline_id}
+            >
+              {discipline.name}
             </ChoiceButton>
           ))}
         </VStack>

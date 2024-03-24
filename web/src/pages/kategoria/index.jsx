@@ -24,6 +24,8 @@ const CategoriesPage = () => {
   const [categories, setCategories] = useState([])
   const {zawody: competitionId} = useParams()
   const {gender: gender} = useParams()
+  const {konkurencja: disciplineId} = useParams()
+
   const navigate = useNavigate()
 
   const fetchScoresForAllCategories = async () => {

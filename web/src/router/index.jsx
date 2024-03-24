@@ -21,11 +21,18 @@ import {
   LIFTER_PATH,
   GENDERS_PATH,
   GENDER_COMPETITION_PATH,
-  DISCIPLINE_PATH,
+  DISCIPLINES_PATH,
+  DISCIPLINE_COMPETITION_PATH,
+  DISCIPLINE_GENDER_PATH,
+  DISCIPLINE_COMPETITION_GENDER_PATH,
   CATEGORY_COMPETITION_GENDER_PATH,
   CATEGORIES_PATH,
   CATEGORIES_GENDER_PATH,
+  CATEGORY_GENDER_DISCIPLINE_PATH,
   CATEGORY_COMPETITION_PATH,
+  CATEGORY_DISCIPLINE_PATH,
+  CATEGORY_COMPETITION_DISCIPLINE_PATH,
+  CATEGORY_COMPETITION_GENDER_DISCIPLINE_PATH,
   RANKING_PATH,
   RANKING_COMPETITION_PATH,
   RANKING_CATEGORY_PATH,
@@ -45,11 +52,18 @@ const Router = () => (
       <Route path={COMPETITIONS_PATH} element={<CompetitionsPage />} />
       <Route path={GENDERS_PATH} element={<GenderPage />} />
       <Route path={GENDER_COMPETITION_PATH} element={<GenderPage />} />
-      <Route path={DISCIPLINE_PATH} element={<DisciplinePage />} />
+      <Route path={DISCIPLINES_PATH} element={<DisciplinePage />} />
+      <Route path={DISCIPLINE_COMPETITION_PATH} element={<DisciplinePage />} />
+      <Route path={DISCIPLINE_GENDER_PATH} element={<DisciplinePage />} />
+      <Route path={DISCIPLINE_COMPETITION_GENDER_PATH} element={<DisciplinePage />} />
       <Route path={CATEGORIES_PATH} element={<CategoriesPage />} />
       <Route path={CATEGORIES_GENDER_PATH} element={<CategoriesPage />} />
+      <Route path={CATEGORY_GENDER_DISCIPLINE_PATH} element={<CategoriesPage />} />
       <Route path={CATEGORY_COMPETITION_PATH} element={<CategoriesPage />} />
+      <Route path={CATEGORY_DISCIPLINE_PATH} element={<CategoriesPage />} />
+      <Route path={CATEGORY_COMPETITION_DISCIPLINE_PATH} element={<CategoriesPage />} />
       <Route path={CATEGORY_COMPETITION_GENDER_PATH} element={<CategoriesPage />} />
+      <Route path={CATEGORY_COMPETITION_GENDER_DISCIPLINE_PATH} element={<CategoriesPage />} />
       <Route path={RANKING_PATH} element={<RankingPage />} />
       <Route path={RANKING_COMPETITION_PATH} element={<RankingPage />} />
       <Route path={RANKING_CATEGORY_PATH} element={<RankingPage />} />

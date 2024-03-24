@@ -3,9 +3,9 @@ import {useNavigate, useParams} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
 import {
-  CATEGORIES_PATH,
-  CATEGORY_COMPETITION_CUSTOM_PATH,
-  RANKING_GENDER_CUSTOM_PATH,
+  DISCIPLINES_PATH,
+  DISCIPLINE_COMPETITION_CUSTOM_PATH,
+  DISCIPLINE_GENDER_CUSTOM_PATH,
   GENDERS_PATH,
 } from '../../router/paths.js'
 
@@ -34,7 +34,9 @@ const GenderPage = () => {
 
         <ChoiceButton
           onClick={() =>
-            navigate(competitionId ? `${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}` : CATEGORIES_PATH)
+            navigate(
+              competitionId ? `${DISCIPLINE_COMPETITION_CUSTOM_PATH}${competitionId}` : DISCIPLINES_PATH
+            )
           }
         >
           Wszystkie
@@ -44,8 +46,8 @@ const GenderPage = () => {
           onClick={() =>
             navigate(
               competitionId
-                ? `${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}M`
-                : `${RANKING_GENDER_CUSTOM_PATH}M`
+                ? `${DISCIPLINE_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}M`
+                : `${DISCIPLINE_GENDER_CUSTOM_PATH}M`
             )
           }
         >
@@ -56,8 +58,8 @@ const GenderPage = () => {
           onClick={() =>
             navigate(
               competitionId
-                ? `${CATEGORY_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}K`
-                : `${RANKING_GENDER_CUSTOM_PATH}K`
+                ? `${DISCIPLINE_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}K`
+                : `${DISCIPLINE_GENDER_CUSTOM_PATH}K`
             )
           }
         >

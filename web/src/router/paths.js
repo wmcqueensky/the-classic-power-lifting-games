@@ -10,19 +10,30 @@ export const SEARCH_PATH = '/szukaj/'
 
 export const COMPETITIONS_PATH = '/zawody/'
 
-export const DISCIPLINE_PATH = '/konkurencja/'
-
 export const GENDERS_PATH = '/gender/'
 export const GENDER_PATH = '/gender/:gender'
 export const GENDER_COMPETITION_PATH = '/gender/zawody/:zawody'
 export const GENDER_COMPETITION_CUSTOM_PATH = '/gender/zawody/'
 
+export const DISCIPLINES_PATH = '/konkurencja/'
+export const DISCIPLINE_COMPETITION_PATH = '/konkurencja/zawody/:zawody'
+export const DISCIPLINE_COMPETITION_CUSTOM_PATH = '/konkurencja/zawody/'
+export const DISCIPLINE_GENDER_PATH = '/konkurencja/gender/:gender'
+export const DISCIPLINE_GENDER_CUSTOM_PATH = '/konkurencja/gender/'
+export const DISCIPLINE_COMPETITION_GENDER_PATH = '/konkurencja/zawody/:zawody/gender/:gender'
+
 export const CATEGORIES_PATH = '/kategoria'
 export const CATEGORIES_GENDER_PATH = '/kategoria/gender/:gender'
+export const CATEGORY_GENDER_DISCIPLINE_PATH = '/kategoria/gender/:gender/konkurencja/:konkurencja'
 export const CATEGORIES_GENDER_CUSTOM_PATH = '/kategoria/gender/'
 export const CATEGORY_COMPETITION_PATH = '/kategoria/zawody/:zawody'
+export const CATEGORY_COMPETITION_DISCIPLINE_PATH = '/kategoria/zawody/:zawody/konkurencja/:konkurencja'
 export const CATEGORY_COMPETITION_CUSTOM_PATH = '/kategoria/zawody/'
+export const CATEGORY_DISCIPLINE_PATH = '/kategoria/konkurencja/:konkurencja'
+export const CATEGORY_DISCIPLINE_CUSTOM_PATH = '/kategoria/konkurencja/'
 export const CATEGORY_COMPETITION_GENDER_PATH = '/kategoria/zawody/:zawody/gender/:gender'
+export const CATEGORY_COMPETITION_GENDER_DISCIPLINE_PATH =
+  '/kategoria/zawody/:zawody/gender/:gender/konkurencja/:konkurencja'
 
 export const RANKING_PATH = '/ranking'
 export const RANKING_COMPETITION_PATH = '/ranking/zawody/:zawody'
