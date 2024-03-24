@@ -17,6 +17,10 @@ import ChoiceButton from '../../common/components/choice-button.jsx'
 
 import fetchAllCategories from '../../common/hooks/categories/use-categories.jsx'
 import fetchCategoriesForCompetition from '../../common/hooks/categories/use-category-for-competition.jsx'
+import fetchCategoriesForDiscipline from '../../common/hooks/categories/use-categories-for-discipline.jsx'
+import fetchCategoriesForCompetitionDiscipline from '../../common/hooks/categories/use-categories-for-competition-discipline.jsx'
+import fetchCategoriesForGenderDiscipline from '../../common/hooks/categories/use-categories-for-gender-discipline.jsx'
+import fetchCategoriesForCompetitionGenderDiscipline from '../../common/hooks/categories/use-categories-for-competition-gender-discipline.jsx'
 import fetchCategoriesForGender from '../../common/hooks/categories/use-category-for-gender.jsx'
 import fetchCategoriesForCompetitionGender from '../../common/hooks/categories/use-category-for-competition-gender.jsx'
 
@@ -61,20 +65,40 @@ const CategoriesPage = () => {
       try {
         let categoriesData = []
 
-        if (competitionId && gender) {
+        if (competitionId && gender && !disciplineId) {
           categoriesData = await fetchCategoriesForCompetitionGender(competitionId, gender)
         }
 
-        if (!competitionId && gender) {
+        if (!competitionId && gender && !disciplineId) {
           categoriesData = await fetchCategoriesForGender(gender)
         }
 
-        if (competitionId && !gender) {
+        if (competitionId && !gender && !disciplineId) {
           categoriesData = await fetchCategoriesForCompetition(competitionId)
         }
 
-        if (!competitionId && !gender) {
+        if (!competitionId && !gender && !disciplineId) {
           categoriesData = await fetchAllCategories()
+        }
+
+        if (competitionId && gender && disciplineId) {
+          categoriesData = await fetchCategoriesForCompetitionGenderDiscipline(
+            competitionId,
+            gender,
+            disciplineId
+          )
+        }
+
+        if (!competitionId && gender && disciplineId) {
+          categoriesData = await fetchCategoriesForGenderDiscipline(gender, disciplineId)
+        }
+
+        if (competitionId && !gender && disciplineId) {
+          categoriesData = await fetchCategoriesForCompetitionDiscipline(competitionId, disciplineId)
+        }
+
+        if (!competitionId && !gender && disciplineId) {
+          categoriesData = await fetchCategoriesForDiscipline(disciplineId)
         }
 
         setCategories(categoriesData)
@@ -84,7 +108,7 @@ const CategoriesPage = () => {
     }
 
     fetchCategories()
-  }, [competitionId])
+  }, [competitionId, gender, disciplineId])
 
   return (
     <motion.div variants={smoothVariant} initial="hidden" animate="visible">
