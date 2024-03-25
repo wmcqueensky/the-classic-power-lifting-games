@@ -34,14 +34,31 @@ const RegistrationPage = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        <Heading fontSize={{base: '2rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}} mb={4} textAlign="center">
-          Przyszłe zawody:
-        </Heading>
-        {registration.map((competition) => (
-          <Link key={competition.name} href={competition.link} isExternal>
-            <ChoiceButton>{competition.name}</ChoiceButton>
-          </Link>
-        ))}
+        {registration.length > 0 ? (
+          <>
+            <Heading
+              fontSize={{base: '2rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}}
+              mb={4}
+              textAlign="center"
+            >
+              Przyszłe zawody:
+            </Heading>
+
+            {registration.map((competition) => (
+              <Link key={competition.name} href={competition.link} isExternal>
+                <ChoiceButton>{competition.name}</ChoiceButton>
+              </Link>
+            ))}
+          </>
+        ) : (
+          <Heading
+            fontSize={{base: '2rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}}
+            mb={4}
+            textAlign="center"
+          >
+            Brak otwartych zapisów
+          </Heading>
+        )}
       </Box>
     </motion.div>
   )

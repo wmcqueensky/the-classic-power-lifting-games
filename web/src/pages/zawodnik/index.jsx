@@ -109,6 +109,7 @@ const LifterPage = () => {
                 <Th>Wilks</Th>
               </Tr>
             </Thead>
+
             <Tbody>
               <Tr>
                 <Td>Double Lift</Td>
@@ -128,6 +129,7 @@ const LifterPage = () => {
                   ).toFixed(4)}
                 </Td>
               </Tr>
+
               <Tr>
                 <Td>Bench Press</Td>
                 <Td>{scores[0].max_sg?.toFixed(2)}</Td>
@@ -146,6 +148,7 @@ const LifterPage = () => {
                   ).toFixed(4)}
                 </Td>
               </Tr>
+
               <Tr>
                 <Td>Deadlift</Td>
                 <Td>{scores[0].max_sg?.toFixed(2)}</Td>
@@ -164,6 +167,7 @@ const LifterPage = () => {
                   ).toFixed(4)}
                 </Td>
               </Tr>
+
               <Tr>
                 <Td>Steel Grip</Td>
                 <Td>{scores[0].max_sg?.toFixed(2)}</Td>
@@ -182,15 +186,18 @@ const LifterPage = () => {
                   ).toFixed(4)}
                 </Td>
               </Tr>
+
               <Tr>
-                <Td>Trójbój</Td>
+                <Td>Powerlifting</Td>
                 <Td>{scores[0].max_sg?.toFixed(2)}</Td>
                 <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
                 <Td>{scores[0].max_wl?.toFixed(2)}</Td>
                 <Td>{scores[0].max_mc?.toFixed(2)}</Td>
+
                 <Td>
                   {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
                 </Td>
+
                 <Td>
                   {(
                     scores[0].wilks_wl +
@@ -209,7 +216,7 @@ const LifterPage = () => {
         </Text>
 
         <Table variant="striped" colorScheme="blackAlpha" minWidth="100%" size="sm" overflowX="scroll" mb="8">
-          <Thead>
+          <Thead bgColor="white">
             <Tr>
               <Th>Ranking</Th>
               <Th>Waga</Th>
