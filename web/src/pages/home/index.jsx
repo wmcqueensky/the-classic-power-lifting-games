@@ -46,18 +46,30 @@ const HomePage = () => {
           animate={isVisible1 ? 'visible' : 'hidden'}
           ref={boxRef1}
         >
-          <VStack textAlign="left">
-            <Heading
-              fontSize={{base: '3rem', sm: '4,5rem', md: '5rem', lg: '5.5rem', xl: '6rem', '2xl': '6.5rem'}}
+          <VStack>
+            <VStack
               mt="10px"
               mr={{base: '0', sm: '50px', md: '100px', lg: '200px', xl: '310px', '2xl': '350px'}}
               bgColor="rgba(0, 0, 0, 0.5)"
               borderRadius="20"
-              overflow="hidden"
               p="4"
+              alignItems="left"
             >
-              <span style={{fontWeight: 'normal'}}>THE CLASSIC</span> <br /> POWERLIFTING <br /> GAMES
-            </Heading>
+              <Heading
+                fontSize={{base: '1.5rem', sm: '2rem', md: '3rem', '2xl': '3.5rem'}}
+                fontWeight="100"
+                lineHeight="108%"
+              >
+                THE CLASSIC
+              </Heading>
+
+              <Heading
+                fontSize={{base: '3rem', sm: '4.5rem', md: '5rem', lg: '5.5rem', xl: '6rem', '2xl': '6.5rem'}}
+                lineHeight="108%"
+              >
+                POWERLIFTING <br /> GAMES
+              </Heading>
+            </VStack>
 
             <Button
               size={{base: 'xl', lg: 'xxl'}}

@@ -169,6 +169,8 @@ const RankingPage = () => {
                 )}
                 {/* {disciplineInfo.name === 'Steel Grip' && <Td>{score.max_sg?.toFixed(2)}</Td>}
                 {disciplineInfo.name === 'Steel Grip' && <Td>{score.wilks_sg?.toFixed(4)}</Td>} */}
+                <Td>{score.max_sg?.toFixed(2)}</Td>
+                <Td>{score.wilks_sg?.toFixed(4)}</Td>
 
                 <Td>{score.max_sqt?.toFixed(2)}</Td>
                 <Td>{score.wilks_sqt?.toFixed(4)}</Td>
