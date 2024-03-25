@@ -107,7 +107,7 @@ const RankingPage = () => {
         )}
 
         <Table variant="striped" colorScheme="blackAlpha" minWidth="100%" size="sm" overflowX="scroll">
-          <Thead>
+          <Thead bgColor="white" position="sticky" top="88" zIndex="sticky">
             <Tr>
               <Th>Miejsce</Th>
               <Th>Zawodnik</Th>

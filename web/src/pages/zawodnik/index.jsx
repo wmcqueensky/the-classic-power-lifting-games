@@ -98,8 +98,9 @@ const LifterPage = () => {
             overflowX="scroll"
             mb="8"
           >
-            <Thead>
+            <Thead bgColor="white">
               <Tr>
+                <Th>Konkurencja</Th>
                 <Th>SteelGrip</Th>
                 <Th>Squat</Th>
                 <Th>Deadlift</Th>
@@ -110,6 +111,79 @@ const LifterPage = () => {
             </Thead>
             <Tbody>
               <Tr>
+                <Td>Double Lift</Td>
+                <Td>{scores[0].max_sg?.toFixed(2)}</Td>
+                <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
+                <Td>{scores[0].max_wl?.toFixed(2)}</Td>
+                <Td>{scores[0].max_mc?.toFixed(2)}</Td>
+                <Td>
+                  {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
+                </Td>
+                <Td>
+                  {(
+                    scores[0].wilks_wl +
+                    scores[0].wilks_mc +
+                    scores[0].wilks_sg +
+                    scores[0].wilks_sqt
+                  ).toFixed(4)}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>Bench Press</Td>
+                <Td>{scores[0].max_sg?.toFixed(2)}</Td>
+                <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
+                <Td>{scores[0].max_wl?.toFixed(2)}</Td>
+                <Td>{scores[0].max_mc?.toFixed(2)}</Td>
+                <Td>
+                  {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
+                </Td>
+                <Td>
+                  {(
+                    scores[0].wilks_wl +
+                    scores[0].wilks_mc +
+                    scores[0].wilks_sg +
+                    scores[0].wilks_sqt
+                  ).toFixed(4)}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>Deadlift</Td>
+                <Td>{scores[0].max_sg?.toFixed(2)}</Td>
+                <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
+                <Td>{scores[0].max_wl?.toFixed(2)}</Td>
+                <Td>{scores[0].max_mc?.toFixed(2)}</Td>
+                <Td>
+                  {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
+                </Td>
+                <Td>
+                  {(
+                    scores[0].wilks_wl +
+                    scores[0].wilks_mc +
+                    scores[0].wilks_sg +
+                    scores[0].wilks_sqt
+                  ).toFixed(4)}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>Steel Grip</Td>
+                <Td>{scores[0].max_sg?.toFixed(2)}</Td>
+                <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
+                <Td>{scores[0].max_wl?.toFixed(2)}</Td>
+                <Td>{scores[0].max_mc?.toFixed(2)}</Td>
+                <Td>
+                  {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
+                </Td>
+                <Td>
+                  {(
+                    scores[0].wilks_wl +
+                    scores[0].wilks_mc +
+                    scores[0].wilks_sg +
+                    scores[0].wilks_sqt
+                  ).toFixed(4)}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>Trójbój</Td>
                 <Td>{scores[0].max_sg?.toFixed(2)}</Td>
                 <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
                 <Td>{scores[0].max_wl?.toFixed(2)}</Td>
