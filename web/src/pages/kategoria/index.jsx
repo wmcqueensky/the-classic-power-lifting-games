@@ -1,4 +1,4 @@
-import {Box, Heading, VStack} from '@chakra-ui/react'
+import {Box, Heading, VStack, HStack} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import {motion} from 'framer-motion'
@@ -40,33 +40,33 @@ const CategoriesPage = () => {
     }
 
     if (!competitionId && gender && !disciplineId) {
-      navigate(`${RANKING_GENDER_CUSTOM_PATH}${gender}`) //git
+      navigate(`${RANKING_GENDER_CUSTOM_PATH}${gender}`)
     }
 
     if (competitionId && !gender && !disciplineId) {
-      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}`) //git
+      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}`)
     }
 
     if (!competitionId && !gender && !disciplineId) {
-      navigate(RANKING_PATH) //git
+      navigate(RANKING_PATH)
     }
 
     if (!competitionId && !gender && disciplineId) {
-      navigate(`${RANKING_DISCIPLINE_CUSTOM_PATH}${disciplineId}`) //git
+      navigate(`${RANKING_DISCIPLINE_CUSTOM_PATH}${disciplineId}`)
     }
 
     if (competitionId && gender && disciplineId) {
       navigate(
-        `${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}${gender}${DISCIPLINES_PATH}${disciplineId}` //git ale ranking chyba ignoruje plec
+        `${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}${gender}${DISCIPLINES_PATH}${disciplineId}`
       )
     }
 
     if (!competitionId && gender && disciplineId) {
-      navigate(`${RANKING_GENDER_CUSTOM_PATH}${gender}${DISCIPLINES_PATH}${disciplineId}`) //git i tutaj plec tez git
+      navigate(`${RANKING_GENDER_CUSTOM_PATH}${gender}${DISCIPLINES_PATH}${disciplineId}`)
     }
 
     if (competitionId && !gender && disciplineId) {
-      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${DISCIPLINES_PATH}${disciplineId}`) //git
+      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${DISCIPLINES_PATH}${disciplineId}`)
     }
   }
 
@@ -142,6 +142,13 @@ const CategoriesPage = () => {
         justifyContent="center"
         flexDirection="column"
       >
+        <HStack h="20%">
+          <Box borderBottom="10px solid" borderColor="red" w="50px" mx={2} />
+          <Box borderBottom="10px solid" borderColor="red" w="50px" mx={2} />
+          <Box borderBottom="10px solid" borderColor="red" w="50px" mx={2} />
+          <Box borderBottom="10px solid" borderColor="red" w="50px" mx={2} />
+        </HStack>
+
         <Heading fontSize={{base: '2rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}} mb={4} textAlign="center">
           Wybierz kategorie:
         </Heading>

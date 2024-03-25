@@ -14,6 +14,7 @@ import backgroundImage from '../../common/assets/statistics-background.png'
 
 import fetchCategoryInfo from '../../common/hooks/categories/use-category-for-ranking-info.jsx'
 import fetchCompetitionInfo from '../../common/hooks/competitions/use-competition-for-ranking-info.jsx'
+import fetchDisciplineInfo from '../../common/hooks/disciplines/use-discipline-for-ranking-info.jsx'
 
 import fetchScoresForRanking from '../../common/hooks/scores/use-scores-for-ranking.jsx'
 import fetchLiftersData from '../../common/hooks/lifters/use-lifters-for-ranking.jsx'
@@ -23,6 +24,7 @@ import fetchCategoriesData from '../../common/hooks/categories/use-categories-fo
 const RankingPage = () => {
   const [competitionInfo, setCompetitionInfo] = useState({})
   const [categoryInfo, setCategoryInfo] = useState({})
+  const [disciplineInfo, setDisciplineInfo] = useState({})
   const [scores, setScores] = useState([])
   const [lifters, setLifters] = useState({})
   const [competitions, setCompetitions] = useState({})
@@ -65,6 +67,9 @@ const RankingPage = () => {
         if (categoryId && !gender) {
           const categoryData = await fetchCategoryInfo(categoryId)
           setCategoryInfo(categoryData)
+
+          const disciplineData = await fetchDisciplineInfo(categoryData.discipline_id)
+          setDisciplineInfo(disciplineData)
         }
       } catch (error) {
         console.error('Error fetching data:', error.message)
@@ -111,6 +116,8 @@ const RankingPage = () => {
               <Th>Klub</Th>
               {!competitionId && <Th>Zawody</Th>}
               {!categoryId && <Th>Kategoria</Th>}
+              {/* {disciplineInfo.name === 'Steel Grip' && <Th>SteelGrip</Th>}
+              {disciplineInfo.name === 'Steel Grip' && <Th>WilksSG</Th>} */}
               <Th>SteelGrip</Th>
               <Th>WilksSG</Th>
               <Th>Squat</Th>
@@ -160,9 +167,8 @@ const RankingPage = () => {
                     </TableButton>
                   </Td>
                 )}
-
-                <Td>{score.max_sg?.toFixed(2)}</Td>
-                <Td>{score.wilks_sg?.toFixed(4)}</Td>
+                {/* {disciplineInfo.name === 'Steel Grip' && <Td>{score.max_sg?.toFixed(2)}</Td>}
+                {disciplineInfo.name === 'Steel Grip' && <Td>{score.wilks_sg?.toFixed(4)}</Td>} */}
 
                 <Td>{score.max_sqt?.toFixed(2)}</Td>
                 <Td>{score.wilks_sqt?.toFixed(4)}</Td>
