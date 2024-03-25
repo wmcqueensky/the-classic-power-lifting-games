@@ -27,13 +27,18 @@ const RankingPage = () => {
   const [lifters, setLifters] = useState({})
   const [competitions, setCompetitions] = useState({})
   const [categories, setCategories] = useState({})
-  const {zawody: competitionId, kategoria: categoryId, gender: gender} = useParams()
+  const {
+    zawody: competitionId,
+    kategoria: categoryId,
+    gender: gender,
+    konkurencja: disciplineId,
+  } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const scoresData = await fetchScoresForRanking(competitionId, categoryId, gender)
+        const scoresData = await fetchScoresForRanking(competitionId, categoryId, gender, disciplineId)
         setScores(scoresData)
 
         const lifterIds = scoresData.map((score) => score.lifter_id)

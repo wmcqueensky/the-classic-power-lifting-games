@@ -21,7 +21,7 @@ const theme = extendTheme({
         '&:hover': {
           bg: 'gray',
         },
-        bg: 'gray.900',
+        bg: 'gray.700',
         borderRadius: 'full',
       },
       '::-webkit-scrollbar-track': {

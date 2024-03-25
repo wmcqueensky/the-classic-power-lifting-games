@@ -39,6 +39,10 @@ import {
   RANKING_GENDER_PATH,
   RANKING_COMPETITION_GENDER_PATH,
   RANKING_COMPETITION_CATEGORY_PATH,
+  RANKING_DISCIPLINE_PATH,
+  RANKING_COMPETITION_GENDER_DISCIPLINE_PATH,
+  RANKING_COMPETITION_DISCIPLINE_PATH,
+  RANKING_GENDER_DISCIPLINE_PATH,
 } from './paths'
 
 const Router = () => (
@@ -66,8 +70,12 @@ const Router = () => (
       <Route path={CATEGORY_COMPETITION_GENDER_DISCIPLINE_PATH} element={<CategoriesPage />} />
       <Route path={RANKING_PATH} element={<RankingPage />} />
       <Route path={RANKING_COMPETITION_PATH} element={<RankingPage />} />
+      <Route path={RANKING_COMPETITION_DISCIPLINE_PATH} element={<RankingPage />} />
       <Route path={RANKING_CATEGORY_PATH} element={<RankingPage />} />
       <Route path={RANKING_GENDER_PATH} element={<RankingPage />} />
+      <Route path={RANKING_GENDER_DISCIPLINE_PATH} element={<RankingPage />} />
+      <Route path={RANKING_DISCIPLINE_PATH} element={<RankingPage />} />
+      <Route path={RANKING_COMPETITION_GENDER_DISCIPLINE_PATH} element={<RankingPage />} />
       <Route path={RANKING_COMPETITION_GENDER_PATH} element={<RankingPage />} />
       <Route path={RANKING_COMPETITION_CATEGORY_PATH} element={<RankingPage />} />
       <Route path={LIFTER_PATH} element={<LifterPage />} />

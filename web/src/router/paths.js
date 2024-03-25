@@ -37,11 +37,17 @@ export const CATEGORY_COMPETITION_GENDER_DISCIPLINE_PATH =
 
 export const RANKING_PATH = '/ranking'
 export const RANKING_COMPETITION_PATH = '/ranking/zawody/:zawody'
+export const RANKING_COMPETITION_DISCIPLINE_PATH = '/ranking/zawody/:zawody/konkurencja/:konkurencja'
 export const RANKING_CATEGORY_PATH = '/ranking/kategoria/:kategoria'
 export const RANKING_GENDER_PATH = '/ranking/gender/:gender'
+export const RANKING_GENDER_DISCIPLINE_PATH = '/ranking/gender/:gender/konkurencja/:konkurencja'
+export const RANKING_DISCIPLINE_PATH = '/ranking/konkurencja/:konkurencja'
 export const RANKING_COMPETITION_CATEGORY_PATH = '/ranking/zawody/:zawody/kategoria/:kategoria'
 export const RANKING_COMPETITION_GENDER_PATH = '/ranking/zawody/:zawody/gender/:gender'
+export const RANKING_COMPETITION_GENDER_DISCIPLINE_PATH =
+  '/ranking/zawody/:zawody/gender/:gender/konkurencja/:konkurencja'
 
 export const RANKING_COMPETITION_CUSTOM_PATH = '/ranking/zawody/'
 export const RANKING_CATEGORY_CUSTOM_PATH = '/ranking/kategoria/'
 export const RANKING_GENDER_CUSTOM_PATH = '/ranking/gender/'
+export const RANKING_DISCIPLINE_CUSTOM_PATH = '/ranking/konkurencja/'

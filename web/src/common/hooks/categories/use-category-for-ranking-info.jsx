@@ -4,7 +4,7 @@ const fetchCategoryInfo = async (categoryId) => {
   try {
     const {data, error} = await supabase
       .from('categories')
-      .select('name')
+      .select('name, discipline_id')
       .eq('category_id', categoryId)
       .single()
 

@@ -8,8 +8,10 @@ import {
   CATEGORIES_PATH,
   RANKING_CATEGORY_CUSTOM_PATH,
   RANKING_GENDER_CUSTOM_PATH,
+  RANKING_DISCIPLINE_CUSTOM_PATH,
   RANKING_PATH,
   GENDERS_PATH,
+  DISCIPLINES_PATH,
 } from '../../router/paths.js'
 
 import backgroundImage from '../../common/assets/statistics-background.png'
@@ -33,20 +35,38 @@ const CategoriesPage = () => {
   const navigate = useNavigate()
 
   const fetchScoresForAllCategories = async () => {
-    if (competitionId && gender) {
-      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}${gender}`)
+    if (competitionId && gender && !disciplineId) {
+      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}${gender}`) //kiedy jest K to bierze tez M
     }
 
-    if (!competitionId && gender) {
-      navigate(`${RANKING_GENDER_CUSTOM_PATH}${gender}`)
+    if (!competitionId && gender && !disciplineId) {
+      navigate(`${RANKING_GENDER_CUSTOM_PATH}${gender}`) //git
     }
 
-    if (competitionId && !gender) {
-      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}`)
+    if (competitionId && !gender && !disciplineId) {
+      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}`) //git
     }
 
-    if (!competitionId && !gender) {
-      navigate(RANKING_PATH)
+    if (!competitionId && !gender && !disciplineId) {
+      navigate(RANKING_PATH) //git
+    }
+
+    if (!competitionId && !gender && disciplineId) {
+      navigate(`${RANKING_DISCIPLINE_CUSTOM_PATH}${disciplineId}`) //git
+    }
+
+    if (competitionId && gender && disciplineId) {
+      navigate(
+        `${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}${gender}${DISCIPLINES_PATH}${disciplineId}` //git ale ranking chyba ignoruje plec
+      )
+    }
+
+    if (!competitionId && gender && disciplineId) {
+      navigate(`${RANKING_GENDER_CUSTOM_PATH}${gender}${DISCIPLINES_PATH}${disciplineId}`) //git i tutaj plec tez git
+    }
+
+    if (competitionId && !gender && disciplineId) {
+      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${DISCIPLINES_PATH}${disciplineId}`) //git
     }
   }
 
