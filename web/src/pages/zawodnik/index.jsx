@@ -14,6 +14,11 @@ import fetchInfoForLifter from '../../common/hooks/lifters/use-lifter-for-info.j
 const LifterPage = () => {
   const [lifter, setLifterData] = useState(0)
   const [scores, setScores] = useState([])
+  const [doubleLiftScores, setDoubleLiftScores] = useState([])
+  const [benchPressScores, setBenchPressScores] = useState([])
+  const [deadliftScores, setDeadliftScores] = useState([])
+  const [steelGripScores, setSteelGripScores] = useState([])
+  const [powerLiftingScores, setPowerliftingScores] = useState([])
   const [competitions, setCompetitions] = useState([])
   const [categories, setCategories] = useState([])
   const {zawodnik: lifterId} = useParams()
@@ -31,7 +36,9 @@ const LifterPage = () => {
 
     const fetchScoresForLifter = async () => {
       try {
-        const {data: categoryData, error: categoryError} = await supabase.from('categories').select('*')
+        const {data: categoryData, error: categoryError} = await supabase
+          .from('categories')
+          .select('category_id, name, discipline_id')
 
         if (categoryError) {
           throw categoryError
@@ -45,7 +52,7 @@ const LifterPage = () => {
 
         const {data: competitionData, error: competitionError} = await supabase
           .from('competitions')
-          .select('*')
+          .select('competition_id, name, date')
 
         if (competitionError) {
           throw competitionError
@@ -66,7 +73,76 @@ const LifterPage = () => {
           throw scoreError
         }
 
-        scoreData.sort((a, b) => b.wilkswl + b.wilksmc - (a.wilkswl + a.wilksmc))
+        scoreData.sort(
+          (a, b) =>
+            b.wilks_wl +
+            b.wilks_mc +
+            b.wilks_sg +
+            b.wilks_sqt -
+            (a.wilks_wl + a.wilks_mc + b.wilks_sg + b.wilks_sqt)
+        )
+
+        const {data: disciplineData, error: disciplineError} = await supabase.from('disciplines').select('*')
+
+        if (disciplineError) {
+          throw disciplineError
+        }
+
+        let doubleLiftScores = []
+        let benchPressScores = []
+        let deadliftScores = []
+        let steelGripScores = []
+        let powerLiftingScores = []
+
+        scoreData.forEach((score) => {
+          const categoryId = score.category_id
+          const category = categoryData.find((category) => category.category_id === categoryId)
+          if (category) {
+            const disciplineId = category.discipline_id
+            console.log(disciplineId)
+            const discipline = disciplineData.find((discipline) => discipline.discipline_id === disciplineId)
+            if (discipline) {
+              const disciplineName = discipline.name
+              switch (disciplineName) {
+                case 'Double Lift':
+                  doubleLiftScores.push(score)
+                  break
+                case 'Bench Press':
+                  benchPressScores.push(score)
+                  break
+                case 'Deadlift':
+                  deadliftScores.push(score)
+                  break
+                case 'Steel Grip':
+                  steelGripScores.push(score)
+                  break
+                case 'Powerlifting':
+                  powerLiftingScores.push(score)
+                  break
+                default:
+                  break
+              }
+            }
+          }
+        })
+
+        doubleLiftScores.sort((a, b) => b.wilks_wl + b.wilks_mc - (a.wilks_wl + a.wilks_mc))
+
+        benchPressScores.sort((a, b) => b.wilks_wl - a.wilks_wl)
+
+        deadliftScores.sort((a, b) => b.wilks_mc - a.wilks_mc)
+
+        steelGripScores.sort((a, b) => b.wilks_sg - b.wilks_sg)
+
+        powerLiftingScores.sort(
+          (a, b) => b.wilks_wl + b.wilks_mc + b.wilks_sqt - (a.wilks_wl + a.wilks_mc + b.wilks_sqt)
+        )
+
+        setDoubleLiftScores(doubleLiftScores)
+        setBenchPressScores(benchPressScores)
+        setDeadliftScores(deadliftScores)
+        setSteelGripScores(steelGripScores)
+        setPowerliftingScores(powerLiftingScores)
 
         setScores(scoreData)
       } catch (error) {
@@ -113,98 +189,80 @@ const LifterPage = () => {
             <Tbody>
               <Tr>
                 <Td>Double Lift</Td>
-                <Td>{scores[0].max_sg?.toFixed(2)}</Td>
-                <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
-                <Td>{scores[0].max_wl?.toFixed(2)}</Td>
-                <Td>{scores[0].max_mc?.toFixed(2)}</Td>
+                <Td></Td>
+                <Td></Td>
+                <Td>{doubleLiftScores[0]?.max_wl?.toFixed(2)}</Td>
+                <Td>{doubleLiftScores[0]?.max_mc?.toFixed(2)}</Td>
                 <Td>
-                  {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
+                  {doubleLiftScores[0]?.max_wl !== undefined && doubleLiftScores[0]?.max_mc !== undefined
+                    ? (doubleLiftScores[0]?.max_wl + doubleLiftScores[0]?.max_mc).toFixed(2)
+                    : ''}
                 </Td>
                 <Td>
-                  {(
-                    scores[0].wilks_wl +
-                    scores[0].wilks_mc +
-                    scores[0].wilks_sg +
-                    scores[0].wilks_sqt
-                  ).toFixed(4)}
+                  {doubleLiftScores[0]?.wilks_wl !== undefined && doubleLiftScores[0]?.wilks_mc !== undefined
+                    ? (doubleLiftScores[0]?.wilks_wl + doubleLiftScores[0]?.wilks_mc).toFixed(4)
+                    : ''}
                 </Td>
               </Tr>
 
               <Tr>
                 <Td>Bench Press</Td>
-                <Td>{scores[0].max_sg?.toFixed(2)}</Td>
-                <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
-                <Td>{scores[0].max_wl?.toFixed(2)}</Td>
-                <Td>{scores[0].max_mc?.toFixed(2)}</Td>
-                <Td>
-                  {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
-                </Td>
-                <Td>
-                  {(
-                    scores[0].wilks_wl +
-                    scores[0].wilks_mc +
-                    scores[0].wilks_sg +
-                    scores[0].wilks_sqt
-                  ).toFixed(4)}
-                </Td>
+                <Td></Td>
+                <Td></Td>
+                <Td></Td>
+                <Td>{benchPressScores[0]?.max_mc?.toFixed(2)}</Td>
+                <Td>{benchPressScores[0]?.max_wl?.toFixed(2)}</Td>
+                <Td>{benchPressScores[0]?.wilks_wl?.toFixed(4)}</Td>
               </Tr>
 
               <Tr>
                 <Td>Deadlift</Td>
-                <Td>{scores[0].max_sg?.toFixed(2)}</Td>
-                <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
-                <Td>{scores[0].max_wl?.toFixed(2)}</Td>
-                <Td>{scores[0].max_mc?.toFixed(2)}</Td>
-                <Td>
-                  {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
-                </Td>
-                <Td>
-                  {(
-                    scores[0].wilks_wl +
-                    scores[0].wilks_mc +
-                    scores[0].wilks_sg +
-                    scores[0].wilks_sqt
-                  ).toFixed(4)}
-                </Td>
+                <Td></Td>
+                <Td></Td>
+                <Td></Td>
+                <Td>{deadliftScores[0]?.max_mc?.toFixed(2)}</Td>
+                <Td>{deadliftScores[0]?.max_mc?.toFixed(2)}</Td>
+                <Td>{deadliftScores[0]?.wilks_mc?.toFixed(4)}</Td>
               </Tr>
 
               <Tr>
                 <Td>Steel Grip</Td>
-                <Td>{scores[0].max_sg?.toFixed(2)}</Td>
-                <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
-                <Td>{scores[0].max_wl?.toFixed(2)}</Td>
-                <Td>{scores[0].max_mc?.toFixed(2)}</Td>
-                <Td>
-                  {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
-                </Td>
-                <Td>
-                  {(
-                    scores[0].wilks_wl +
-                    scores[0].wilks_mc +
-                    scores[0].wilks_sg +
-                    scores[0].wilks_sqt
-                  ).toFixed(4)}
-                </Td>
+                <Td>{steelGripScores[0]?.max_sg?.toFixed(2)}</Td>
+                <Td></Td>
+                <Td></Td>
+                <Td></Td>
+                <Td>{steelGripScores[0]?.max_sg?.toFixed(2)}</Td>
+                <Td>{steelGripScores[0]?.wilks_sg?.toFixed(4)}</Td>
               </Tr>
 
               <Tr>
                 <Td>Powerlifting</Td>
-                <Td>{scores[0].max_sg?.toFixed(2)}</Td>
-                <Td>{scores[0].max_sqt?.toFixed(2)}</Td>
-                <Td>{scores[0].max_wl?.toFixed(2)}</Td>
-                <Td>{scores[0].max_mc?.toFixed(2)}</Td>
+                <Td></Td>
+                <Td>{powerLiftingScores[0]?.max_sqt?.toFixed(2)}</Td>
+                <Td>{powerLiftingScores[0]?.max_wl?.toFixed(2)}</Td>
+                <Td>{powerLiftingScores[0]?.max_mc?.toFixed(2)}</Td>
 
                 <Td>
-                  {(scores[0].max_wl + scores[0].max_mc + scores[0].max_sg + scores[0].max_sqt).toFixed(2)}
+                  {powerLiftingScores[0]?.max_wl !== undefined &&
+                  powerLiftingScores[0]?.max_mc !== undefined &&
+                  powerLiftingScores[0]?.max_sqt !== undefined
+                    ? (
+                        powerLiftingScores[0]?.max_wl +
+                        powerLiftingScores[0]?.max_mc +
+                        powerLiftingScores[0]?.max_sqt
+                      ).toFixed(2)
+                    : ''}
                 </Td>
-
                 <Td>
-                  {(
-                    scores[0].wilks_wl +
-                    scores[0].wilks_mc +
-                    scores[0].wilks_sg +
-                    scores[0].wilks_sqt
-                  ).toFixed(4)}
+                  {powerLiftingScores[0]?.wilks_wl !== undefined &&
+                  powerLiftingScores[0]?.wilks_mc !== undefined &&
+                  powerLiftingScores[0]?.wilks_sqt !== undefined
+                    ? (
+                        powerLiftingScores[0]?.wilks_wl +
+                        powerLiftingScores[0]?.wilks_mc +
+                        powerLiftingScores[0]?.wilks_sqt
+                      ).toFixed(4)
+                    : ''}
                 </Td>
               </Tr>
             </Tbody>

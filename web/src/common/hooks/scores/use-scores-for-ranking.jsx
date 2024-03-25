@@ -31,7 +31,7 @@ const fetchScoresForRanking = async (competitionId, categoryId, gender, discipli
     }
 
     if (!competitionId && !categoryId && !gender && disciplineId) {
-      const {data: categoryData, error: categoryError} = await supabase //git
+      const {data: categoryData, error: categoryError} = await supabase
         .from('categories')
         .select('category_id')
         .eq('discipline_id', disciplineId)
@@ -45,7 +45,7 @@ const fetchScoresForRanking = async (competitionId, categoryId, gender, discipli
     }
 
     if (competitionId && !categoryId && !gender && disciplineId) {
-      const {data: categoryData, error: categoryError} = await supabase //git
+      const {data: categoryData, error: categoryError} = await supabase
         .from('categories')
         .select('category_id')
         .eq('discipline_id', disciplineId)
@@ -59,7 +59,7 @@ const fetchScoresForRanking = async (competitionId, categoryId, gender, discipli
     }
 
     if (!competitionId && !categoryId && gender && disciplineId) {
-      const {data: categoryData, error: categoryError} = await supabase //git
+      const {data: categoryData, error: categoryError} = await supabase
         .from('categories')
         .select('category_id')
         .eq('discipline_id', disciplineId)
@@ -74,7 +74,7 @@ const fetchScoresForRanking = async (competitionId, categoryId, gender, discipli
     }
 
     if (competitionId && !categoryId && gender && disciplineId) {
-      const {data: categoryData, error: categoryError} = await supabase //git
+      const {data: categoryData, error: categoryError} = await supabase
         .from('categories')
         .select('category_id')
         .eq('discipline_id', disciplineId)

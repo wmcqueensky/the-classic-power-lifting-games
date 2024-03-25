@@ -52,7 +52,7 @@ const HomePage = () => {
               mr={{base: '0', sm: '50px', md: '100px', lg: '200px', xl: '310px', '2xl': '350px'}}
               bgColor="rgba(0, 0, 0, 0.5)"
               borderRadius="20"
-              p="4"
+              p="10"
               alignItems="left"
             >
               <Heading
