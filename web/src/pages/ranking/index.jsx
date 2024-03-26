@@ -22,7 +22,7 @@ import fetchCompetitionsData from '../../common/hooks/competitions/use-competiti
 import fetchCategoriesData from '../../common/hooks/categories/use-categories-for-ranking.jsx'
 
 const RankingPage = () => {
-  const [loading, setLoading] = useState(true) // Introduce loading state
+  const [loading, setLoading] = useState(true)
   const [competitionInfo, setCompetitionInfo] = useState({})
   const [categoryInfo, setCategoryInfo] = useState({})
   const [disciplineInfo, setDisciplineInfo] = useState({})

@@ -210,7 +210,7 @@ const LifterPage = () => {
                 <Td></Td>
                 <Td></Td>
                 <Td></Td>
-                <Td>{benchPressScores[0]?.max_mc?.toFixed(2)}</Td>
+                <Td>{benchPressScores[0]?.max_wl?.toFixed(2)}</Td>
                 <Td>{benchPressScores[0]?.max_wl?.toFixed(2)}</Td>
                 <Td>{benchPressScores[0]?.wilks_wl?.toFixed(4)}</Td>
               </Tr>

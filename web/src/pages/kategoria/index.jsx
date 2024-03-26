@@ -36,7 +36,7 @@ const CategoriesPage = () => {
 
   const fetchScoresForAllCategories = async () => {
     if (competitionId && gender && !disciplineId) {
-      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}${gender}`) //kiedy jest K to bierze tez M
+      navigate(`${RANKING_COMPETITION_CUSTOM_PATH}${competitionId}${GENDERS_PATH}${gender}`)
     }
 
     if (!competitionId && gender && !disciplineId) {

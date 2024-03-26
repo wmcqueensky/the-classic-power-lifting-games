@@ -3,21 +3,18 @@ import {VStack, Heading, Box, Button, Image} from '@chakra-ui/react'
 import {motion} from 'framer-motion'
 import {useNavigate} from 'react-router-dom'
 import {smoothVariant} from '../../common/animations/smooth-slide-in-animation.jsx'
-import {REGISTRATION_PATH, CONTACT_PATH} from '../../router/paths.js'
-
+import {REGISTRATION_PATH} from '../../router/paths.js'
 import backgroundImage from './images/background.png'
 import championshipImage from './images/double-lift.png'
-import peopleImage from './images/onas-home.png'
+import CookiePopup from '../../common/components/cookie-popup.jsx'
 
 const HomePage = () => {
   const navigate = useNavigate()
   const boxRef1 = useRef(null)
   const boxRef2 = useRef(null)
-  const boxRef3 = useRef(null)
-
   const [isVisible1, setIsVisible1] = useState(true)
   const [isVisible2, setIsVisible2] = useState(false)
-  const [isVisible3, setIsVisible3] = useState(false)
+  const [cookieAccepted, setCookieAccepted] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,18 +24,23 @@ const HomePage = () => {
       if (boxRef2.current && window.scrollY > boxRef2.current.offsetTop - window.innerHeight) {
         setIsVisible2(true)
       }
-      if (boxRef3.current && window.scrollY > boxRef3.current.offsetTop - window.innerHeight) {
-        setIsVisible3(true)
-      }
     }
     window.scrollTo(0, 0)
-
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const handleAcceptCookie = () => {
+    setCookieAccepted(true)
+  }
+
+  const handleDeclineCookie = () => {
+    setCookieAccepted(true)
+  }
+
   return (
     <>
+      {!cookieAccepted && <CookiePopup onAccept={handleAcceptCookie} onDecline={handleDeclineCookie} />}
       <Box bgImage={`url(${backgroundImage})`} backgroundSize="cover" backgroundPosition="center" h="100vh">
         <motion.div
           variants={smoothVariant}
@@ -62,7 +64,6 @@ const HomePage = () => {
               >
                 THE CLASSIC
               </Heading>
-
               <Heading
                 fontSize={{base: '3rem', sm: '4.5rem', md: '5rem', lg: '5.5rem', xl: '6rem', '2xl': '6.5rem'}}
                 lineHeight="108%"
@@ -70,7 +71,6 @@ const HomePage = () => {
                 POWERLIFTING <br /> GAMES
               </Heading>
             </VStack>
-
             <Button
               size={{base: 'xl', lg: 'xxl'}}
               colorScheme="black"
@@ -117,45 +117,6 @@ const HomePage = () => {
           </VStack>
         </motion.div>
       </Box>
-      <motion.div
-        variants={smoothVariant}
-        initial="hidden"
-        animate={isVisible3 ? 'visible' : 'hidden'}
-        transition={{delay: 1}}
-        ref={boxRef3}
-      >
-        <Box
-          backgroundPosition="center"
-          h="100vh"
-          color="white"
-          bgImage={`url(${peopleImage})`}
-          backgroundSize="cover"
-          ref={boxRef3}
-        >
-          <Button
-            size="xxl"
-            colorScheme="black"
-            variant="outline"
-            borderRadius="3xl"
-            position="absolute"
-            bottom="5%"
-            left="50%"
-            transform="translateX(-50%)"
-            p="8"
-            fontSize={{base: '1.5rem', sm: '2rem', lg: '2.5rem', '2xl': '3rem'}}
-            bgColor="rgba(0, 0, 0, 0.6)"
-            _hover={{
-              bg: 'rgba(255, 0, 0, 0.4)',
-              color: 'white',
-            }}
-            onClick={() => {
-              navigate(CONTACT_PATH)
-            }}
-          >
-            Dowiedz się o nas więcej
-          </Button>
-        </Box>
-      </motion.div>
     </>
   )
 }

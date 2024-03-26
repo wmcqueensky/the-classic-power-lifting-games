@@ -32,7 +32,7 @@ const StatisticsPage = () => {
         </Heading>
         <VStack maxH="70vh" overflowY="auto">
           <ChoiceButton onClick={() => navigate(`${SEARCH_PATH}`)}>Szukaj zawodnika</ChoiceButton>
-          <ChoiceButton onClick={() => navigate(`${COMPETITIONS_PATH}`)}>Szukaj kategorii</ChoiceButton>
+          <ChoiceButton onClick={() => navigate(`${COMPETITIONS_PATH}`)}>Szukaj rankingu</ChoiceButton>
         </VStack>
       </Box>
     </motion.div>
