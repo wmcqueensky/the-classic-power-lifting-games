@@ -22,6 +22,7 @@ import fetchCompetitionsData from '../../common/hooks/competitions/use-competiti
 import fetchCategoriesData from '../../common/hooks/categories/use-categories-for-ranking.jsx'
 
 const RankingPage = () => {
+  const [loading, setLoading] = useState(true) // Introduce loading state
   const [competitionInfo, setCompetitionInfo] = useState({})
   const [categoryInfo, setCategoryInfo] = useState({})
   const [disciplineInfo, setDisciplineInfo] = useState({})
@@ -64,13 +65,15 @@ const RankingPage = () => {
           setCompetitionInfo(competitionData)
         }
 
-        if (categoryId && !gender) {
+        if (categoryId) {
           const categoryData = await fetchCategoryInfo(categoryId)
           setCategoryInfo(categoryData)
 
           const disciplineData = await fetchDisciplineInfo(categoryData.discipline_id)
           setDisciplineInfo(disciplineData)
         }
+
+        setLoading(false)
       } catch (error) {
         console.error('Error fetching data:', error.message)
       }
@@ -78,6 +81,10 @@ const RankingPage = () => {
 
     fetchData()
   }, [competitionId, categoryId])
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <motion.div variants={smoothVariant} initial="hidden" animate="visible">
