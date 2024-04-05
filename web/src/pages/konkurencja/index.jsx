@@ -1,4 +1,4 @@
-import {Box, Heading, VStack, HStack} from '@chakra-ui/react'
+import {Box, Heading, VStack, HStack, Text} from '@chakra-ui/react'
 import {useNavigate, useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import {motion} from 'framer-motion'
@@ -14,9 +14,12 @@ import {
 
 import backgroundImage from '../../common/assets/statistics-background.png'
 import ChoiceButton from '../../common/components/choice-button.jsx'
+
 import fetchDisciplines from '../../common/hooks/disciplines/use-disciplines.jsx'
+import fetchCompetitionInfo from '../../common/hooks/competitions/use-competition-for-ranking-info.jsx'
 
 const DisciplinePage = () => {
+  const [competitionInfo, setCompetitionInfo] = useState({})
   const [disciplines, setDisciplines] = useState([])
   const {zawody: competitionId, gender} = useParams()
   const navigate = useNavigate()
@@ -24,6 +27,11 @@ const DisciplinePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (competitionId) {
+          const competitionData = await fetchCompetitionInfo(competitionId)
+          setCompetitionInfo(competitionData)
+        }
+
         const data = await fetchDisciplines()
         setDisciplines(data)
       } catch (error) {
@@ -84,12 +92,53 @@ const DisciplinePage = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        <HStack h="20%">
-          <Box borderBottom="10px solid" borderColor="red" w="50px" mx={2} />
-          <Box borderBottom="10px solid" borderColor="red" w="50px" mx={2} />
-          <Box borderBottom="10px solid" borderColor="red" w="50px" mx={2} />
-          <Box borderBottom="10px solid" borderColor="white" w="50px" mx={2} />
-        </HStack>
+        <VStack>
+          <HStack h={{base: '20%', md: '10%'}} mb="2">
+            <Box w={{base: '70px', md: '150px'}} mx={2} fontSize={{base: '12px', md: '16px'}}>
+              <Text textAlign="center">{competitionId ? competitionInfo.name : 'Wszystkie Zawody'}</Text>
+            </Box>
+            <Box w={{base: '70px', md: '150px'}} mx={2} fontSize={{base: '12px', md: '16px'}}>
+              <Text textAlign="center">{gender ? gender : 'Wszystkie Płcie'}</Text>
+            </Box>
+            <Box w={{base: '70px', md: '150px'}} mx={2} fontSize={{base: '12px', md: '16px'}}>
+              <Text textAlign="center">Konkurencja</Text>
+            </Box>
+            <Box w={{base: '70px', md: '150px'}} mx={2} fontSize={{base: '12px', md: '16px'}}>
+              <Text textAlign="center">Kategoria</Text>
+            </Box>
+          </HStack>
+
+          <HStack h="20%">
+            <Box
+              borderBottom="10px solid"
+              borderColor="red"
+              borderRadius="4"
+              w={{base: '70px', md: '150px'}}
+              mx={2}
+            />
+            <Box
+              borderBottom="10px solid"
+              borderColor="red"
+              borderRadius="4"
+              w={{base: '70px', md: '150px'}}
+              mx={2}
+            />
+            <Box
+              borderBottom="10px solid"
+              borderColor="red"
+              borderRadius="4"
+              w={{base: '70px', md: '150px'}}
+              mx={2}
+            />
+            <Box
+              borderBottom="10px solid"
+              borderColor="white"
+              borderRadius="4"
+              w={{base: '70px', md: '150px'}}
+              mx={2}
+            />
+          </HStack>
+        </VStack>
 
         <Heading fontSize={{base: '2rem', lg: '3rem', xl: '3.5rem', '2xl': '4rem'}} mb={4} textAlign="center">
           Wybierz konkurencję:

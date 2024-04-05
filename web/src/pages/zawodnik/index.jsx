@@ -187,12 +187,12 @@ const LifterPage = () => {
             </Thead>
 
             <Tbody>
-              <Tr>
+              <Tr bg="gray.900">
                 <Td>Double Lift</Td>
                 <Td></Td>
                 <Td></Td>
-                <Td>{doubleLiftScores[0]?.max_wl?.toFixed(2)}</Td>
                 <Td>{doubleLiftScores[0]?.max_mc?.toFixed(2)}</Td>
+                <Td>{doubleLiftScores[0]?.max_wl?.toFixed(2)}</Td>
                 <Td>
                   {doubleLiftScores[0]?.max_wl !== undefined && doubleLiftScores[0]?.max_mc !== undefined
                     ? (doubleLiftScores[0]?.max_wl + doubleLiftScores[0]?.max_mc).toFixed(2)
@@ -205,7 +205,7 @@ const LifterPage = () => {
                 </Td>
               </Tr>
 
-              <Tr>
+              <Tr bg="none">
                 <Td>Bench Press</Td>
                 <Td></Td>
                 <Td></Td>
@@ -215,17 +215,17 @@ const LifterPage = () => {
                 <Td>{benchPressScores[0]?.wilks_wl?.toFixed(4)}</Td>
               </Tr>
 
-              <Tr>
+              <Tr bg="gray.900">
                 <Td>Deadlift</Td>
                 <Td></Td>
                 <Td></Td>
-                <Td></Td>
                 <Td>{deadliftScores[0]?.max_mc?.toFixed(2)}</Td>
+                <Td></Td>
                 <Td>{deadliftScores[0]?.max_mc?.toFixed(2)}</Td>
                 <Td>{deadliftScores[0]?.wilks_mc?.toFixed(4)}</Td>
               </Tr>
 
-              <Tr>
+              <Tr bg="none">
                 <Td>Steel Grip</Td>
                 <Td>{steelGripScores[0]?.max_sg?.toFixed(2)}</Td>
                 <Td></Td>
@@ -235,7 +235,7 @@ const LifterPage = () => {
                 <Td>{steelGripScores[0]?.wilks_sg?.toFixed(4)}</Td>
               </Tr>
 
-              <Tr>
+              <Tr bg="gray.900">
                 <Td>Powerlifting</Td>
                 <Td></Td>
                 <Td>{powerLiftingScores[0]?.max_sqt?.toFixed(2)}</Td>
@@ -297,7 +297,7 @@ const LifterPage = () => {
 
           <Tbody>
             {scores.map((score, index) => (
-              <Tr key={index}>
+              <Tr key={score.score_id} bg={index % 2 === 0 ? 'gray.900' : 'none'}>
                 <Td>{index + 1}</Td>
                 <Td>{score.weight.toFixed(2)}</Td>
                 <Td>{score.club}</Td>

@@ -4,7 +4,7 @@ const fetchDisciplineInfo = async (disciplineId) => {
   try {
     const {data, error} = await supabase
       .from('disciplines')
-      .select('name')
+      .select('*')
       .eq('discipline_id', disciplineId)
       .single()
 

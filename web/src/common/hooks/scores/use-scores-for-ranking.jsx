@@ -12,10 +12,6 @@ const fetchScoresForRanking = async (competitionId, categoryId, gender, discipli
       query = query.eq('competition_id', competitionId)
     }
 
-    if (categoryId && !competitionId && !gender && !disciplineId) {
-      query = query.eq('category_id', categoryId)
-    }
-
     if ((competitionId || !competitionId) && !categoryId && gender && !disciplineId) {
       const {data: lifterData, error: lifterError} = await supabase
         .from('lifters')
@@ -44,20 +40,6 @@ const fetchScoresForRanking = async (competitionId, categoryId, gender, discipli
       query = query.in('category_id', categoryIds)
     }
 
-    if (competitionId && !categoryId && !gender && disciplineId) {
-      const {data: categoryData, error: categoryError} = await supabase
-        .from('categories')
-        .select('category_id')
-        .eq('discipline_id', disciplineId)
-
-      if (categoryError) {
-        throw categoryError
-      }
-
-      const categoryIds = categoryData.map((category) => category.category_id)
-      query = query.eq('competition_id', competitionId).in('category_id', categoryIds)
-    }
-
     if (!competitionId && !categoryId && gender && disciplineId) {
       const {data: categoryData, error: categoryError} = await supabase
         .from('categories')
@@ -73,6 +55,20 @@ const fetchScoresForRanking = async (competitionId, categoryId, gender, discipli
       query = query.in('category_id', categoryIds)
     }
 
+    if (competitionId && !categoryId && !gender && disciplineId) {
+      const {data: categoryData, error: categoryError} = await supabase
+        .from('categories')
+        .select('category_id')
+        .eq('discipline_id', disciplineId)
+
+      if (categoryError) {
+        throw categoryError
+      }
+
+      const categoryIds = categoryData.map((category) => category.category_id)
+      query = query.eq('competition_id', competitionId).in('category_id', categoryIds)
+    }
+
     if (competitionId && !categoryId && gender && disciplineId) {
       const {data: categoryData, error: categoryError} = await supabase
         .from('categories')
@@ -86,6 +82,14 @@ const fetchScoresForRanking = async (competitionId, categoryId, gender, discipli
 
       const categoryIds = categoryData.map((category) => category.category_id)
       query = query.eq('competition_id', competitionId).in('category_id', categoryIds)
+    }
+
+    if (categoryId && (!competitionId || gender || disciplineId)) {
+      query = query.eq('category_id', categoryId)
+    }
+
+    if (competitionId && categoryId && !gender && !disciplineId) {
+      query = query.eq('category_id', categoryId)
     }
 
     const {data: scoresData, error} = await query

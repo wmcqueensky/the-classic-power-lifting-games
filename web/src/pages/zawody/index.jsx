@@ -1,4 +1,4 @@
-import {Box, Heading, VStack, HStack} from '@chakra-ui/react'
+import {Box, Heading, VStack, HStack, Text} from '@chakra-ui/react'
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {motion} from 'framer-motion'
@@ -38,12 +38,53 @@ const CompetitionsPage = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        <HStack h="20%">
-          <Box borderBottom="10px solid" borderColor="red" w="50px" mx={2} />
-          <Box borderBottom="10px solid" borderColor="white" w="50px" mx={2} />
-          <Box borderBottom="10px solid" borderColor="white" w="50px" mx={2} />
-          <Box borderBottom="10px solid" borderColor="white" w="50px" mx={2} />
-        </HStack>
+        <VStack>
+          <HStack h={{base: '20%', md: '10%'}} mb="2">
+            <Box w={{base: '70px', md: '150px'}} mx={2} fontSize={{base: '12px', md: '16px'}}>
+              <Text textAlign="center">Zawody</Text>
+            </Box>
+            <Box w={{base: '70px', md: '150px'}} mx={2} fontSize={{base: '12px', md: '16px'}}>
+              <Text textAlign="center">Płeć</Text>
+            </Box>
+            <Box w={{base: '70px', md: '150px'}} mx={2} fontSize={{base: '12px', md: '16px'}}>
+              <Text textAlign="center">Konkurencja</Text>
+            </Box>
+            <Box w={{base: '70px', md: '150px'}} mx={2} fontSize={{base: '12px', md: '16px'}}>
+              <Text textAlign="center">Kategoria</Text>
+            </Box>
+          </HStack>
+
+          <HStack h="20%">
+            <Box
+              borderBottom="10px solid"
+              borderColor="red"
+              borderRadius="4"
+              w={{base: '70px', md: '150px'}}
+              mx={2}
+            />
+            <Box
+              borderBottom="10px solid"
+              borderColor="white"
+              borderRadius="4"
+              w={{base: '70px', md: '150px'}}
+              mx={2}
+            />
+            <Box
+              borderBottom="10px solid"
+              borderColor="white"
+              borderRadius="4"
+              w={{base: '70px', md: '150px'}}
+              mx={2}
+            />
+            <Box
+              borderBottom="10px solid"
+              borderColor="white"
+              borderRadius="4"
+              w={{base: '70px', md: '150px'}}
+              mx={2}
+            />
+          </HStack>
+        </VStack>
 
         <Heading
           fa="h1"
@@ -53,7 +94,6 @@ const CompetitionsPage = () => {
         >
           Wybierz zawody:
         </Heading>
-
         <VStack maxH="70vh" overflowY="auto">
           <ChoiceButton onClick={() => navigate(`${GENDERS_PATH}`)}>Wszystkie</ChoiceButton>
 

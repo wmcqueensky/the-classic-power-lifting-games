@@ -65,12 +65,14 @@ const RankingPage = () => {
           setCompetitionInfo(competitionData)
         }
 
+        if (disciplineId) {
+          const categoryData = await fetchDisciplineInfo(disciplineId)
+          setDisciplineInfo(categoryData)
+        }
+
         if (categoryId) {
           const categoryData = await fetchCategoryInfo(categoryId)
           setCategoryInfo(categoryData)
-
-          const disciplineData = await fetchDisciplineInfo(categoryData.discipline_id)
-          setDisciplineInfo(disciplineData)
         }
 
         setLoading(false)
@@ -89,7 +91,13 @@ const RankingPage = () => {
   return (
     <motion.div variants={smoothVariant} initial="hidden" animate="visible">
       <Box bgImage={`url(${backgroundImage})`} backgroundSize="cover" backgroundPosition="center" h="100%">
-        {competitionId && categoryId && (
+        <Text fontSize="4xl" fontWeight="bold" mb="4">
+          {competitionId ? competitionInfo.name : 'Wszystkie Zawody'} | {gender ? gender : 'Wszystkie Płcie'}{' '}
+          | {disciplineId ? disciplineInfo.name : 'Wszystkie Dyscypliny'} |{' '}
+          {categoryId ? categoryInfo.name : 'Wszystkie Kategorie'}
+        </Text>
+
+        {/* {competitionId && categoryId && (
           <Text fontSize="4xl" fontWeight="bold" mb="4">
             {competitionInfo.name} | {categoryInfo.name}
           </Text>
@@ -105,7 +113,7 @@ const RankingPage = () => {
           <Text fontSize="4xl" fontWeight="bold" mb="4">
             Wszystkie Zawody | {categoryInfo.name}
           </Text>
-        )}
+        )} */}
 
         {competitionId && (
           <Text fontSize="xl" fontWeight="bold" mb="4">
@@ -139,7 +147,7 @@ const RankingPage = () => {
           </Thead>
           <Tbody>
             {scores.map((score, index) => (
-              <Tr key={index}>
+              <Tr key={score.score_id} bg={index % 2 === 0 ? 'gray.900' : 'none'}>
                 <Td>{index + 1}</Td>
 
                 <Td>

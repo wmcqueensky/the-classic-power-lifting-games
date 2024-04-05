@@ -4,7 +4,7 @@ const ChoiceButton = ({onClick, children}) => (
   <Button
     as="button"
     h={{base: '36px', md: '46px'}}
-    w={{base: '280px', sm: '300px'}}
+    w={{base: '280px', sm: '350px'}}
     lineHeight="1.2"
     transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
     border="1px"

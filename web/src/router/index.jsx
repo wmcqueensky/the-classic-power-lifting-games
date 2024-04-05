@@ -43,6 +43,12 @@ import {
   RANKING_COMPETITION_GENDER_DISCIPLINE_PATH,
   RANKING_COMPETITION_DISCIPLINE_PATH,
   RANKING_GENDER_DISCIPLINE_PATH,
+  RANKING_COMPETITION_GENDER_DISCIPLINE_CATEGORY_PATH,
+  RANKING_COMPETITION_GENDER_CATEGORY_PATH,
+  RANKING_DISCIPLINE_CATEGORY_PATH,
+  RANKING_GENDER_CATEGORY_PATH,
+  RANKING_GENDER_DISCIPLINE_CATEGORY_PATH,
+  RANKING_COMPETITION_DISCIPLINE_CATEGORY_PATH,
 } from './paths'
 
 const Router = () => (
@@ -78,6 +84,12 @@ const Router = () => (
       <Route path={RANKING_COMPETITION_GENDER_DISCIPLINE_PATH} element={<RankingPage />} />
       <Route path={RANKING_COMPETITION_GENDER_PATH} element={<RankingPage />} />
       <Route path={RANKING_COMPETITION_CATEGORY_PATH} element={<RankingPage />} />
+      <Route path={RANKING_COMPETITION_GENDER_CATEGORY_PATH} element={<RankingPage />} />
+      <Route path={RANKING_DISCIPLINE_CATEGORY_PATH} element={<RankingPage />} />
+      <Route path={RANKING_GENDER_CATEGORY_PATH} element={<RankingPage />} />
+      <Route path={RANKING_GENDER_DISCIPLINE_CATEGORY_PATH} element={<RankingPage />} />
+      <Route path={RANKING_COMPETITION_DISCIPLINE_CATEGORY_PATH} element={<RankingPage />} />
+      <Route path={RANKING_COMPETITION_GENDER_DISCIPLINE_CATEGORY_PATH} element={<RankingPage />} />
       <Route path={LIFTER_PATH} element={<LifterPage />} />
     </Route>
     <Route path="*" element={<Navigate to={{pathname: HOME_PATH}} />} />

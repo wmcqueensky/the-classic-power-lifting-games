@@ -30,12 +30,21 @@ const HomePage = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    const storedCookieChoice = localStorage.getItem('cookieAccepted')
+    if (storedCookieChoice === 'true') {
+      setCookieAccepted(true)
+    }
+  }, [])
+
   const handleAcceptCookie = () => {
     setCookieAccepted(true)
+    localStorage.setItem('cookieAccepted', 'true')
   }
 
   const handleDeclineCookie = () => {
     setCookieAccepted(true)
+    localStorage.setItem('cookieAccepted', 'true')
   }
 
   return (
