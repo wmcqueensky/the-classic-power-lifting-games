@@ -2,7 +2,7 @@
 
 This React website was created to learn and practice fundamental React features, Web development, Chakra UI, MVC design pattern, Database programming while using the [Supabase](https://supabase.com).
 
-This website is also an official website of Classic Powerlifting Games which take place at Lodz University of Technology. The current website address of the website in the repo is [here](https://transcendent-chimera-119673.netlify.app), but after resolving the issues this website will be posted in exchange of the current one available at this address: [Official Url](https://www.theclassicpowerliftinggames.pl) 
+This website is also an official website of Classic Powerlifting Games which take place at Lodz University of Technology. The current website address of the website in the repo is [here](https://theclassicpowerliftinggames.netlify.app), but after resolving the issues this website will be posted in exchange of the current one available at this address: [Official Url](https://www.theclassicpowerliftinggames.pl) 
 
 ## Photos
 <img width="1680" alt="Screenshot 2024-04-06 at 21 18 29" src="https://github.com/wmcqueensky/College-Power-Lifting/assets/79480681/187ccb24-6c69-4296-86f0-dd2aad2db810">
